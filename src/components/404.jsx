@@ -12,10 +12,10 @@ function Login() {
       {/* include navigations */}
       <Nav />
 
-      <div className=" flex justify-center  flex-col mt-24 mb-10 text-center  items-center ">
+      <div className="  flex justify-center  flex-col mt-36 lg:mt-24 mb-10 text-center  items-center ">
         <p className=" text-9xl ">404 Not Found</p>
         <p className="  mt-10 mb-5 text-xl ">Your visited page not found. You may go home page.</p>
-        <Link className=' bg-[#67c066] rounded-md mb-5 w-80 text-white mt-14 p-5 hover:bg-[#3ccc3a]' to="/">Create Account</Link> <br/>
+        <Link className=' bg-[#67c066] rounded-md mb-5 w-80 text-white mt-14 p-5 hover:bg-[#3ccc3a]' to="/">Back to Home</Link> <br/>
 
       </div>
 

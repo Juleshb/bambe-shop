@@ -31,7 +31,11 @@ function Nav() {
       
     <input className=" border p-2 bg-slate-300 w-72" placeholder="What are you looking for?" type="text"/>
     <img className=" absolute ml-64 mt-3" src={search}/>
+    
+    <Link to="/Cart">
     <img className=" mt-1 ml-5" src={buy}/>
+    </Link>
+   
  
     </div>
       <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">

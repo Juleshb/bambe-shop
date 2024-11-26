@@ -10,9 +10,27 @@ import icons_arrow_left from "./assets/icons_arrow_left.png"
 import icons_arrow_right from "./assets/arrow-right.png"
 import star from "./assets/star.png"
 import emptystar from "./assets/emptystar.png"
-
 import Frame1 from "./assets/Frame1.png"
 import Radio from "./assets/Radio.png"
+import keyboard from "./assets/keyboard.png"
+import chair from "./assets/chair.png"
+import monitor from "./assets/monitor.png"
+
+import phone from "./assets/phones.png"
+import computer from "./assets/computer.png"
+import SmartWatch from "./assets/SmartWatch.png"
+import Camera from "./assets/Camera.png"
+import gaming from "./assets/gaming.png"
+import Headphone from "./assets/Headphone.png"
+
+import bag from "./assets/bag.png"
+import jacket from "./assets/jacket.png"
+import smartbook from "./assets/smartbook.png"
+ 
+
+
+
+
 
 
 function Home() {
@@ -61,12 +79,15 @@ function Home() {
 </div>
 
  
+ 
+
+
  <div className=' ml-5 flex flex-col justify-center items-center'>
 {/* Flash seles  */}
 <div className=' flex justify-stretch w-full mt-10'>
   <div className=' w-1/2'>
     <p className=' font-bold'>To day</p>
-    <p className=' font-semibold text-2xl'>Flash Sales</p>
+    <p className=' font-semibold text-3xl'>Flash Sales</p>
   </div>
   <div className=' w-1/2  flex justify-end'>
     <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full mr-4' src={icons_arrow_left}/>
@@ -83,13 +104,35 @@ function Home() {
 <div className='  w-96   lg:w-72 mb-6 mt-5'>
   <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
     <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img src={Frame1}/>
+     <img className=' h-44' src={Frame1}/>
+  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+  </div>
+ 
+  <p className=' mt-2 mb-2'>HAVIT HV-G92 Gamepad</p>
+  <div className=' flex space-x-2'>
+  <p>50K Frw</p>
+  <p className=' text-[#3CCC3A]'>70K Frw</p>
+  </div>
+  
+  <div className=' flex'>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={emptystar}/>
+    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
+ </div>
+</div>
+
+<div className=' mb-6 mt-5'>
+<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
+<p className=' bg-slate-600 text-white pl-3 pr-3   -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
+     <img className=' h-44' src={keyboard}/>
   <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
   </div>
  
   <p className=' mt-2 mb-2'>AK-900 Wired Keyboard</p>
   <div className=' flex space-x-2'>
-  <p>50K Frw</p>
+  <p>44K Frw</p>
   <p className=' text-[#3CCC3A]'>50K Frw</p>
   </div>
   
@@ -105,14 +148,14 @@ function Home() {
 <div className=' mb-6 mt-5'>
 <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
 <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img src={Frame1}/>
+     <img className=' h-44' src={monitor}/>
   <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
   </div>
  
-  <p className=' mt-2 mb-2'>AK-900 Wired Keyboard</p>
+  <p className=' mt-2 mb-2'>IPS LCD Gaming Monitor</p>
   <div className=' flex space-x-2'>
-  <p>50K Frw</p>
-  <p className=' text-[#3CCC3A]'>50K Frw</p>
+  <p>200K Frw</p>
+  <p className=' text-[#3CCC3A]'>250K Frw</p>
   </div>
   
   <div className=' flex'>
@@ -127,36 +170,14 @@ function Home() {
 <div className=' mb-6 mt-5'>
 <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
 <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img src={Frame1}/>
+     <img className=' h-44' src={chair}/>
   <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
   </div>
  
-  <p className=' mt-2 mb-2'>AK-900 Wired Keyboard</p>
+  <p className=' mt-2 mb-2'>S-Series Comfort Chair </p>
   <div className=' flex space-x-2'>
-  <p>50K Frw</p>
-  <p className=' text-[#3CCC3A]'>50K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
-
-<div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img src={Frame1}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>AK-900 Wired Keyboard</p>
-  <div className=' flex space-x-2'>
-  <p>50K Frw</p>
-  <p className=' text-[#3CCC3A]'>50K Frw</p>
+  <p>17K Frw</p>
+  <p className=' text-[#3CCC3A]'>20K Frw</p>
   </div>
   
   <div className=' flex'>
@@ -174,7 +195,205 @@ function Home() {
 <button className=' bg-[#2ac127] w-60 rounded-md text-white p-3'>View All Products</button>
 </div>
 </div> 
+
+
+
+{/* Flash seles  */}
+<div className=' flex justify-stretch w-full mt-10 mb-7'>
+  <div className=' w-1/2'>
+    <p className=' font-bold'>Categoty</p>
+    <p className=' font-bold text-3xl'>Browse By Category</p>
+
+   </div>
+  <div className=' w-1/2  flex justify-end'>
+    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full mr-4' src={icons_arrow_left}/>
+    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full' src={icons_arrow_right}/>
+  </div>
+  <div>
+  </div>
+</div>
+
+
+<div className=' flex flex-col justify-center items-center '>
+<div className=' grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-10 '>
+
+  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center  w-72 md:w-full'>
+    <img src={phone}/>
+    <p>Phones</p>
+  </div>
+  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+    <img src={computer}/>
+    <p>Computers</p>
+
+  </div>
+  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+    <img src={SmartWatch}/>
+    <p>Smart Watch</p>
+
+  </div>
+  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+    <img src={Camera}/>
+    <p>Camera</p>
+
+  </div>
+  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+    <img src={Headphone}/>
+    <p>Headphone</p>
+
+  </div>
+
+  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+    <img src={gaming}/>
+    <p>Gaming</p>
+
+  </div>
+
+
+</div>
+</div>
  
+
+
+
+
+
+
+
+
+
+
+
+
+<div className=' ml-5 flex flex-col justify-center items-center'>
+{/* Flash seles  */}
+<div className=' flex justify-stretch w-full mt-10'>
+  <div className=' w-1/2'>
+    <p className=' font-bold'>This Month</p>
+    <p className=' font-semibold text-3xl'>Best Selling Products</p>
+  </div>
+  <div className=' w-1/2  flex justify-end'>
+    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full mr-4' src={icons_arrow_left}/>
+    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full' src={icons_arrow_right}/>
+  </div>
+  <div>
+  </div>
+</div>
+
+<div className=' w-full  flex justify-center items-center  '>
+
+
+<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-32 '>
+<div className='  w-96   lg:w-72 mb-6 mt-5'>
+  <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
+    <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
+     <img className=' h-44' src={jacket}/>
+  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+  </div>
+ 
+  <p className=' mt-2 mb-2'>The north coat</p>
+  <div className=' flex space-x-2'>
+  <p>50K Frw</p>
+  <p className=' text-[#3CCC3A]'>70K Frw</p>
+  </div>
+  
+  <div className=' flex'>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={emptystar}/>
+    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
+ </div>
+</div>
+
+<div className=' mb-6 mt-5'>
+<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
+<p className=' bg-slate-600 text-white pl-3 pr-3   -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
+     <img className=' h-44' src={bag}/>
+  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+  </div>
+ 
+  <p className=' mt-2 mb-2'>Gucci duffle bag</p>
+  <div className=' flex space-x-2'>
+  <p>44K Frw</p>
+  <p className=' text-[#3CCC3A]'>50K Frw</p>
+  </div>
+  
+  <div className=' flex'>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={emptystar}/>
+    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
+ </div>
+</div>
+
+<div className=' mb-6 mt-5'>
+<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
+<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
+     <img className=' h-44' src={monitor}/>
+  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+  </div>
+ 
+  <p className=' mt-2 mb-2'>IPS LCD Gaming Monitor</p>
+  <div className=' flex space-x-2'>
+  <p>200K Frw</p>
+  <p className=' text-[#3CCC3A]'>250K Frw</p>
+  </div>
+  
+  <div className=' flex'>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={smartbook}/>
+    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
+ </div>
+</div>
+
+<div className=' mb-6 mt-5'>
+<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
+<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
+     <img className=' h-44' src={chair}/>
+  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+  </div>
+ 
+  <p className=' mt-2 mb-2'>S-Series Comfort Chair </p>
+  <div className=' flex space-x-2'>
+  <p>17K Frw</p>
+  <p className=' text-[#3CCC3A]'>20K Frw</p>
+  </div>
+  
+  <div className=' flex'>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={star}/>
+    <img className=' w-4 h-4' src={emptystar}/>
+    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
+ </div>
+</div>
+</div>
+
+</div>
+<div className=' flex justify-center items-center mb-10'>
+<button className=' bg-[#2ac127] w-60 rounded-md text-white p-3'>View All Products</button>
+</div>
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
