@@ -6,8 +6,45 @@ import Vector2 from "../assets/Vector2.png";
 import Vector3 from "../assets/Vector3.png";
 import Vector4 from "../assets/Vector4.png";
 
+import delivery from "../assets/delivery.png";
+import money from "../assets/money.png";
+import Services from "../assets/Services.png";
+
+
 function Footer() {
   return (
+    <>
+    <div className=' flex justify-center items-center  w-full'>
+<div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  lg:gap-14 '>
+
+<div className=' mt-5 lg:mt-20 lg:mb-20 flex flex-col w-full justify-center items-center'>
+  <img className=' w-14 mb-2' src={delivery}/>
+  <p className=' font-bold'>FREE AND FAST DELIVERY</p>
+  <p>Free delivery for all orders over $140</p>
+</div>
+
+<div className=' mt-10 lg:mt-20 lg:mb-20 flex flex-col w-full justify-center items-center'>
+  <img className=' w-14 mb-2' src={Services}/>
+  <p className=' font-bold'>24/7 CUSTOMER SERVICE</p>
+  <p>Friendly 24/7 customer support</p>
+</div>
+
+<div className='mt-10 lg:mt-20 lg:mb-20 mb-10 flex flex-col w-full justify-center items-center'>
+  <img className=' w-14 mb-2' src={money}/>
+  <p className=' font-bold'>MONEY BACK GUARANTEE</p>
+  <p>We reurn money within 30 days</p>
+</div>
+
+
+
+
+<div></div>
+<div></div>
+
+</div>
+ </div>
+
+
 
     <div className='bg-[#3ccc3a] w-full flex justify-center '>
     <div className=' p-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 lg:gap-32  text-white '>
@@ -64,6 +101,9 @@ function Footer() {
 
     </div>
      </div>
+    </>
+
+    
 
   )
 

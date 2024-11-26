@@ -13,7 +13,7 @@ function Login() {
       <Nav/>
 
 
-      <div className=' w-full flex mt-10   md:flex-col-reverse lg:flex-row '>
+      <div className=' w-full flex     md:flex-col-reverse lg:flex-row  ml-10 lg:ml-0 mt-52 lg:mt-10'>
         <img className=' hidden lg:block w-96 lg:w-1/2 lg:h-1/3  ' src={LoginImg}/>
 
         <div className='  md:ml-32 flex flex-col justify-center items-center '>
