@@ -46,14 +46,14 @@ function Login() {
 <form onSubmit={handleLogin}>
 
 
-        <div className='  md:ml-32 flex flex-col justify-center items-center '>
-          <p className=' text-4xl mb-7 font-semibold'>Create an account</p>
-          <p className=' mb-3'>Enter your details below</p>
+        <div className='  md:ml-32 flex flex-col justify-center items-center mt-52 '>
+          <p className=' text-4xl  mb-4 font-semibold'>Create an account</p>
+          <p className=' mb-10'>Enter your details below</p>
 
           {message && <p className="text-red-500 mb-4">{message}</p>}
 
            <input 
-                          onChange={(e)=>setemail(e.target.value)}
+            onChange={(e)=>setemail(e.target.value)}
 
            className=' focus:outline-none border-b-2 border-slate-400 pb-1 mb-10 w-80' type='text' placeholder='Email or Phone Number'/><br/>
           <input
