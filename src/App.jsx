@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Cart from "./components/Cart";
 import Dashboard from "./components/Seller/Dashboard";
 import Addproduct from "./components/Seller/AddProduct";
+import Createcategory from "./components/Seller/Createcategory";
 function App() {
   return (
     <>
@@ -16,6 +17,7 @@ function App() {
       <Route path="/Cart" element={<Cart/>}/> 
       <Route path="/Dashboard" element={<Dashboard/>}/>
       <Route path="/Addproduct" element={<Addproduct/>}/>
+      <Route path="/Createcategory" element={<Createcategory/>}/>
 
       <Route path="/*" element={<Notfound/>}/>
     </Routes>

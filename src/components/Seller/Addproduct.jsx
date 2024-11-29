@@ -8,6 +8,7 @@ import {
  Label,
  Modal,
  Table,
+ Select,
   TextInput,
 } from "flowbite-react";
  import { FaPlus } from "react-icons/fa";
@@ -32,7 +33,8 @@ export default function Addproduct() {
       <div className=" w-full">
 
       <div className="flex w-full mt-20 ">
-  <div className="py-4">
+  <div className="">
+    <p className=" mb-4 text-xl font-bold ">Add Product </p>
     <form>
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 w-full ">
         {/* Product Name Input */}
@@ -59,28 +61,31 @@ export default function Addproduct() {
           >
             Category
           </label>
-          <input
-            id="category"
-            name="category"
-            placeholder="Electronics"
-            className="block w-full mt-1  border border-green-500 p-2 pl-3 "
-          />
+        <select 
+         className="block w-full mt-1  border border-green-500 p-2 pl-3 "
+        id="category" required>
+        <option>Select Category</option>
+        <option>Category1</option>
+        <option>Category2</option>
+        <option>Category3</option>
+      </select>
         </div>
 
         {/* Brand Input */}
         <div>
           <label
             htmlFor="brand"
-            className="block text-sm font-medium text-gray-700"
+            className="block  text-sm font-medium text-gray-700"
           >
-            Brand
+            Promotion / New
           </label>
-          <input
-            id="brand"
-            name="brand"
-            placeholder="Apple"
-            className="block w-full mt-1  border border-green-500 p-2 pl-3 "
-          />
+          <select 
+         className="block w-full mt-1  border border-green-500 p-2 pl-3 "
+        id="category" required>
+        <option>Select Promotion / New</option>
+        <option>Promotion</option>
+        <option>New</option>
+       </select>
         </div>
 
         {/* Price Input */}
