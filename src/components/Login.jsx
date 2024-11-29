@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import LoginImg from "./assets/signup-img.webp";
 import { useNavigate } from 'react-router-dom'; 
 import google from "./assets/google.webp";
@@ -18,7 +18,7 @@ function Login() {
   const handleLogin=async(e)=>{
     e.preventDefault();   
     try{
-      const response =await axios.post("http://localhost:4800/api/login",{
+      const response =await axios.post("http://localhost:4800/api/categories",{
         email, 
         password 
       })

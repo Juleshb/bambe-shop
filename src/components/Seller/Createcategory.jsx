@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "./Sidebar";
 import keyboard from "../assets/keyboard.png";
 import {
@@ -16,8 +16,56 @@ import {
   HiUpload
 } from "react-icons/hi";
 import { useState } from "react";
+import axios from "axios";
+
+
  
 export default function Createcategory() {
+  const [message, setmessage] = useState("");
+  const [errrmessage, errrsetmessage] = useState("");
+  const [name,setcategory]=useState("");
+  const [CategoyList,setCategoyList]=useState("");
+  
+const APi="http://localhost:4800/api/categories";
+  const createCategory=async(e)=>{
+    e.preventDefault();
+    try{
+      const response =await axios.post(APi,{
+        name
+      })
+      setmessage("Successfully created category");
+
+    }
+    catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        errrsetmessage(error.response.data.error);  
+      } else {
+        errrsetmessage(response.data.message);
+      }
+      console.error("Error:", error.message);
+    }
+
+  }
+
+  // display all categories
+
+  useEffect(()=>{
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get(APi);
+        setCategoyList(response.data);
+      } catch (error) {
+        console.error('Error fetching rooms:', error);
+      }
+    };
+    fetchCategory()
+  },[])
+
+  
+
+
+
+
   const EditProductModal = () => {
     const [isOpen, setOpen] = useState(false);
 
@@ -51,29 +99,8 @@ export default function Createcategory() {
                         name="productName"
                         placeholder='Apple iMac 27"'
                         className="mt-1 block w-full border-green-400 focus:border-green-700 rounded-md p-3 border-2"
-                      />
+                       />
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
                
                   </div>
                 </form>
@@ -101,10 +128,7 @@ export default function Createcategory() {
 
     return (
       <>
-        <Button className=" text-red-500" onClick={() => setOpen(!isOpen)}>
-          <HiTrash className="mr-2 text-lg text-black" />
-          Delete Category
-        </Button>
+        
         <div className=" ">
           <Modal onClose={() => setOpen(false)} show={isOpen} size="md">
             <Modal.Body className="px-6 pb-6 pt-0">
@@ -139,12 +163,16 @@ export default function Createcategory() {
             <Table.HeadCell>Actions</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y divide-gray-200 bg-[#ffffff] text-black">
-          <Table.Row className="hover:bg-gray-100 ">
+        
+        { CategoyList && CategoyList.map(category=>(
+     
+          <Table.Row key={category.id} className="hover:bg-gray-100 ">
             <Table.Cell className="w-4 p-4">
              </Table.Cell>
-            <Table.Cell className="whitespace-nowrap p-4 text-sm font-normal ">
+         
+            <Table.Cell  className="whitespace-nowrap p-4 text-sm font-normal ">
               <div className="text-base font-semibold text-gray-900 ">
-                keyboard{" "}
+                {category.name}
               </div>
               <div className="text-sm font-normal text-gray-500 dark:text-gray-400"></div>
             </Table.Cell>
@@ -153,10 +181,17 @@ export default function Createcategory() {
             <Table.Cell className="space-x-2 whitespace-nowrap p-4">
               <div className="flex items-center gap-x-3">
                 <EditProductModal />
-                <DeleteProductModal />
-              </div>
+                <Button  key={category.id} className=" text-red-500" onClick={() => setOpen(!isOpen)}>
+          <HiTrash className="mr-2 text-lg text-black" />
+          Delete Category
+        </Button>              </div>
             </Table.Cell>
+
+
           </Table.Row>
+        
+          ))
+        }
         </Table.Body>
       </Table>
     );
@@ -172,8 +207,12 @@ export default function Createcategory() {
         <div className=" w-full">
           <div className="flex w-full mt-20 ">
             <div className="">
-              <p className=" mb-4 text-xl font-bold ">Create Category </p>
-              <form>
+              <p className=" text-xl font-bold mb-10 ">Create Category </p>
+
+              {message && <p className="text-green-500 mb-4 text-xl">{message}</p>}
+              {errrmessage && <p className="text-red-500 mb-4 text-xl">{errrmessage}</p>}
+
+              <form onSubmit={createCategory}>
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 w-full ">
                   {/* Product Name Input */}
                   <div>
@@ -184,9 +223,10 @@ export default function Createcategory() {
                       Category name
                     </label>
                     <input
+                    type="text"
+                    onChange={(e)=>setcategory(e.target.value)}
                       id="productName"
-                      name="productName"
-                      placeholder='Apple iMac 27"'
+                       placeholder='Phone'
                       className="block w-full mt-1  border border-green-500 p-2 pl-3 "
                     />
                   </div>
@@ -212,115 +252,23 @@ export default function Createcategory() {
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div className="w-full max-w-3xl bg-white rounded-lg shadow-lg">
               <div className="border-b p-6 bg-white">
-                <strong className="text-lg">Edit Category</strong>
+                <strong className="text-lg">Delete Category</strong>
               </div>
               <div className="p-6 bg-white">
-                <form>
-                  <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                    <div>
-                      <label
-                        htmlFor="productName"
-                        className="block text-sm font-medium"
-                      >
-                        Category name
-                      </label>
-                      <input
-                        id="productName"
-                        name="productName"
-                        placeholder='Apple iMac 27"'
-                        className="mt-1 block w-full border-green-400 focus:border-green-700 rounded-md p-3 border-2"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="category"
-                        className="block text-sm font-medium"
-                      >
-                        Category
-                      </label>
-                      <input
-                        id="category"
-                        name="category"
-                        placeholder="Electronics"
-                        className="mt-1 block w-full border-green-400 focus:border-green-700 rounded-md p-3 border-2"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="brand"
-                        className="block text-sm font-medium"
-                      >
-                        Brand
-                      </label>
-                      <input
-                        id="brand"
-                        name="brand"
-                        placeholder="Apple"
-                        className="mt-1 block w-full border-green-400 focus:border-green-700 rounded-md p-3 border-2"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="price"
-                        className="block text-sm font-medium"
-                      >
-                        Price
-                      </label>
-                      <input
-                        id="price"
-                        name="price"
-                        type="number"
-                        placeholder="$2300"
-                        className="mt-1 block w-full border-green-400 focus:border-green-700 rounded-md p-3 border-2"
-                      />
-                    </div>
-                    <div className="lg:col-span-2">
-                      <label
-                        htmlFor="productDetails"
-                        className="block text-sm font-medium"
-                      >
-                        Product details
-                      </label>
-                      <input
-                        id="productDetails"
-                        name="productDetails"
-                        placeholder="e.g. 3.8GHz 8-core 10th-generation Intel Core i7 processor, Turbo Boost up to 5.0GHz, Ram 16 GB DDR4 2300Mhz"
-                        className="mt-1 block w-full border-green-400 focus:border-green-700 rounded-md p-3 border-2"
-                      />
-                    </div>
-                    <div className="flex space-x-5">
-                      {["apple-imac-1.png"].map((src, index) => (
-                        <div key={index} className="relative bg-white">
-                          <img
-                            alt={`Product ${index + 1}`}
-                            src={keyboard}
-                            className="h-24 rounded"
-                          />
-                          <button
-                            className="absolute -top-2 -right-2 text-red-600"
-                            type="button"
-                          >
-                            <HiTrash className="text-2xl" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="lg:col-span-2">
-                      <div className="flex w-full items-center justify-center">
-                        <label className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded border-2 border-dashed border-gray-300 p-6 hover:bg-gray-50 bg-white">
-                          <HiUpload className="text-4xl text-gray-300" />
-                          <p className="py-1 text-sm text-gray-600">
-                            Upload a file or drag and drop
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            PNG, JPG, GIF up to 10MB
-                          </p>
-                          <input type="file" className="hidden" />
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+              <div className="flex flex-col items-center gap-y-6 text-center">
+                <HiOutlineExclamationCircle className="text-7xl text-red-600" />
+                <p className="text-lg  ">
+                  Are you sure you want to delete this Category?
+                </p>
+                <div className="flex items-center gap-x-3">
+                  <Button color=" " onClick={() => setOpen(false)}>
+                    Yes, I'm sure
+                  </Button>
+                  <Button color=" " onClick={() => setOpen(false)}>
+                    No, cancel
+                  </Button>
+                </div>
+              </div>
               </div>
               <div className="flex justify-end gap-4 border-t p-4 bg-white">
                 <button
@@ -329,8 +277,8 @@ export default function Createcategory() {
                 >
                   Cancel
                 </button>
-                <button className="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-                  Save all
+                <button className="px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700">
+                 Delete
                 </button>
               </div>
             </div>
