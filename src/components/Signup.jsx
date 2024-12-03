@@ -46,7 +46,7 @@ const handleSignup=async(e)=>{
         <form onSubmit={handleSignup}>
           <div className="  md:ml-32 flex flex-col justify-center items-center ">
             <p className=" text-4xl mb-7 font-semibold">Create an account</p>
-            <p className=" mb-3">Enter your details below</p>
+            <p className=" mb-3 mt-60 text-2xl lg:mb-10">Enter your details below</p>
 
             {message && <p className="text-green-500 mb-4">{message}</p>}
 
