@@ -4,7 +4,7 @@ import Notfound from "./components/404";
 import { Route,Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
-import Dashboard from "./components/Seller/Dashboard";
+import Dashboard from "./components/Seller/index";
 import Addproduct from "./components/Seller/Addproduct";
 import { AuthProvider } from "./components/contex/authocontex"; 
 import Createcategory from "./components/Seller/Createcategory";
