@@ -14,8 +14,6 @@ const Dashboard = () => {
   );
 };
 
-
-
 const LatestTransactions = () => {
   const [isDropdown, setDropdown] = useState(false);
 
