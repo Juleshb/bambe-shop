@@ -5,11 +5,13 @@ import { Route,Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Cart from "./components/Cart";
 import Dashboard from "./components/Seller/Dashboard";
-import Addproduct from "./components/Seller/AddProduct";
+import Addproduct from "./components/Seller/Addproduct";
+import { AuthProvider } from "./components/contex/authocontex"; 
 import Createcategory from "./components/Seller/Createcategory";
 function App() {
   return (
     <>
+    <AuthProvider>
     <Routes>      
       <Route path="/Login" element={<Login/>}/>
       <Route path="/Signup" element={<Signup/>}/> 
@@ -21,6 +23,7 @@ function App() {
 
       <Route path="/*" element={<Notfound/>}/>
     </Routes>
+    </AuthProvider>
     </> 
   );
 }
