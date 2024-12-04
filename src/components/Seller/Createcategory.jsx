@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Sidebar from "./Sidebar";
 
 const API = "http://localhost:4800/api/categories";
 
@@ -80,10 +79,6 @@ export default function ManageCategories() {
 
   return (
     <div className="flex w-full">
-      {/* Sidebar */}
-      <div className="w-[30%]">
-        <Sidebar />
-      </div>
 
       {/* Main Content */}
       <div className="w-full p-6">
