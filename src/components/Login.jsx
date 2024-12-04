@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Nav from './navs/Nav';
 import Footer from './navs/Footer';
+
 import axiosInstance from "./utils/axios";
 import { AuthContext } from "./contex/authocontex";
 import LoginImg from "./assets/signup-img.webp";
