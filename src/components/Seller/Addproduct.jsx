@@ -5,7 +5,7 @@ import { Icon } from "@iconify/react";
 import { Modal, Button, TextInput, Label, Select, Table } from "flowbite-react";
 
 export default function AddProduct() {
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(['']);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -30,7 +30,6 @@ export default function AddProduct() {
           axiosInstance.get("/api/categories"),
           axiosInstance.get("/api/products"),
         ]);
-
         setCategories(categoriesRes.data);
         setProducts(productsRes.data);
       } catch (err) {
@@ -40,7 +39,6 @@ export default function AddProduct() {
 
     fetchData();
   }, []);
-
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -116,7 +114,7 @@ export default function AddProduct() {
         name: "",
         description: "",
         price: "",
-        category_id: "",
+        category_id: "2",
         is_new: false,
         is_on_promotion: false,
         image: null,
@@ -127,6 +125,7 @@ export default function AddProduct() {
       setIsLoading(false);
     }
   };
+  console.log(categories)
 
   return (
    

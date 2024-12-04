@@ -8,6 +8,7 @@ import Dashboard from "./components/Seller/index";
 import Addproduct from "./components/Seller/Addproduct";
 import { AuthProvider } from "./components/contex/authocontex"; 
 import Createcategory from "./components/Seller/Createcategory";
+import ProductDetails from "./components/ProductDetails";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
       <Route path="/Dashboard" element={<Dashboard/>}/>
       <Route path="/Addproduct" element={<Addproduct/>}/>
       <Route path="/Createcategory" element={<Createcategory/>}/>
+      <Route path="/Product" element={<ProductDetails/>}/>
 
       <Route path="/*" element={<Notfound/>}/>
     </Routes>
