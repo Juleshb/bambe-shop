@@ -22,40 +22,57 @@ import SmartWatch from "./assets/SmartWatch.png"
 import Camera from "./assets/Camera.png"
 import gaming from "./assets/gaming.png"
 import Headphone from "./assets/Headphone.png"
-
 import bag from "./assets/bag.png"
 import jacket from "./assets/jacket.png"
 import smartbook from "./assets/smartbook.png"
- 
-
-
-
-
-
+import axiosInstance from './utils/axios'
+import { useEffect,useState } from 'react'
 
 function Home() {
+  const [categories, setCategories] = useState(['']);
+  const [products, setProducts] = useState([]);
+
+    // Fetch categories and products on mount
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const [categoriesRes, productsRes] = await Promise.all([
+            axiosInstance.get("/api/categories"),
+            axiosInstance.get("/api/products"),
+          ]);
+          setCategories(categoriesRes.data);
+          setProducts(productsRes.data);
+        } catch (err) {
+          console.error("Error fetching data:", err.message);
+        }
+      };
+  
+      fetchData();
+    }, []);
+  
+
+
   return (
 <>
 <Nav/>
 
 <div className=' lg:pl-48  lg:mr-48'>
-
-  
-
 {/* Ads section */}
-
 <div className=' flex w-full  justify-between'>
 
-<div className='  flex-col w-80 border-r-2 hidden lg:flex '>
-  <Link className=' mb-4' to="/">Woman’s Fashion</Link>
-  <Link className=' mb-4' to="/">Men’s Fashion</Link>
-  <Link className=' mb-4' to="/">Electronics</Link>
-  <Link className=' mb-4' to="/">Home & Lifestyle</Link>
-  <Link className=' mb-4' to="/">Medicine</Link>
-  <Link className=' mb-4' to="/">Sports & Outdoor</Link>
-  <Link className=' mb-4' to="/">Baby’s & Toys</Link>
-  <Link className=' mb-4' to="/">Groceries & Pets</Link>
-  <Link className=' mb-4' to="/">Health & Beauty</Link>
+<div className='  flex-col w-80 mt-20 pt-10 border-r-2 hidden lg:flex '>
+  <p className=' text-xl font-bold mb-2 text-slate-700'>Categories</p>
+
+  {
+    categories.map((category)=>(
+      <div key={category.id}>
+  <Link className=' mb-4' to="/">{category.name}</Link>
+      </div>
+    ))
+  }
+  
+  
+
 </div>
 
 <div className='  mt-32 lg:mt-28 w-full lg:w-3/4   flex-col md:flex-col  flex   justify-evenly text-center lg:text-start items-center lg:flex-row  mb-3  bg-black text-white'>
@@ -101,17 +118,27 @@ function Home() {
 
 
 <div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-32 '>
+
+
+
+
+
+{products.map((product)=>(
 <div className='  w-96   lg:w-72 mb-6 mt-5'>
   <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
     <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={Frame1}/>
+     <img className=' h-44'
+      src={
+        `http://localhost:4800${product.images[0].url}`
+
+      }/>
   <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
   </div>
  
-  <p className=' mt-2 mb-2'>HAVIT HV-G92 Gamepad</p>
+  <p className=' mt-2 mb-2'>{product.name}</p>
   <div className=' flex space-x-2'>
-  <p>50K Frw</p>
-  <p className=' text-[#3CCC3A]'>70K Frw</p>
+  <p>{product.price} RFW</p>
+  {/* <p className=' text-[#3CCC3A]'>70K Frw</p> */}
   </div>
   
   <div className=' flex'>
@@ -123,7 +150,28 @@ function Home() {
  </div>
 </div>
 
-<div className=' mb-6 mt-5'>
+))}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* <div className=' mb-6 mt-5'>
 <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
 <p className=' bg-slate-600 text-white pl-3 pr-3   -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
      <img className=' h-44' src={keyboard}/>
@@ -143,9 +191,9 @@ function Home() {
     <img className=' w-4 h-4' src={emptystar}/>
     <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
  </div>
-</div>
+</div> */}
 
-<div className=' mb-6 mt-5'>
+{/* <div className=' mb-6 mt-5'>
 <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
 <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
      <img className=' h-44' src={monitor}/>
@@ -187,7 +235,9 @@ function Home() {
     <img className=' w-4 h-4' src={emptystar}/>
     <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
  </div>
-</div>
+</div> */}
+
+
 </div>
 
 </div>
@@ -283,17 +333,26 @@ function Home() {
 
 
 <div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-32 '>
+
+
+
+
+{products.map((product)=>(
 <div className='  w-96   lg:w-72 mb-6 mt-5'>
   <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
     <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={jacket}/>
+     <img className=' h-44'
+      src={
+        `http://localhost:4800${product.images[0].url}`
+
+      }/>
   <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
   </div>
  
-  <p className=' mt-2 mb-2'>The north coat</p>
+  <p className=' mt-2 mb-2'>{product.name}</p>
   <div className=' flex space-x-2'>
-  <p>50K Frw</p>
-  <p className=' text-[#3CCC3A]'>70K Frw</p>
+  <p>{product.price} RFW</p>
+  {/* <p className=' text-[#3CCC3A]'>70K Frw</p> */}
   </div>
   
   <div className=' flex'>
@@ -305,71 +364,13 @@ function Home() {
  </div>
 </div>
 
-<div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3   -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={bag}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>Gucci duffle bag</p>
-  <div className=' flex space-x-2'>
-  <p>44K Frw</p>
-  <p className=' text-[#3CCC3A]'>50K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
+))}
 
-<div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={monitor}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>IPS LCD Gaming Monitor</p>
-  <div className=' flex space-x-2'>
-  <p>200K Frw</p>
-  <p className=' text-[#3CCC3A]'>250K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={smartbook}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
 
-<div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={chair}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>S-Series Comfort Chair </p>
-  <div className=' flex space-x-2'>
-  <p>17K Frw</p>
-  <p className=' text-[#3CCC3A]'>20K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
+
+
+
+
 </div>
 
 </div>
