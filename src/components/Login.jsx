@@ -26,13 +26,16 @@ function Login() {
 
     }
     catch (error) {
-      if (error.response && error.response.data && error.response.data.error) {
-        setmessage(error.response.data.error);  
+      if (error.response) {
+        console.error("Response Error:", error.response.data);
+        setmessage(error.response.data.error || "Login failed");
       } else {
-        setmessage(response.data.message);
+        console.error("Unexpected Error:", error.message);
+        setmessage("An unexpected error occurred.");
       }
-      console.error("Error:", error.message);
     }
+    
+    
   }
   return (
     <>
