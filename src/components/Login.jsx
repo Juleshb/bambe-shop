@@ -6,37 +6,9 @@ import { Link } from "react-router-dom";
 import Footer from './navs/Footer';
 import Nav from './navs/Nav'
 import axios from "axios";
-
-
-
-
+ 
 function Login() {
-  const [message, setmessage] = useState("");
-  const [email, setemail] = useState("");
- const [password, setpassword] = useState("");
- const navigate = useNavigate(); 
-  const handleLogin=async(e)=>{
-    e.preventDefault();   
-    try{
-      const response =await axios.post("http://localhost:4800/api/login",{
-        email, 
-        password 
-      })
-      navigate('/dashboards');
 
-    }
-    catch (error) {
-      if (error.response) {
-        console.error("Response Error:", error.response.data);
-        setmessage(error.response.data.error || "Login failed");
-      } else {
-        console.error("Unexpected Error:", error.message);
-        setmessage("An unexpected error occurred.");
-      }
-    }
-    
-    
-  }
   return (
     <>
 {/* include navigations */}
