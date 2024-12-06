@@ -121,46 +121,36 @@ function Home() {
 
 
 
+{products.map((product) => (
+  <div className="w-96 lg:w-72 mb-6 mt-5" key={product.id}>
+    <div className="bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center">
+      <p className="bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md">-40%</p>
+      <img
+        className="h-44"
+        src={
+          product.images && product.images.length > 0
+            ? `http://localhost:4800${product.images[0].url}`  
+            : 'placeholder-image-url' 
+        }
+        alt={product.name}
+      />
+      <button className="bg-[#2ac127] w-full rounded-md text-white p-1">Add To Cart</button>
+    </div>
 
+    <p className="mt-2 mb-2">{product.name}</p>
+    <div className="flex space-x-2">
+      <p>{product.price} RFW</p>
+    </div>
 
-{products.map((product)=>(
-<div className='  w-96   lg:w-72 mb-6 mt-5'>
-  <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-    <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44'
-      src={
-        `http://localhost:4800${product.images[0].url}`
-
-      }/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+    <div className="flex">
+      <img className="w-4 h-4" src={star} alt="star" />
+      <img className="w-4 h-4" src={star} alt="star" />
+      <img className="w-4 h-4" src={star} alt="star" />
+      <img className="w-4 h-4" src={emptystar} alt="empty star" />
+      <span className="text-slate-500 text-sm ml-2 -mt-1.2">(55)</span>
+    </div>
   </div>
- 
-  <p className=' mt-2 mb-2'>{product.name}</p>
-  <div className=' flex space-x-2'>
-  <p>{product.price} RFW</p>
-  {/* <p className=' text-[#3CCC3A]'>70K Frw</p> */}
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
-
 ))}
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -336,35 +326,38 @@ function Home() {
 
 
 
+{products.map((product) => (
+  <div className="w-96 lg:w-72 mb-6 mt-5" key={product.id}>
+    <div className="bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center">
+      <p className="bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md">-40%</p>
+      <img
+        className="h-44"
+        src={
+          product.images && product.images.length > 0
+            ? `http://localhost:4800${product.images[0].url}`  
+            : 'placeholder-image-url' 
+        }
+        alt={product.name}
+      />
+      <button className="bg-[#2ac127] w-full rounded-md text-white p-1">Add To Cart</button>
+    </div>
 
-{products.map((product)=>(
-<div className='  w-96   lg:w-72 mb-6 mt-5'>
-  <div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-    <p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44'
-      src={
-        `http://localhost:4800${product.images[0].url}`
+    <p className="mt-2 mb-2">{product.name}</p>
+    <div className="flex space-x-2">
+      <p>{product.price} RFW</p>
+    </div>
 
-      }/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
+    <div className="flex">
+      <img className="w-4 h-4" src={star} alt="star" />
+      <img className="w-4 h-4" src={star} alt="star" />
+      <img className="w-4 h-4" src={star} alt="star" />
+      <img className="w-4 h-4" src={emptystar} alt="empty star" />
+      <span className="text-slate-500 text-sm ml-2 -mt-1.2">(55)</span>
+    </div>
   </div>
- 
-  <p className=' mt-2 mb-2'>{product.name}</p>
-  <div className=' flex space-x-2'>
-  <p>{product.price} RFW</p>
-  {/* <p className=' text-[#3CCC3A]'>70K Frw</p> */}
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
-
 ))}
+
+
 
 
 

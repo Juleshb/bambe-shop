@@ -3,7 +3,7 @@ import { HiUpload } from "react-icons/hi";
 import axiosInstance from "../utils/axios";
 import { Icon } from "@iconify/react";
 import { Modal, Button, TextInput, Label, Select, Table } from "flowbite-react";
-
+import axios from "axios";
 export default function AddProduct() {
   const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
@@ -22,6 +22,26 @@ export default function AddProduct() {
   const [file, setFile] = useState(null);
   const [currentProduct, setCurrentProduct] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+
+  const [Newcategory, setNewCategory] = useState([]);
+  const categoryAPI="http://localhost:4800/api/categories";
+
+
+  // Fetch all categories
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(categoryAPI);
+      setNewCategory(response.data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+ 
+
 
 
    useEffect(() => {
@@ -115,7 +135,7 @@ export default function AddProduct() {
         name: "",
         description: "",
         price: "",
-        category_id: "2",
+        category_id: "",
         is_new: false,
         is_on_promotion: false,
         image: null,
@@ -126,8 +146,7 @@ export default function AddProduct() {
       setIsLoading(false);
     }
   };
-  console.log(categories)
-
+ 
   return (
    
         <div className="flex w-full p-4 mt-20">
@@ -171,7 +190,7 @@ export default function AddProduct() {
                     required
                   >
                     <option value="">Select Category</option>
-                    {categories.map((category) => (
+                    {Newcategory.map((category) => (
                       <option key={category.id} value={category.id}>
                         {category.name}
                       </option>
