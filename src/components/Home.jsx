@@ -117,7 +117,7 @@ function Home() {
 <div className=' w-full  flex justify-center items-center  '>
 
 
-<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-32 '>
+<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-x-32 '>
 
 
 
@@ -322,7 +322,7 @@ function Home() {
 <div className=' w-full  flex justify-center items-center  '>
 
 
-<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-32 '>
+<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-x-32 '>
 
 
 
@@ -357,12 +357,7 @@ function Home() {
   </div>
 ))}
 
-
-
-
-
-
-
+ 
 
 </div>
 

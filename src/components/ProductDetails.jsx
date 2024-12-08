@@ -3,6 +3,7 @@ import './ProductDetails.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Nav from './navs/Nav';
 import Footer from './navs/Footer';
+import iphone from "./assets/iphone.jpg"
 function ProductDetails() {
   return (
    <>
@@ -19,7 +20,7 @@ function ProductDetails() {
                             
                             <div className="swiper-slide">
                                 <div className="block">
-                                    <img src="http://localhost:4800/uploads/products/1733320770889-Frame%20611.png"
+                                    <img src="http://localhost:4800/uploads/products/1733516077345-iphone2.jpg"
                                         alt="Summer Travel Bag image" className="max-lg:mx-auto rounded-2xl object-cover"/>
                                 </div>
                             </div>
@@ -72,7 +73,7 @@ function ProductDetails() {
 
                             <div className="color-box group">
                                 <div>
-                                    <img src="http://localhost:4800/uploads/products/1733320770889-Frame%20611.png"
+                                    <img src="http://localhost:4800/uploads/products/1733516077345-iphone2.jpg"
                                         alt="Summer Travel Bag image"
                                         className="border-2 border-gray-100 rounded-xl transition-all duration-500 group-hover:border-[#2ac127] object-cover"
                                         />
