@@ -3,8 +3,39 @@ import './ProductDetails.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Nav from './navs/Nav';
 import Footer from './navs/Footer';
+import { useParams } from 'react-router-dom';
+import { useState,useEffect } from 'react';
 import iphone from "./assets/iphone.jpg"
 function ProductDetails() {
+    const { id } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [product, setProduct] = useState(null);
+    const API = `http://localhost:4800/api/products/single/${id}`; 
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(API);
+                const data = await response.json();
+                setProduct(data);
+                setLoading(false); 
+            } catch (error) {
+                console.error('Error fetching product:', error);
+                setLoading(false); // Stop loading even on error
+            }
+        };
+        
+        fetchProduct();
+    }, [id]);
+
+    if (loading) {
+        return <div className=" flex justify-center items-center h-[50vh] text-center">
+            <p>Loading product details...</p> 
+        </div>;
+    }
+    if (!product) {
+        return <div>Product not found!</div>;
+    }
   return (
    <>
 <Nav/>
@@ -20,8 +51,11 @@ function ProductDetails() {
                             
                             <div className="swiper-slide">
                                 <div className="block">
-                                    <img src="http://localhost:4800/uploads/products/1733516077345-iphone2.jpg"
-                                        alt="Summer Travel Bag image" className="max-lg:mx-auto rounded-2xl object-cover"/>
+                                <img 
+                                src={`http://localhost:4800${product?.images?.[0]?.url}`}
+                                
+                                alt={product?.name}
+                                         className="max-lg:mx-auto rounded-2xl object-cover"/>
                                 </div>
                             </div>
                         </div>
@@ -37,9 +71,10 @@ function ProductDetails() {
                     <div className="pro-detail w-full max-lg:max-w-[608px] lg:pl-8 xl:pl-16 max-lg:mx-auto max-lg:mt-8">
                         <div className="flex items-center justify-between gap-6 mb-6">
                             <div className="text">
-                                <h2 className="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2">Gaming
+                       
+                                <h2 className="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2">{product.name}
                                 </h2>
-                                <p className="font-normal text-base text-gray-500">ABS LUGGAGE</p>
+                                <p className="font-normal text-base text-gray-500">{product.description}</p>
                             </div>
                             <button className="group transition-all duration-500 p-0.5">
                                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none"
@@ -58,7 +93,7 @@ function ProductDetails() {
 
                         <div className="flex flex-col min-[400px]:flex-row min-[400px]:items-center mb-8 gap-y-3">
                             <div className="flex items-center">
-                                <h5 className="font-manrope font-semibold text-2xl leading-9 text-gray-900 ">$ 199.00 </h5>
+                                <h5 className="font-manrope font-semibold text-2xl leading-9 text-gray-900 ">{product.price} Frw</h5>
                                 <span className="ml-3 hidden font-semibold text-lg text-">30% off</span>
                             </div>
                             <svg className="mx-5 max-[400px]:hidden" xmlns="http://www.w3.org/2000/svg" width="2"
@@ -73,8 +108,7 @@ function ProductDetails() {
 
                             <div className="color-box group">
                                 <div>
-                                    <img src="http://localhost:4800/uploads/products/1733516077345-iphone2.jpg"
-                                        alt="Summer Travel Bag image"
+                                    <img src={`http://localhost:4800${product?.images?.[0]?.url}`} alt={product.name}
                                         className="border-2 border-gray-100 rounded-xl transition-all duration-500 group-hover:border-[#2ac127] object-cover"
                                         />
                                     <p

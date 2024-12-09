@@ -134,8 +134,9 @@ function Home() {
         }
         alt={product.name}
       />
-      <button className="bg-[#2ac127] w-full rounded-md text-white p-1">Add To Cart</button>
-    </div>
+
+      <Link className="bg-[#2ac127] w-full rounded-md text-white p-1" to={`/product/${product.id}`}>Add To Cart</Link>
+     </div>
 
     <p className="mt-2 mb-2">{product.name}</p>
     <div className="flex space-x-2">
