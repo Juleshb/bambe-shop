@@ -12,8 +12,6 @@ const Dashboard = () => {
   );
 };
 
-
-
 const LatestTransactions = () => {
   
 
