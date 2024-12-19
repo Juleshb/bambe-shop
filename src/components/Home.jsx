@@ -2,7 +2,6 @@ import React from 'react'
 import Footer from './navs/Footer'
 import Nav from './navs/Nav'
 import { Link, Links } from 'react-router-dom'
-
 import bgimage from "./assets/bgimage.png"
 import iphonelogo from "./assets/iphonelogo.png"
 import arrowright from "./assets/arrow-right.png"
@@ -10,46 +9,45 @@ import icons_arrow_left from "./assets/icons_arrow_left.png"
 import icons_arrow_right from "./assets/arrow-right.png"
 import star from "./assets/star.png"
 import emptystar from "./assets/emptystar.png"
-import Frame1 from "./assets/Frame1.png"
-import Radio from "./assets/Radio.png"
-import keyboard from "./assets/keyboard.png"
-import chair from "./assets/chair.png"
-import monitor from "./assets/monitor.png"
-
+ import Radio from "./assets/Radio.png"
 import phone from "./assets/phones.png"
 import computer from "./assets/computer.png"
 import SmartWatch from "./assets/SmartWatch.png"
 import Camera from "./assets/Camera.png"
 import gaming from "./assets/gaming.png"
 import Headphone from "./assets/Headphone.png"
-import bag from "./assets/bag.png"
-import jacket from "./assets/jacket.png"
-import smartbook from "./assets/smartbook.png"
 import axiosInstance from './utils/axios'
 import { useEffect,useState } from 'react'
+import { useCart } from './CartContext'
+import { useContext } from 'react'
+import { CartContext } from './CartContext'
+ 
 
 function Home() {
+  const { addToCart } = useContext(CartContext);
+
+  const { incrementCart } = useCart();
   const [categories, setCategories] = useState(['']);
   const [products, setProducts] = useState([]);
 
     // Fetch categories and products on mount
     useEffect(() => {
-      const fetchData = async () => {
+      const fetchProducts = async () => {
         try {
-          const [categoriesRes, productsRes] = await Promise.all([
-            axiosInstance.get("/api/categories"),
-            axiosInstance.get("/api/products"),
-          ]);
-          setCategories(categoriesRes.data);
+          const productsRes = await axiosInstance.get("/api/products");
           setProducts(productsRes.data);
         } catch (err) {
           console.error("Error fetching data:", err.message);
         }
       };
   
-      fetchData();
+      fetchProducts();
     }, []);
-  
+
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  };
 
 
   return (
@@ -125,7 +123,8 @@ function Home() {
   <div className="w-96 lg:w-72 mb-6 mt-5" key={product.id}>
     <div className="bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center">
       <p className="bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md">-40%</p>
-      <img
+   <Link  to={`/product/${product.id}`}>
+    <img
         className="h-44"
         src={
           product.images && product.images.length > 0
@@ -133,9 +132,14 @@ function Home() {
             : 'placeholder-image-url' 
         }
         alt={product.name}
-      />
+      /></Link>  
 
-      <Link className="bg-[#2ac127] w-full rounded-md text-white p-1" to={`/product/${product.id}`}>Add To Cart</Link>
+<button
+              className="bg-[#2ac127] w-full rounded-md text-white p-1"
+              onClick={() => handleAddToCart(product)}
+            >
+              Add To Cart
+            </button> 
      </div>
 
     <p className="mt-2 mb-2">{product.name}</p>
@@ -152,81 +156,6 @@ function Home() {
     </div>
   </div>
 ))}
-
-
-
-
-
-
-
-
-
-
-{/* <div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3   -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={keyboard}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>AK-900 Wired Keyboard</p>
-  <div className=' flex space-x-2'>
-  <p>44K Frw</p>
-  <p className=' text-[#3CCC3A]'>50K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div> */}
-
-{/* <div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={monitor}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>IPS LCD Gaming Monitor</p>
-  <div className=' flex space-x-2'>
-  <p>200K Frw</p>
-  <p className=' text-[#3CCC3A]'>250K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div>
-
-<div className=' mb-6 mt-5'>
-<div className='bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center '>
-<p className=' bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md'>-40%</p>
-     <img className=' h-44' src={chair}/>
-  <button className=' bg-[#2ac127] w-full rounded-md text-white p-1'>Add To Cart</button>
-  </div>
- 
-  <p className=' mt-2 mb-2'>S-Series Comfort Chair </p>
-  <div className=' flex space-x-2'>
-  <p>17K Frw</p>
-  <p className=' text-[#3CCC3A]'>20K Frw</p>
-  </div>
-  
-  <div className=' flex'>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={star}/>
-    <img className=' w-4 h-4' src={emptystar}/>
-    <span className=' text-slate-500 text-sm ml-2 -mt-1.2'>(55)</span>
- </div>
-</div> */}
 
 
 </div>
@@ -292,18 +221,7 @@ function Home() {
 
 </div>
 </div>
- 
-
-
-
-
-
-
-
-
-
-
-
+   
 
 <div className=' ml-5 flex flex-col justify-center items-center'>
 {/* Flash seles  */}
@@ -367,29 +285,10 @@ function Home() {
 <button className=' bg-[#2ac127] w-60 rounded-md text-white p-3'>View All Products</button>
 </div>
 </div> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 {/* category */}
-
 
 <div className=' mb-20 w-full p-10 bg-[#2ac127] flex flex-col md:flex-row'>
 
@@ -407,23 +306,7 @@ function Home() {
 </div>
 
 
-
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  
 </div>

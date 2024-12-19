@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+import { CartContext } from "../CartContext";
+import { useCart } from "../CartContext";
 function Nav() {
+  const { cart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <>

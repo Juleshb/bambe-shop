@@ -3,8 +3,12 @@ import Logo from "../assets/logo-black.png";
 import buy from "../assets/buy.png";
 import search from "../assets/search.png";
 import { Link } from "react-router-dom";
-
+import { useCart } from "../CartContext.jsx";
+import { useContext } from "react";
 function Nav() {
+  const { cart } = useCart();
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+ 
   return (
     <>
       <div>
@@ -34,9 +38,13 @@ function Nav() {
     
     <Link to="/Cart">
     <img className=" mt-1 ml-5" src={buy}/>
-    </Link>
+    <span className="absolute -mt-12 bg-orange-400 w-6 text-center rounded-full ml-10">
+                      {totalItems}
+                    </span>
+
+            </Link>
    
- 
+
     </div>
       <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
         <span class="sr-only">Open main menu</span>
