@@ -9,10 +9,14 @@ import Addproduct from "./components/Seller/Addproduct";
 import { AuthProvider } from "./components/contex/authocontex"; 
 import Createcategory from "./components/Seller/Createcategory";
 import ProductDetails from "./components/ProductDetails";
+import {CartProvider} from "./components/CartContext";
 function App() {
   return (
     <>
     <AuthProvider>
+      <CartProvider>
+        
+   
     <Routes>      
       <Route path="/Login" element={<Login/>}/>
       <Route path="/Signup" element={<Signup/>}/> 
@@ -24,7 +28,8 @@ function App() {
       <Route path="/Product/:id" element={<ProductDetails/>}/>
 
       <Route path="/*" element={<Notfound/>}/>
-    </Routes>
+    </Routes> 
+      </CartProvider>
     </AuthProvider>
     </> 
   );
