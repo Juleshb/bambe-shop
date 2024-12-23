@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
+import axiosInstance from "../utils/axios";
 const Dashboard = () => {
   return (
     <div className="flex bg-white text-black">
@@ -13,61 +16,25 @@ const Dashboard = () => {
 };
 
 const LatestTransactions = () => {
-  
 
+  const [products, setProducts] = useState([]);
+  // Fetch products on mount
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.get("/api/products");
+        setProducts(response.data); // Assuming the API response is the product array
+      } catch (err) {
+        console.error("Error fetching data:", err.message);
+      }
+    };
 
-
-
-  const transactions = [
-    {
-      image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK7zsaGnI-MnoYX3u4QtoQLvFPI0CMLJpAKw&s",
-      description: "Macbook",
-      date: "Apr 23, 2021",
-      amount: "230,000Frw",
-      status: "Completed",
-      statusColor: "bg-green-100 text-green-800"
-    },
-    {
-      image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK7zsaGnI-MnoYX3u4QtoQLvFPI0CMLJpAKw&s",
-
-      description: "Macbook 2017 Pro",
-      date: "Apr 25, 2021",
-      amount: "230,000Frw",
-      status: "Refunded",
-      statusColor: "bg-yellow-100 text-yellow-800"
-    },
-    {
-      image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTK7zsaGnI-MnoYX3u4QtoQLvFPI0CMLJpAKw&s",
-
-      description: "Macbook 2020 Pro",
-      date: "Apr 27, 2021",
-      amount: "230,000Frw",
-      status: "Pending",
-      statusColor: "bg-blue-100 text-blue-800"
-    }
-  ];
-
+    fetchProducts();
+  }, []);
+ 
   return (
     <div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 
       <div className="rounded-lg bg-slate-100 h-[100vh] p-4 shadow sm:p-6 xl:p-8">
       <div className="mb-4 flex items-center justify-between">
@@ -252,53 +219,55 @@ const LatestTransactions = () => {
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-300">
-            <tr>
-              <th className="px-4 py-2 text-left text-sm font-medium text-black">
-                Image
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-black">
-                Product name
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-black">
-                Date &amp; Time
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-black">
-                Amount
-              </th>
-              <th className="px-4 py-2 text-left text-sm font-medium text-black">
-                Status
-              </th>
+      <table className="table-auto w-full border-collapse border border-gray-200">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="border border-gray-200 px-4 py-2 text-left">ID</th> 
+              <th className="border border-gray-200 px-4 py-2 text-left">
+              Image
+            </th>
+            <th className="border border-gray-200 px-4 py-2 text-left">Name</th>
+            <th className="border border-gray-200 px-4 py-2 text-left">
+              Description
+            </th>
+            <th className="border border-gray-200 px-4 py-2 text-left">
+              Price
+            </th>
+         
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product.id} className="hover:bg-gray-50">
+              <td className="border border-gray-200 px-4 py-2">{product.id}</td>
+              <td className="border border-gray-200 px-4 py-2">
+                {product.images && product.images.length > 0 ? (
+                  <img
+                  src={
+                    product.images && product.images.length > 0
+                      ? `http://localhost:4800${product.images[0].url}`  
+                      : 'placeholder-image-url' 
+                  }                    alt={product.name}
+                    className="w-24 h-24 rounded-lg object-cover"
+                  />
+                ) : (
+                  "No Image"
+                )}
+              </td>
+              <td className="border border-gray-200 px-4 py-2">
+                {product.name}
+              </td>
+              <td className="border border-gray-200 px-4 py-2">
+                {product.description}
+              </td>
+              <td className="border border-gray-200 px-4 py-2">
+                {product.price}
+              </td>
+             
             </tr>
-          </thead>
-          <tbody className="bg-white">
-            {transactions.map((transaction, index) => (
-              <tr key={index} className="border-b">
-                <td className="px-4 py-2 text-sm text-black">
-                  <img className=" w-32" src={transaction.image}/>
-                  
-                </td>
-                <td className="px-4 py-2 text-sm text-black">
-                  {transaction.description}
-                </td>
-                <td className="px-4 py-2 text-sm text-gray-500">
-                  {transaction.date}
-                </td>
-                <td className="px-4 py-2 text-sm font-semibold text-black">
-                  {transaction.amount}
-                </td>
-                <td className="px-4 py-2">
-                  <span
-                    className={`inline-flex items-center rounded px-2 py-1 text-xs font-medium ${transaction.statusColor}`}
-                  >
-                    {transaction.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </tbody>
+      </table>
       </div>
     </div>
     </div>
