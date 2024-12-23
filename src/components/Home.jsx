@@ -44,6 +44,8 @@ function Home() {
       fetchProducts();
     }, []);
 
+    
+
 
   const handleAddToCart = (product) => {
     addToCart(product);
