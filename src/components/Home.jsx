@@ -71,8 +71,6 @@ function Home() {
     ))
   }
   
-  
-
 </div>
 
 <div className='  mt-32 lg:mt-28 w-full lg:w-3/4   flex-col md:flex-col  flex   justify-evenly text-center lg:text-start items-center lg:flex-row  mb-3  bg-black text-white'>
@@ -95,8 +93,6 @@ function Home() {
 </div>
 </div>
 
- 
- 
 
 
  <div className=' ml-5 flex flex-col justify-center items-center'>

@@ -10,6 +10,7 @@ import { AuthProvider } from "./components/contex/authocontex";
 import Createcategory from "./components/Seller/Createcategory";
 import ProductDetails from "./components/ProductDetails";
 import {CartProvider} from "./components/CartContext";
+import Checkout from "./components/Checkout";
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
       <Route path="/Addproduct" element={<Addproduct/>}/>
       <Route path="/Createcategory" element={<Createcategory/>}/>
       <Route path="/Product/:id" element={<ProductDetails/>}/>
+      <Route path="/Checkout" element={<Checkout/>}/>
 
       <Route path="/*" element={<Notfound/>}/>
     </Routes> 
