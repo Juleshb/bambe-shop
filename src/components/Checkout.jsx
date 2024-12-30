@@ -3,10 +3,9 @@ import { Link, useNavigate } from "react-router-dom"; // For navigation
 import Nav from "./navs/Nav";
 import Footer from "./navs/Footer";
 import { CartContext } from "./CartContext";
-
-
+import axios from "axios";
 function Checkout() {
- const { cart, setCart, removeFromCart } = useContext(CartContext);
+  const { cart, setCart, removeFromCart } = useContext(CartContext);
   const navigate = useNavigate(); // Initialize navigation
 
   // Calculate total
@@ -38,120 +37,227 @@ function Checkout() {
     setTotal(calculateTotal());
   };
 
-  const handleCheckout = () => {
-    navigate("/checkout"); // Navigate to Checkout page
+  // Define state for user input
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zip, setZip] = useState("");
+ 
+  const handleCheckout = async () => {
+    // Format the order data as required
+    const orderData = cart.map((item) => ({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      phone_number: phone,
+      address_line: address,
+      city: city,
+      state: state,
+      zip_code: zip,
+      product_id: item.id, // Map product ID
+      quantity: item.quantity, // Map quantity
+      price: Number(item.price).toFixed(2), // Ensure price is a number and formatted as a string with 2 decimal places
+      total: (Number(item.price) * item.quantity).toFixed(2), // Total price for the item
+    }));
+  
+    // Instead of sending an array, you can send one object containing the order data
+    const order = {
+      customer_details: {
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone_number: phone,
+        address_line: address,
+        city: city,
+        state: state,
+        zip_code: zip,
+      },
+      order_items: orderData // This is where the order items will go, this is an array
+    };
+  
+    console.log(order);
+  
+    try {
+      const response = await axios.post("http://localhost:4800/api/productorders", order, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (response.status === 200) {
+        // Navigate to confirmation page after successful order submission
+        navigate("/order-confirmation");
+      } else {
+        console.error("Error submitting order:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error submitting order:", error);
+    }
   };
-
+  
 
   return (
     <>
       <Nav />
 
       <div className="mt-60 lg:mt-32 ml-10 overflow-auto pr-10 md:pl-0 md:pr-0">
-        
-      <div class="font-[sans-serif] bg-white">
-      <div class="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
-        <div class="bg-[#2ac127] sm:h-screen sm:sticky sm:top-0 lg:min-w-[470px] sm:min-w-[300px] lg:h-[35rem] rounded-lg shadow-2xl ">
-          <div class="relative h-full">
-            <div class="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
-              <div class="space-y-4">
-
-                
-              {cart.map((item) => (
-                
-                <div    key={item.id} class="flex items-start gap-4">
-                  <div class="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
-                  <img
-                      src={
-                        item.images && item.images.length > 0
-                          ? `http://localhost:4800${item.images[0].url}`
-                          : "placeholder-image-url"
-                      }
-                      className="w-16 md:w-32 max-w-full max-h-full"
-                    />                  </div>
-                  <div class="w-full">
-                    <h3 class="text-white font-bold text-xl">  {item.name}</h3>
-                    <ul class="text-xs text-white space-y-2 mt-2">
-                      <li class="flex flex-wrap gap-4 text-lg border-b-2">Amount <span class="ml-auto">{item.quantity}</span></li>
-                       <li class="flex flex-wrap gap-4 text-lg">Total Price <span class="ml-auto"> {item.price * item.quantity} RFW</span></li>
-                    </ul>
+        <div className="font-[sans-serif] bg-white">
+          <div className="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
+            <div className="bg-[#2ac127] sm:h-screen sm:sticky sm:top-0 lg:min-w-[470px] sm:min-w-[300px] lg:h-[35rem] rounded-lg shadow-2xl ">
+              <div className="relative h-full">
+                <div className="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
+                  <div className="space-y-4">
+                    {cart.map((item) => (
+                      <div key={item.id} className="flex items-start gap-4">
+                        <div className="w-32 h-28 max-lg:w-24 max-lg:h-24 flex p-3 shrink-0 bg-gray-300 rounded-md">
+                          <img
+                            src={
+                              item.images && item.images.length > 0
+                                ? `http://localhost:4800${item.images[0].url}`
+                                : "placeholder-image-url"
+                            }
+                            className="w-16 md:w-32 max-w-full max-h-full"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <h3 className="text-white font-bold text-xl">
+                            {item.name}
+                          </h3>
+                          <ul className="text-xs text-white space-y-2 mt-2">
+                            <li className="flex flex-wrap gap-4 text-lg border-b-2">
+                              Amount <span className="ml-auto">{item.quantity}</span>
+                            </li>
+                            <li className="flex flex-wrap gap-4 text-lg">
+                              Total Price{" "}
+                              <span className="ml-auto">
+                                {item.price * item.quantity} RFW
+                              </span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-             
-))}
-               
-
-             
+                <div className="md:absolute md:left-0 md:bottom-0 bg-green-800 w-full p-4">
+                  <h4 className="flex flex-wrap gap-4 text-lg text-white">
+                    Total{" "}
+                    <span className="ml-auto">
+                      <p>{total} RFW</p>
+                    </span>
+                  </h4>
+                </div>
               </div>
             </div>
 
-            <div class="md:absolute md:left-0 md:bottom-0 bg-green-800 w-full p-4">
-              <h4 class="flex flex-wrap gap-4 text-lg  text-white">Total <span class="ml-auto">   <p>{total} RFW</p>
-              </span></h4>
+            <div className="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">
+              <h2 className="text-2xl font-bold text-gray-800">Complete your order</h2>
+              <form className="mt-8">
+                <div>
+                  <h3 className="text-base text-gray-800 mb-4">Personal Details</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="First Name"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Last Name"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Email"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+
+                    <div>
+                      <input
+                        type="number"
+                        placeholder="Phone No."
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <h3 className="text-base text-gray-800 mb-4">Shipping Address</h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Address Line"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="City"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="State"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={state}
+                        onChange={(e) => setState(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Zip Code"
+                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+                        value={zip}
+                        onChange={(e) => setZip(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8">
+                  <button
+                    type="button"
+                    className="bg-green-600 text-white py-3 px-4 w-full rounded-md"
+                    onClick={handleCheckout}
+                  >
+                    Complete Order
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-
-        <div class="max-w-4xl w-full h-max rounded-md px-4 py-8 sticky top-0">
-          <h2 class="text-2xl font-bold text-gray-800">Complete your order</h2>
-          <form class="mt-8">
-            <div>
-              <h3 class="text-base text-gray-800 mb-4">Personal Details</h3>
-              <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                  <input type="text" placeholder="First Name"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-
-                <div>
-                  <input type="text" placeholder="Last Name"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-
-                <div>
-                  <input type="email" placeholder="Email"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-
-                <div>
-                  <input type="number" placeholder="Phone No."
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-8">
-              <h3 class="text-base text-gray-800 mb-4">Shipping Address</h3>
-              <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                  <input type="text" placeholder="Address Line"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-                <div>
-                  <input type="text" placeholder="City"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-                <div>
-                  <input type="text" placeholder="State"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-                <div>
-                  <input type="text" placeholder="Zip Code"
-                    class="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600" />
-                </div>
-              </div>
-
-              <div class="flex gap-4 max-md:flex-col mt-8">
-                <Link to="/Cart" class="rounded-md px-6 py-3 text-center w-full text-sm tracking-wide bg-transparent hover:bg-gray-100 border border-gray-300 text-gray-800 max-md:order-1">Cancel</Link>
-                <button type="button" class="rounded-md px-6 py-3 w-full text-sm tracking-wide bg-green-600 hover:bg-green-700 text-white">Complete Purchase</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-        
       </div>
 
       <Footer />
