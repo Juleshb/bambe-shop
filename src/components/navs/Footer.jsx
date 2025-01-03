@@ -59,9 +59,9 @@ function Footer() {
       <div>
         <p className=' text-xl text-white mb-5'>Support</p>
         <p className=' mb-5'>KGL stret 121</p>
-        <p className=' mb-5'>bambeshop@gmail.com</p>
-        <p className=' mb-5'>+25078444444</p>
-      </div>
+        <a className=' mt-2' href="mailto:umuhuza.store@gmail.com">umuhuza.store@gmail.com</a>
+        <a href="tel:+250 783 224 032">+250 783 224 032</a>
+        </div>
      
       <div>
         <p className=' text-xl text-white mb-5'>Account</p>

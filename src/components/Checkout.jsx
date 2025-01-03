@@ -58,14 +58,13 @@ function Checkout() {
       city: city,
       state: state,
       zip_code: zip,
-      product_id: item.id, // Map product ID
-      quantity: item.quantity, // Map quantity
-      price: Number(item.price).toFixed(2), // Ensure price is a number and formatted as a string with 2 decimal places
-      total: (Number(item.price) * item.quantity).toFixed(2), // Total price for the item
+      product_id: item.id, 
+      quantity: item.quantity, 
+      price: Number(item.price).toFixed(2), 
+      total: (Number(item.price) * item.quantity).toFixed(2), 
     }));
   
-    // Instead of sending an array, you can send one object containing the order data
-    const order = {
+     const order = {
       customer_details: {
         first_name: firstName,
         last_name: lastName,
@@ -76,7 +75,7 @@ function Checkout() {
         state: state,
         zip_code: zip,
       },
-      order_items: orderData // This is where the order items will go, this is an array
+      order_items: orderData  
     };
   
     console.log(order);
@@ -88,9 +87,8 @@ function Checkout() {
         },
       });
   
-      if (response.status === 200) {
-        // Navigate to confirmation page after successful order submission
-        navigate("/order-confirmation");
+      if (response.status === 200) { 
+        alert("Product added to cart");
       } else {
         console.error("Error submitting order:", response.statusText);
       }

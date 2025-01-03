@@ -40,16 +40,13 @@ export default function AddProduct() {
     fetchCategories();
   }, []);
 
- 
-
-
 
    useEffect(() => {
     const fetchData = async () => {
       try {
         const [categoriesRes, productsRes] = await Promise.all([
           axiosInstance.get("/api/categories"),
-          axiosInstance.get("/api/products"),
+          axiosInstance.get("/api/userproduct"),
         ]);
         setCategories(categoriesRes.data);
         setProducts(productsRes.data);
@@ -128,7 +125,7 @@ export default function AddProduct() {
       alert("Product added successfully!");
       setFilePreview(null);
 
-      const updatedProducts = await axiosInstance.get("/api/products");
+      const updatedProducts = await axiosInstance.get("/api/userproduct");
       setProducts(updatedProducts.data);
 
       setFormData({

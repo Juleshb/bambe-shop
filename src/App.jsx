@@ -11,7 +11,10 @@ import Createcategory from "./components/Seller/Createcategory";
 import ProductDetails from "./components/ProductDetails";
 import {CartProvider} from "./components/CartContext";
 import Checkout from "./components/Checkout";
-function App() {
+import About from "./components/About";
+import Contact from "./components/Contact";
+
+function App() { 
   return (
     <>
     <AuthProvider>
@@ -22,6 +25,8 @@ function App() {
       <Route path="/Login" element={<Login/>}/>
       <Route path="/Signup" element={<Signup/>}/> 
       <Route path="/" element={<Home/>}/> 
+      <Route path="/about" element={<About/>}/> 
+      <Route path="/Contact" element={<Contact/>}/> 
       <Route path="/Cart" element={<Cart/>}/> 
       <Route path="/Dashboard" element={<Dashboard/>}/>
       <Route path="/Addproduct" element={<Addproduct/>}/>
