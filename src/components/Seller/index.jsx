@@ -10,6 +10,10 @@ import Category from "./Createcategory";
 import DashboardComponent from "./Dashboard";
 import Nav from "./nav";
 import Logo from "../assets/logo-black.png";
+import Order from "./Order";
+
+
+
 
 
 const Dashboard = () => {
@@ -24,7 +28,7 @@ const Dashboard = () => {
       case "Categories":
         return <Category />;
       case "Orders":
-        return <div>Orders Content</div>;
+        return <Order/>;
       case "Customers":
         return <div>Customers Content</div>;
       case "Account":

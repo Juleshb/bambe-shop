@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { Icon } from "@iconify/react";
+
 
 import axiosInstance from "../utils/axios";
 const Dashboard = () => {
@@ -13,25 +14,29 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}; 
 
 const LatestTransactions = () => {
 
-  const [products, setProducts] = useState([]);
-  // Fetch products on mount
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axiosInstance.get("/api/products");
-        setProducts(response.data); // Assuming the API response is the product array
-      } catch (err) {
-        console.error("Error fetching data:", err.message);
-      }
-    };
-
-    fetchProducts();
-  }, []);
- 
+       const [products, setProducts] = useState([]);
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const [categoriesRes, productsRes] = await Promise.all([
+            axiosInstance.get("/api/categories"),
+            axiosInstance.get("/api/productorders")
+          ]);
+           setProducts(productsRes.data);
+        } catch (err) {
+          console.error("Error fetching data:", err.message);
+        }
+      };
+  
+      fetchData();
+    }, []);
+    
+    
   return (
     <div>
   
@@ -220,53 +225,86 @@ const LatestTransactions = () => {
       </div>
       <div className="overflow-x-auto">
       <table className="table-auto w-full border-collapse border border-gray-200">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border border-gray-200 px-4 py-2 text-left">ID</th> 
-              <th className="border border-gray-200 px-4 py-2 text-left">
-              Image
-            </th>
-            <th className="border border-gray-200 px-4 py-2 text-left">Name</th>
-            <th className="border border-gray-200 px-4 py-2 text-left">
-              Description
-            </th>
-            <th className="border border-gray-200 px-4 py-2 text-left">
-              Price
-            </th>
-         
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
-            <tr key={product.id} className="hover:bg-gray-50">
-              <td className="border border-gray-200 px-4 py-2">{product.id}</td>
-              <td className="border border-gray-200 px-4 py-2">
-                {product.images && product.images.length > 0 ? (
-                  <img
-                  src={
-                    product.images && product.images.length > 0
-                      ? `http://localhost:4800${product.images[0].url}`  
-                      : 'placeholder-image-url' 
-                  }                    alt={product.name}
-                    className="w-24 h-24 rounded-lg object-cover"
-                  />
-                ) : (
-                  "No Image"
-                )}
-              </td>
-              <td className="border border-gray-200 px-4 py-2">
-                {product.name}
-              </td>
-              <td className="border border-gray-200 px-4 py-2">
-                {product.description}
-              </td>
-              <td className="border border-gray-200 px-4 py-2">
-                {product.price}
-              </td>
-             
-            </tr>
-          ))}
-        </tbody>
+      <thead className="ltr:text-left rtl:text-right">
+              <tr>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Customer Name
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Location
+                </th> <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Images
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Product
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Description
+                </th>
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Price
+                </th>
+               
+                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                  Status
+                </th>
+               </tr>
+            </thead>
+          <tbody className="divide-y divide-gray-200 text-center">
+                     {products.map((product) => (
+                       <tr key={product.id}>
+                         <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                           {product.last_name}
+                         </td> 
+                         <td className="whitespace-nowrap px-4 py-2  text-gray-900">
+                           {product.city}
+                         </td>
+                           <td className=" flex items-center justify-center">
+                          
+                           <img
+                           src={`http://localhost:4800${product.image_url}`}
+                           alt={product.name}
+                             className="w-16 h-16 object-cover"
+                           />
+                         </td> <td className="whitespace-nowrap px-4 py-2  text-gray-900">
+                           {product.name}
+                         </td>
+                        
+                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                           {product.description}
+                         </td>
+                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                           {product.price}Fwf
+                         </td>
+       
+                      
+       
+                         <td className="whitespace-nowrap px-4 hidden py-2">
+                           <button
+                             color="light"
+                             onClick={() => handleViewProduct(product)}
+                           >
+                             <Icon icon="carbon:view" width="24" height="24" />
+                           </button>
+                           <button
+                             color="failure"
+                             onClick={() => handleDeleteProduct(product.id)}
+                           >
+                             <Icon
+                               icon="weui:delete-outlined"
+                               width="24"
+                               height="24"
+                             />
+                           </button>
+                           
+                         </td>
+                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                          <button className="bg-green-400 p-1  rounded-md text-white w-32">Panding</button>
+                         </td>
+       
+                       </tr>
+                     ))}
+                   </tbody>
       </table>
       </div>
     </div>
