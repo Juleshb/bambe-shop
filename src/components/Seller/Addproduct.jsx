@@ -40,13 +40,16 @@ export default function AddProduct() {
     fetchCategories();
   }, []);
 
+ 
+
+
 
    useEffect(() => {
     const fetchData = async () => {
       try {
         const [categoriesRes, productsRes] = await Promise.all([
           axiosInstance.get("/api/categories"),
-          axiosInstance.get("/api/userproduct"),
+          axiosInstance.get("/api/products/userproduct"),
         ]);
         setCategories(categoriesRes.data);
         setProducts(productsRes.data);
@@ -125,7 +128,7 @@ export default function AddProduct() {
       alert("Product added successfully!");
       setFilePreview(null);
 
-      const updatedProducts = await axiosInstance.get("/api/userproduct");
+      const updatedProducts = await axiosInstance.get("/api/products/userproduct");
       setProducts(updatedProducts.data);
 
       setFormData({
@@ -348,6 +351,7 @@ export default function AddProduct() {
             <h3 className="text-lg font-semibold mt-4">Images</h3>
             <div className="flex space-x-2 mt-2">
               {currentProduct.images.map((image) => (
+                
                 <img
                   key={image.id}
                   src={`http://localhost:4800${image.url}`}
@@ -359,8 +363,7 @@ export default function AddProduct() {
         </div>
         </div>
       )}
-   
         </div>
-     
-  );
+     
+  );
 }

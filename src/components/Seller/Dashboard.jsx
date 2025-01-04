@@ -14,7 +14,7 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}; 
 
 const LatestTransactions = () => {
 
@@ -36,7 +36,7 @@ const LatestTransactions = () => {
       fetchData();
     }, []);
     
- 
+    
   return (
     <div>
   
