@@ -16,6 +16,8 @@ import { AuthProvider } from "./components/contex/authocontex";
 import { CartProvider } from "./components/CartContext";
 import ProtectedRoute from "./components/contex/ProtectedRoute ";
 
+import Logout from "./components/Seller/Logout";
+
 function App() { 
   return (
     <AuthProvider>
@@ -29,6 +31,7 @@ function App() {
           <Route path="/Cart" element={<Cart />} /> 
           <Route path="/Product/:id" element={<ProductDetails />} />
           <Route path="/Checkout" element={<Checkout />} />
+          <Route path="/Logout" element={<Logout />} />
 
           {/* Protected Routes */}
           <Route 
