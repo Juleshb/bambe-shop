@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-const API = "http://localhost:4800/api/categories";
+import axiosInstance from "../utils/axios";
 
 export default function ManageCategories() {
   const [name, setName] = useState("");
   const [categoryList, setCategoryList] = useState([]);
   const [message, setMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [editId, setEditId] = useState(null);  
+  const [editId, setEditId] = useState(null);
 
   // Fetch all categories
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(API);w
+      const response = await axiosInstance.get("/api/categories");
       setCategoryList(response.data);
     } catch (error) {
       console.error("Error fetching categories:", error);
@@ -24,16 +22,16 @@ export default function ManageCategories() {
     fetchCategories();
   }, []);
 
-   const saveCategory = async (e) => {
+  const saveCategory = async (e) => {
     e.preventDefault();
     if (editId) {
       // Update existing category
       try {
-        const response = await axios.put(`${API}/${editId}`, { name });
+        await axiosInstance.put(`/categories/${editId}`, { name });
         setMessage("Category updated successfully!");
         setErrorMessage("");
         setName("");
-        setEditId(null);  
+        setEditId(null);
         fetchCategories();
       } catch (error) {
         const errMsg =
@@ -44,11 +42,11 @@ export default function ManageCategories() {
     } else {
       // Create new category
       try {
-        const response = await axios.post(API, { name });
+        await axiosInstance.post("/categories", { name });
         setMessage("Category created successfully!");
         setErrorMessage("");
         setName("");
-        fetchCategories();  
+        fetchCategories();
       } catch (error) {
         const errMsg =
           error.response?.data?.error || "Failed to create category!";
@@ -58,16 +56,14 @@ export default function ManageCategories() {
     }
   };
 
-  // Set category to edit
   const editCategory = (id, name) => {
     setEditId(id);
-    setName(name);  
+    setName(name);
   };
 
-  // Delete category
   const deleteCategory = async (id) => {
     try {
-      await axios.delete(`${API}/${id}`);
+      await axiosInstance.delete(`/categories/${id}`);
       setMessage("Category deleted successfully!");
       setErrorMessage("");
       fetchCategories(); // Refresh list
@@ -79,7 +75,6 @@ export default function ManageCategories() {
 
   return (
     <div className="flex w-full">
-
       {/* Main Content */}
       <div className="w-full p-6">
         <h1 className="text-2xl font-bold mb-6">

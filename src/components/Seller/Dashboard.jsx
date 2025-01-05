@@ -20,6 +20,7 @@ const LatestTransactions = () => {
 
        const [products, setProducts] = useState([]);
        const [userproducts, setuserProducts] = useState([]);
+       const [category, setcategory] = useState([]);
 
   
     useEffect(() => {
@@ -33,6 +34,7 @@ const LatestTransactions = () => {
           ]);
            setProducts(productsRes.data);
            setuserProducts(userProductsRes.data.length);
+           setcategory(categoriesRes.data.length);
         } catch (err) {
           console.error("Error fetching data:", err.message);
         }
@@ -41,8 +43,7 @@ const LatestTransactions = () => {
       fetchData();
     }, []);
 
-    console.log(userproducts);
-    
+       
     
   return (
     <div>
@@ -98,7 +99,7 @@ const LatestTransactions = () => {
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Customers</p>
-                  <p className="text-4xl ml-2 font-semibold">12</p>
+                  <p className="text-4xl ml-2 font-semibold">{products.length}</p>
                 </div>
                 <svg
                   width="40px"
@@ -139,7 +140,7 @@ const LatestTransactions = () => {
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Sales</p>
-                  <p className="text-4xl ml-2 font-semibold">22</p>
+                  <p className="text-4xl ml-2 font-semibold">0</p>
                 </div>
                 <svg
                   width="40px"
@@ -180,7 +181,7 @@ const LatestTransactions = () => {
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Categories</p>
-                  <p className="text-4xl ml-2 font-semibold">5</p>
+                  <p className="text-4xl ml-2 font-semibold">{category}</p>
                 </div>
                 <svg
                   width="40px"
