@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Icon } from "@iconify/react";
-
-
+import axios from "axios";
+ 
 import axiosInstance from "../utils/axios";
 const Dashboard = () => {
   return (
@@ -19,15 +19,20 @@ const Dashboard = () => {
 const LatestTransactions = () => {
 
        const [products, setProducts] = useState([]);
+       const [userproducts, setuserProducts] = useState([]);
+
   
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const [categoriesRes, productsRes] = await Promise.all([
+          const [categoriesRes, productsRes,userProductsRes] = await Promise.all([
             axiosInstance.get("/api/categories"),
-            axiosInstance.get("/api/productorders")
+            axiosInstance.get("/api/productorders"),
+            axiosInstance.get("/api/products/userproduct")
+
           ]);
            setProducts(productsRes.data);
+           setuserProducts(userProductsRes.data.length);
         } catch (err) {
           console.error("Error fetching data:", err.message);
         }
@@ -35,6 +40,8 @@ const LatestTransactions = () => {
   
       fetchData();
     }, []);
+
+    console.log(userproducts);
     
     
   return (
@@ -50,7 +57,7 @@ const LatestTransactions = () => {
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Products</p>
-                  <p className="text-4xl ml-2 font-semibold">32</p>
+                  <p className="text-4xl ml-2 font-semibold">{userproducts}</p>
                 </div>
                 <svg
                   width="40px"
