@@ -64,7 +64,7 @@ function Nav() {
       <Link to="/about" className="text-gray-800 hover:text-green-600">About</Link>
       </li>
       <li>
-      <Link to="/signup" className="text-gray-800 hover:text-green-600">Signup</Link>
+      <Link to="/signup" className="text-gray-800 hover:text-green-600">Signup / Login</Link>
       </li>
     </ul>
   </div>

@@ -24,9 +24,9 @@ function Sidebar() {
       </ul>
       <footer className="mt-auto">
 
-        <button
-           className=" justify-center items-center flex w-full py-2 px-4 text-left bg-red-300 text-black  rounded"
-        ><svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<Link to="/Logout"> 
+            className=" justify-center items-center flex w-full py-2 px-4 text-left bg-red-300 text-black  rounded"
+        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 
         <g id="SVGRepo_bgCarrier" stroke-width="0"/>
         
@@ -36,7 +36,8 @@ function Sidebar() {
         
         </svg>
           Logout
-        </button>
+ </Link>
+       
       </footer>
     </nav>
     </aside>
