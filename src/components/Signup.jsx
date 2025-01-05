@@ -15,7 +15,7 @@ function Signup() {
 const handleSignup=async(e)=>{
     e.preventDefault();   
     try{
-      const response =await axios.post("http://localhost:4800/api/register",{
+      const response =await axios.post("https://bambe.shop/api/register",{
         username,
         email,
         password

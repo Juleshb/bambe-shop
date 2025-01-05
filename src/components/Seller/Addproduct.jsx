@@ -24,7 +24,7 @@ export default function AddProduct() {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   const [Newcategory, setNewCategory] = useState([]);
-  const categoryAPI="http://localhost:4800/api/categories";
+  const categoryAPI="https://bambe.shop/api/categories";
 
 
   // Fetch all categories
@@ -301,7 +301,7 @@ export default function AddProduct() {
                             {product.images.map((image) => (
                               <img
                                 key={image.id}
-                                src={`http://localhost:4800${image.url}`}
+                                src={`https://bambe.shop${image.url}`}
                                 alt={product.name}
                                 className="w-16 h-16 object-cover"
                               />
@@ -354,7 +354,7 @@ export default function AddProduct() {
                 
                 <img
                   key={image.id}
-                  src={`http://localhost:4800${image.url}`}
+                  src={`https://bambe.shop${image.url}`}
                   alt={currentProduct.name}
                   className="w-20 h-20 object-cover"
                 />

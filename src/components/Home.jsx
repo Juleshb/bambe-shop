@@ -128,7 +128,7 @@ function Home() {
         className="h-44"
         src={
           product.images && product.images.length > 0
-            ? `http://localhost:4800${product.images[0].url}`  
+            ? `https://bambe.shop${product.images[0].url}`  
             : 'placeholder-image-url' 
         }
         alt={product.name}
@@ -253,7 +253,7 @@ function Home() {
         className="h-44"
         src={
           product.images && product.images.length > 0
-            ? `http://localhost:4800${product.images[0].url}`  
+            ? `https://bambe.shop${product.images[0].url}`  
             : 'placeholder-image-url' 
         }
         alt={product.name}

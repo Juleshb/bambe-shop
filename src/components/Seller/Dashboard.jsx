@@ -270,7 +270,7 @@ const LatestTransactions = () => {
                            <td className=" flex items-center justify-center">
                           
                            <img
-                           src={`http://localhost:4800${product.image_url}`}
+                           src={`https://bambe.shop${product.image_url}`}
                            alt={product.name}
                              className="w-16 h-16 object-cover"
                            />

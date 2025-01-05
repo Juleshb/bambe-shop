@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:4800";
+const URL = "https://bambe.shop";
 const axiosInstance = axios.create({
     baseURL: `${URL}`,
   });
