@@ -36,6 +36,8 @@ function Home() {
         try {
           const productsRes = await axiosInstance.get("/api/products");
           setProducts(productsRes.data);
+          const categories = await axiosInstance.get("/api/categories");
+          setCategories(categories.data);
         } catch (err) {
           console.error("Error fetching data:", err.message);
         }
