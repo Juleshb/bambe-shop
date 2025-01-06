@@ -48,7 +48,6 @@ function Checkout() {
   const [zip, setZip] = useState("");
  
   const handleCheckout = async () => {
-    // Format the order data as required
     const orderData = cart.map((item) => ({
       first_name: firstName,
       last_name: lastName,
@@ -58,13 +57,14 @@ function Checkout() {
       city: city,
       state: state,
       zip_code: zip,
-      product_id: item.id, 
-      quantity: item.quantity, 
-      price: Number(item.price).toFixed(2), 
-      total: (Number(item.price) * item.quantity).toFixed(2), 
+      product_id: item.id,
+      product_name: item.name, // Include product name here
+      quantity: item.quantity,
+      price: Number(item.price).toFixed(2),
+      total: (Number(item.price) * item.quantity).toFixed(2),
     }));
   
-     const order = {
+    const order = {
       customer_details: {
         first_name: firstName,
         last_name: lastName,
@@ -75,10 +75,8 @@ function Checkout() {
         state: state,
         zip_code: zip,
       },
-      order_items: orderData  
+      order_items: orderData,
     };
-  
-    console.log(order);
   
     try {
       const response = await axios.post("https://bambe.shop/api/productorders", order, {
@@ -87,8 +85,8 @@ function Checkout() {
         },
       });
   
-      if (response.status === 200) { 
-        alert("Product added to cart");
+      if (response.status === 200) {
+        navigate("/Invoice", { state: { order } }); // Pass order data to Invoice
       } else {
         console.error("Error submitting order:", response.statusText);
       }
@@ -96,6 +94,7 @@ function Checkout() {
       console.error("Error submitting order:", error);
     }
   };
+  
   
 
   return (
@@ -232,13 +231,16 @@ function Checkout() {
                       />
                     </div>
                     <div>
-                      <input
-                        type="text"
-                        placeholder="Zip Code"
-                        className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
-                        value={zip}
-                        onChange={(e) => setZip(e.target.value)}
-                      />
+                    <div>
+  <input
+    type="text"
+    placeholder="Zip Code"
+    className="px-4 py-3 bg-gray-100 focus:bg-transparent text-gray-800 w-full text-sm rounded-md focus:outline-green-600"
+    value={zip}
+    onChange={(e) => setZip(e.target.value)}
+  />
+</div>
+
                     </div>
                   </div>
                 </div>

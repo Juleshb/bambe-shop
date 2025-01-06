@@ -15,6 +15,7 @@ import Contact from "./components/Contact";
 import { AuthProvider } from "./components/contex/authocontex"; 
 import { CartProvider } from "./components/CartContext";
 import ProtectedRoute from "./components/contex/ProtectedRoute ";
+import Invoice from "./components/Invoice";
 
 import Logout from "./components/Seller/Logout";
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/Product/:id" element={<ProductDetails />} />
           <Route path="/Checkout" element={<Checkout />} />
           <Route path="/Logout" element={<Logout />} />
+          <Route path="/Invoice" element={<Invoice />} />
 
           {/* Protected Routes */}
           <Route 

@@ -221,10 +221,10 @@ const LatestTransactions = () => {
           </div>
 
           <h3 className="mb-2 text-xl font-bold text-black">
-          Sales Details
+          Orders Details
           </h3>
           <span className="text-base font-normal text-gray-600">
-            This is a list of Sales Details
+            This is a list of Orders Details
           </span>
         </div>
         <div>
@@ -253,7 +253,7 @@ const LatestTransactions = () => {
                   Price
                 </th>
                
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                <th className=" hidden whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   Status
                 </th>
                </tr>
@@ -306,7 +306,7 @@ const LatestTransactions = () => {
                            </button>
                            
                          </td>
-                         <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                         <td className=" hidden whitespace-nowrap px-4 py-2 text-gray-700">
                           <button className="bg-green-400 p-1  rounded-md text-white w-32">Panding</button>
                          </td>
        
