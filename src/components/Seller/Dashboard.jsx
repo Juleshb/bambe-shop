@@ -318,8 +318,6 @@ const LatestTransactions = () => {
     </div>
     </div>
 
-
-
     
   );
 };
