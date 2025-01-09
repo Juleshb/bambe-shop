@@ -1,13 +1,10 @@
-import { defineConfig } from 'vite'
-import react from "@vitejs/plugin-react";
-import commonjs from "@rollup/plugin-commonjs";
-// https://vite.dev/config/
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
 export default defineConfig({
-  plugins: [react(), commonjs()],
+  plugins: [react()],
   server: {
     host: '0.0.0.0',
-    port: 3000, // This exposes the server to your local network
+    port: 3000,
   },
-})
-
- 
+});
