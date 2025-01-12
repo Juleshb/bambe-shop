@@ -19,8 +19,8 @@ const Dashboard = () => {
 const LatestTransactions = () => {
 
        const [products, setProducts] = useState([]);
-       const [userproducts, setuserProducts] = useState([]);
-       const [category, setcategory] = useState([]);
+       const [userproducts, setuserProducts] = useState([0]);
+       const [category, setcategory] = useState([0]);
 
   
     useEffect(() => {
@@ -52,9 +52,9 @@ const LatestTransactions = () => {
       <div className="rounded-lg bg-slate-100 h-[100vh] p-4 shadow sm:p-6 xl:p-8">
       <div className="mb-4 flex items-center justify-between">
         <div>
-          <div className=" mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-44">
+          <div className=" mb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-full gap-44 lg:gap-10">
 
-            <div className="bg-white h-52 w-80 p-5  rounded-md shadow-2xl flex flex-col justify-between">
+            <div className="bg-white h-52 w-72 p-5  rounded-md shadow-2xl flex flex-col justify-between">
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Products</p>
@@ -95,7 +95,7 @@ const LatestTransactions = () => {
               <p className="mb-0 pb-0 ">Total Products added in store</p>
             </div>
 
-            <div className="bg-white h-52 w-80 p-5  rounded-md shadow-2xl flex flex-col justify-between">
+            <div className="bg-white h-52 w-72 p-5  rounded-md shadow-2xl flex flex-col justify-between">
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Customers</p>
@@ -136,7 +136,7 @@ const LatestTransactions = () => {
               <p className="mb-0 pb-0 ">Total Products added in store</p>
             </div>
 
-            <div className="bg-white h-52 w-80 p-5  rounded-md shadow-2xl flex flex-col justify-between">
+            <div className="bg-white h-52 w-72 p-5  rounded-md shadow-2xl flex flex-col justify-between">
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Sales</p>
@@ -177,7 +177,7 @@ const LatestTransactions = () => {
               <p className="mb-0 pb-0 ">Total Products added in store</p>
             </div>
 
-            <div className="bg-white h-52 w-80 p-5  rounded-md shadow-2xl flex flex-col justify-between">
+            <div className="bg-white h-52 w-72 p-5  rounded-md shadow-2xl flex flex-col justify-between">
               <div className=" flex justify-between">
                 <div>
                   <p className="text-lg text-slate-600">Total Categories</p>
