@@ -48,7 +48,7 @@ function Cart() {
       <div className="mt-60 lg:mt-32 ml-10 overflow-auto pr-10 md:pl-0 md:pr-0">
         <div className="relative overflow-x-auto rounded-md">
           <table className="w-full text-sm text-left rtl:text-right text-green-500">
-            <thead className="text-xs uppercase bg-[#2ac127] text-white">
+            <thead className="text-xs uppercase bg-[#38B496] text-white">
               <tr>
                 <th scope="col" className="px-16 py-3">Image</th>
                 <th scope="col" className="px-6 py-3">Product</th>
@@ -61,7 +61,7 @@ function Cart() {
               {cart.map((item) => (
                 <tr
                   key={item.id}
-                  className="bg-[#2ac127] border border-white mb-10 border-b hover:bg-[#4df170] text-white"
+                  className="bg-[#38B496] border border-white mb-10 border-b hover:bg-[#4df170] text-white"
                 >
                   <td className="p-4">
                     <img

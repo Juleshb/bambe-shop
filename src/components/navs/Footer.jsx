@@ -46,7 +46,7 @@ function Footer() {
 
 
 
-    <div className='bg-[#3ccc3a] w-full flex justify-center '>
+    <div className='bg-[#F15C26] w-full flex justify-center '>
     <div className=' p-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 lg:gap-32  text-white '>
 
       <div className='lg:pl-10'>

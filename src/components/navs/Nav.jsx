@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/logo-black.png";
+import Logo from "../assets/whitelogo.png";
 import buy from "../assets/buy.png";
 import search from "../assets/search.png";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ function Nav() {
      
 
     <nav class="bg-white  fixed w-full z-20 top-0 start-0 "> 
-       <div className="text-lg text-white w-full p-2 bg-[#2ac127] text-center flex justify-center items-center">
+       <div className="text-lg text-white w-full p-2 bg-[#38B496] text-center flex justify-center items-center">
           <p className="">
             Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
           </p>

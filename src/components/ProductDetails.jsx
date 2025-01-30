@@ -83,7 +83,7 @@ function ProductDetails() {
                                         className="fill-indigo-50 transition-all duration-500 group-hover:fill-indigo-100"
                                         cx="30" cy="30" r="30" fill="" />
                                     <path
-                                        className="stroke-[#2ac127] transition-all duration-500 group-hover:stroke-[#2ac127]"
+                                        className="stroke-[#38B496] transition-all duration-500 group-hover:stroke-[#38B496]"
                                         d="M21.4709 31.3196L30.0282 39.7501L38.96 30.9506M30.0035 22.0789C32.4787 19.6404 36.5008 19.6404 38.976 22.0789C41.4512 24.5254 41.4512 28.4799 38.9842 30.9265M29.9956 22.0789C27.5205 19.6404 23.4983 19.6404 21.0231 22.0789C18.548 24.5174 18.548 28.4799 21.0231 30.9184M21.0231 30.9184L21.0441 30.939M21.0231 30.9184L21.4628 31.3115"
                                         stroke="" stroke-width="1.6" stroke-miterlimit="10" stroke-linecap="round"
                                         stroke-linejoin="round" />
@@ -109,10 +109,10 @@ function ProductDetails() {
                             <div className="color-box group">
                                 <div>
                                     <img src={`https://bambe.shop${product?.images?.[0]?.url}`} alt={product.name}
-                                        className="border-2 border-gray-100 rounded-xl transition-all duration-500 group-hover:border-[#2ac127] object-cover"
+                                        className="border-2 border-gray-100 rounded-xl transition-all duration-500 group-hover:border-[#38B496] object-cover"
                                         />
                                     <p
-                                        className="font-normal text-sm leading-6 text-gray-400 text-center mt-2 group-hover:text-[#2ac127] ">
+                                        className="font-normal text-sm leading-6 text-gray-400 text-center mt-2 group-hover:text-[#38B496] ">
                                         Beige</p>
                                 </div>
                             </div>
@@ -132,7 +132,7 @@ function ProductDetails() {
                                     </svg>
                                 </button>
                                 <input type="text"
-                                    className="font-semibold text-gray-900 text-lg py-3 px-2 w-full min-[400px]:min-w-[75px] h-full bg-transparent placeholder:text-gray-900 text-center hover:text--[#2ac127] outline-0 hover:placeholder:text-[#2ac127]"
+                                    className="font-semibold text-gray-900 text-lg py-3 px-2 w-full min-[400px]:min-w-[75px] h-full bg-transparent placeholder:text-gray-900 text-center hover:text--[#38B496] outline-0 hover:placeholder:text-[#38B496]"
                                     placeholder="1"/>
                                 <button
                                     className="group py-[14px] px-3 w-full border-l border-gray-400 rounded-r-full h-full flex items-center justify-center bg-white shadow-sm shadow-transparent transition-all duration-300 hover:bg-gray-50 hover:shadow-gray-300">
@@ -148,8 +148,8 @@ function ProductDetails() {
                                 </button>
                             </div>
                             <button
-                                className="group py-3 px-5 rounded-full bg-indigo-50 text-[#2ac127] font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-indigo-300 hover:bg-indigo-100">
-                                <svg className="stroke-[#2ac127] transition-all duration-500 group-hover:stroke-[#2ac127]"
+                                className="group py-3 px-5 rounded-full bg-indigo-50 text-[#38B496] font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-indigo-300 hover:bg-indigo-100">
+                                <svg className="stroke-[#38B496] transition-all duration-500 group-hover:stroke-[#38B496]"
                                     width="22" height="22" viewBox="0 0 22 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -159,7 +159,7 @@ function ProductDetails() {
                                 Add to cart</button>
                         </div>
                         <button
-                            className="text-center w-full px-5 py-4 rounded-[100px] bg-[#2ac127] flex items-center justify-center font-semibold text-lg text-white shadow-sm shadow-transparent transition-all duration-500 ">
+                            className="text-center w-full px-5 py-4 rounded-[100px] bg-[#38B496] flex items-center justify-center font-semibold text-lg text-white shadow-sm shadow-transparent transition-all duration-500 ">
                             Buy Now
                         </button>
                     </div>

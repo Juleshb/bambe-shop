@@ -104,7 +104,7 @@ function Checkout() {
       <div className="mt-60 lg:mt-32 ml-10 overflow-auto pr-10 md:pl-0 md:pr-0">
         <div className="font-[sans-serif] bg-white">
           <div className="flex max-sm:flex-col gap-12 max-lg:gap-4 h-full">
-            <div className="bg-[#2ac127] sm:h-screen sm:sticky sm:top-0 lg:min-w-[470px] sm:min-w-[300px] lg:h-[35rem] rounded-lg shadow-2xl ">
+            <div className="bg-[#38B496] sm:h-screen sm:sticky sm:top-0 lg:min-w-[470px] sm:min-w-[300px] lg:h-[35rem] rounded-lg shadow-2xl ">
               <div className="relative h-full">
                 <div className="px-4 py-8 sm:overflow-auto sm:h-[calc(100vh-60px)]">
                   <div className="space-y-4">

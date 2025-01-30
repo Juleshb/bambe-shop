@@ -62,7 +62,7 @@ const Dashboard = () => {
                 onClick={() => setActiveTab(tab.label)}
                 className={`w-full flex items-center gap-4 px-4 py-3 text-sm font-medium transition-colors ${
                   activeTab === tab.label
-                    ? "bg-[#2ac127] text-white"
+                    ? "bg-[#38B496] text-white"
                     : "text-white hover:bg-[#4bc250] hover:text-gray-900"
                 }`}
               >

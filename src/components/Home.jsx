@@ -135,7 +135,7 @@ function Home() {
       /></Link>  
 
 <button
-              className="bg-[#2ac127] w-full rounded-md text-white p-1"
+              className="bg-[#38B496] w-full rounded-md text-white p-1"
               onClick={() => handleAddToCart(product)}
             >
               Add To Cart
@@ -162,7 +162,7 @@ function Home() {
 
 </div>
 <div className=' flex justify-center items-center mb-10'>
-<button className=' bg-[#2ac127] w-60 rounded-md text-white p-3'>View All Products</button>
+<button className=' bg-[#38B496] w-60 rounded-md text-white p-3'>View All Products</button>
 </div>
 </div> 
 
@@ -258,7 +258,7 @@ function Home() {
         }
         alt={product.name}
       />
-      <button className="bg-[#2ac127] w-full rounded-md text-white p-1">Add To Cart</button>
+      <button className="bg-[#38B496] w-full rounded-md text-white p-1">Add To Cart</button>
     </div>
 
     <p className="mt-2 mb-2">{product.name}</p>
@@ -282,7 +282,7 @@ function Home() {
 
 </div>
 <div className=' flex justify-center items-center mb-10'>
-<button className=' bg-[#2ac127] w-60 rounded-md text-white p-3'>View All Products</button>
+<button className=' bg-[#38B496] w-60 rounded-md text-white p-3'>View All Products</button>
 </div>
 </div> 
  
@@ -290,7 +290,7 @@ function Home() {
 
 {/* category */}
 
-<div className=' mb-20 w-full p-10 bg-[#2ac127] flex flex-col md:flex-row'>
+<div className=' mb-20 w-full p-10 bg-[#38B496] flex flex-col md:flex-row'>
 
 <div className=' p-10'>
   <p className=' text-lg text-slate-100 font-bold mb-8'>Categories</p>
