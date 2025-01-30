@@ -68,9 +68,8 @@ function Footer() {
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
             <p className="text-lg font-semibold mb-4">Download App</p>
             <p className="text-sm mb-4 flex">
-            <p className="text-sm mb-2">Available</p>
-            <Icon icon="lineicons:play-store" width="52" height="32" />
-            <Icon icon="streamline:app-store-solid" width="52" height="32" />
+            <Icon icon="arcticons:google-play-store" width="32" height="32" className="mr-6" />
+            <Icon icon="ph:app-store-logo-light" width="32" height="32" />
             </p>
             <div className="flex justify-center lg:justify-start space-x-3">
             <Icon icon="proicons:instagram" width="24" height="24" />

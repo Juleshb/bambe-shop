@@ -84,7 +84,7 @@ function Home() {
      
   </div>
   <div>
-    <img src={bgimage} />
+    <img src={bgimage} className='animate-pulse' />
   </div>
 </div>
 </div>
@@ -247,14 +247,14 @@ function Home() {
 
 <div className=' p-10'>
   <p className=' text-lg text-slate-100 font-bold mb-8'>Categories</p>
-<p className=' text-4xl text-white font-bold mb-10'>Enhance Your Music Experience</p>
+<p className=' text-3xl sm:text-4xl text-white font-bold mb-10'>Enhance Your Music Experience</p>
 
 <Link className=' text-white bg-[#F15C26] w-44 p-2 text-lg text-center  rounded-md'>Buy Now</Link>
 </div>
 
 
 <div>
-  <img src={Radio}/>
+<img src={Radio} className="animate-[bounce_3s_ease-in-out_infinite]" />
   
 </div>
 
