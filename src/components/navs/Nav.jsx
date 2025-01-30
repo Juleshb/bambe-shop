@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../assets/whitelogo.png";
+import Logo from "../assets/logo-black.png";
 import buy from "../assets/buy.png";
 import search from "../assets/search.png";
 import { Link } from "react-router-dom";
@@ -27,7 +27,7 @@ function Nav() {
         </div>
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
  
-  <img src={Logo} alt="Logo" className="w-20" />
+  <img src={Logo} alt="Logo" className="w-24" />
 
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
    

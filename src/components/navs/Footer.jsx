@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from "../assets/logo-black.png";
+import Logo from "../assets/whitelogo.png";
 import Qrcode from "../assets/Qrcode.png";
 import Vector1 from "../assets/Vector1.png";
 import Vector2 from "../assets/Vector2.png";
