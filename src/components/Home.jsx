@@ -1,7 +1,7 @@
 import React from 'react'
 import Footer from './navs/Footer'
 import Nav from './navs/Nav'
-import { Link, Links } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import bgimage from "./assets/bgimage.png"
 import iphonelogo from "./assets/iphonelogo.png"
 import arrowright from "./assets/arrow-right.png"
@@ -9,18 +9,14 @@ import icons_arrow_left from "./assets/icons_arrow_left.png"
 import icons_arrow_right from "./assets/arrow-right.png"
 import star from "./assets/star.png"
 import emptystar from "./assets/emptystar.png"
- import Radio from "./assets/Radio.png"
-import phone from "./assets/phones.png"
-import computer from "./assets/computer.png"
-import SmartWatch from "./assets/SmartWatch.png"
-import Camera from "./assets/Camera.png"
-import gaming from "./assets/gaming.png"
-import Headphone from "./assets/Headphone.png"
+import Radio from "./assets/Radio.png"
 import axiosInstance from './utils/axios'
 import { useEffect,useState } from 'react'
 import { useCart } from './CartContext'
 import { useContext } from 'react'
 import { CartContext } from './CartContext'
+import { Icon } from "@iconify/react";
+
  
 
 function Home() {
@@ -30,7 +26,6 @@ function Home() {
   const [categories, setCategories] = useState(['']);
   const [products, setProducts] = useState([]);
 
-    // Fetch categories and products on mount
     useEffect(() => {
       const fetchProducts = async () => {
         try {
@@ -59,7 +54,6 @@ function Home() {
 <Nav/>
 
 <div className=' lg:pl-48  lg:mr-48'>
-{/* Ads section */}
 <div className=' flex w-full  justify-between'>
 
 <div className='  flex-col w-80 mt-20 pt-10 border-r-2 hidden lg:flex '>
@@ -68,7 +62,7 @@ function Home() {
   {
     categories.map((category)=>(
       <div key={category.id}>
-  <Link className=' mb-4' to="/">{category.name}</Link>
+  <Link className=' mb-4 hover:text-[#F15C26]' to="/">{category.name}</Link>
       </div>
     ))
   }
@@ -97,123 +91,99 @@ function Home() {
 
 
 
- <div className=' ml-5 flex flex-col justify-center items-center'>
-{/* Flash seles  */}
-<div className=' flex justify-stretch w-full mt-10'>
-  <div className=' w-1/2'>
-    <p className=' font-bold'>To day</p>
-    <p className=' font-semibold text-3xl'>Flash Sales</p>
-  </div>
-  <div className=' w-1/2  flex justify-end'>
-    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full mr-4' src={icons_arrow_left}/>
-    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full' src={icons_arrow_right}/>
-  </div>
-  <div>
-  </div>
-</div>
+<div className="ml-2 sm:ml-5 flex flex-col items-center">
+      <div className="flex flex-col sm:flex-row justify-between w-full mt-6 sm:mt-10 px-4 sm:px-0">
+        <div className="w-full sm:w-1/2 text-center sm:text-left">
+          <p className="font-bold text-sm sm:text-base">Today</p>
+          <p className="font-semibold text-2xl sm:text-3xl">Flash Sales</p>
+        </div>
+        <div className="w-full sm:w-1/2 flex justify-center sm:justify-end mt-3 sm:mt-0">
+          <img className="w-10 h-10 bg-slate-500 p-2 rounded-full mx-2" src={icons_arrow_left} alt="Prev" />
+          <img className="w-10 h-10 bg-slate-500 p-2 rounded-full mx-2" src={icons_arrow_right} alt="Next" />
+        </div>
+      </div>
 
-<div className=' w-full  flex justify-center items-center  '>
+      <div className="w-full flex justify-center items-center mt-6">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0">
+          {products.map((product) => (
+            <div className="w-full sm:w-72 mb-6" key={product.id}>
+              <div className="bg-slate-400 rounded-md flex flex-col items-center p-4">
+                <p className="bg-slate-600 text-white px-3 py-1 text-xs rounded-md self-start">-40%</p>
+                <Link to={`/product/${product.id}`}>
+                  <img
+                    className="h-36 sm:h-44 object-contain"
+                    src={product.images?.length > 0 ? `https://bambe.shop${product.images[0].url}` : "placeholder-image-url"}
+                    alt={product.name}
+                  />
+                </Link>
+                <button className="bg-[#38B496] hover:bg-[#F15C26] w-full rounded-md text-white py-2 mt-3" onClick={() => handleAddToCart(product)}>
+                  Add To Cart
+                </button>
+              </div>
+              <p className="mt-2 mb-2 text-center">{product.name}</p>
+              <p className="text-center">{product.price} RFW</p>
 
+              <div className="flex justify-center">
+                <img className="w-4 h-4" src={star} alt="star" />
+                <img className="w-4 h-4" src={star} alt="star" />
+                <img className="w-4 h-4" src={star} alt="star" />
+                <img className="w-4 h-4" src={emptystar} alt="empty star" />
+                <span className="text-slate-500 text-sm ml-2">(55)</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-x-32 '>
-
-
-
-{products.map((product) => (
-  <div className="w-96 lg:w-72 mb-6 mt-5" key={product.id}>
-    <div className="bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center">
-      <p className="bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md">-40%</p>
-   <Link  to={`/product/${product.id}`}>
-    <img
-        className="h-44"
-        src={
-          product.images && product.images.length > 0
-            ? `https://bambe.shop${product.images[0].url}`  
-            : 'placeholder-image-url' 
-        }
-        alt={product.name}
-      /></Link>  
-
-<button
-              className="bg-[#38B496] w-full rounded-md text-white p-1"
-              onClick={() => handleAddToCart(product)}
-            >
-              Add To Cart
-            </button> 
-     </div>
-
-    <p className="mt-2 mb-2">{product.name}</p>
-    <div className="flex space-x-2">
-      <p>{product.price} RFW</p>
+      <div className="flex justify-center items-center mb-10 mt-4">
+        <button className="bg-[#38B496] w-48 sm:w-60 rounded-md text-white py-3">View All Products</button>
+      </div>
     </div>
 
-    <div className="flex">
-      <img className="w-4 h-4" src={star} alt="star" />
-      <img className="w-4 h-4" src={star} alt="star" />
-      <img className="w-4 h-4" src={star} alt="star" />
-      <img className="w-4 h-4" src={emptystar} alt="empty star" />
-      <span className="text-slate-500 text-sm ml-2 -mt-1.2">(55)</span>
-    </div>
-  </div>
-))}
 
 
-</div>
-
-</div>
-<div className=' flex justify-center items-center mb-10'>
-<button className=' bg-[#38B496] w-60 rounded-md text-white p-3'>View All Products</button>
-</div>
-</div> 
-
-
-
-{/* Flash seles  */}
-<div className=' flex justify-stretch w-full mt-10 mb-7'>
-  <div className=' w-1/2'>
-    <p className=' font-bold'>Categoty</p>
-    <p className=' font-bold text-3xl'>Browse By Category</p>
-
-   </div>
-  <div className=' w-1/2  flex justify-end'>
-    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full mr-4' src={icons_arrow_left}/>
-    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full' src={icons_arrow_right}/>
-  </div>
-  <div>
-  </div>
-</div>
+<div className="flex flex-col sm:flex-row justify-between w-full mt-6 mb-6 sm:mt-10 px-4 sm:px-0">
+        <div className="w-full sm:w-1/2 text-center sm:text-left">
+          <p className="font-bold text-sm sm:text-base">Categoty</p>
+          <p className="font-semibold text-2xl sm:text-3xl">Browse By Category</p>
+        </div>
+        <div className="w-full sm:w-1/2 flex justify-center sm:justify-end mt-3 sm:mt-0">
+          <img className="w-10 h-10 bg-slate-500 p-2 rounded-full mx-2" src={icons_arrow_left} alt="Prev" />
+          <img className="w-10 h-10 bg-slate-500 p-2 rounded-full mx-2" src={icons_arrow_right} alt="Next" />
+        </div>
+      </div>
 
 
 <div className=' flex flex-col justify-center items-center '>
 <div className=' grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-10 '>
 
-  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center  w-72 md:w-full'>
-    <img src={phone}/>
+  <div className=' border flex flex-col justify-center text-[#38B496] items-center cursor-pointer hover:bg-[#F15C26] hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center  w-72 md:w-full'>
+  <Icon icon="wpf:iphone" width="52" height="52" />
     <p>Phones</p>
   </div>
-  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
-    <img src={computer}/>
+  <div className=' border flex flex-col justify-center text-[#38B496] items-center cursor-pointer hover:bg-[#F15C26] hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+  <Icon icon="iconoir:pc-check" width="52" height="52" />
     <p>Computers</p>
 
   </div>
-  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
-    <img src={SmartWatch}/>
+  <div className=' border flex flex-col justify-center text-[#38B496] items-center cursor-pointer hover:bg-[#F15C26] hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+  <Icon icon="solar:watch-square-outline" width="52" height="52" />
     <p>Smart Watch</p>
 
   </div>
-  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
-    <img src={Camera}/>
+  <div className=' border flex flex-col justify-center text-[#F15C26] items-center cursor-pointer hover:bg-[#F15C26] hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+  <Icon icon="circum:camera" width="52" height="52" />
     <p>Camera</p>
 
   </div>
-  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
-    <img src={Headphone}/>
+  <div className=' border flex flex-col justify-center text-[#38B496] items-center cursor-pointer hover:bg-[#F15C26] hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+  <Icon icon="fluent:headphones-24-regular" width="52" height="52" />
     <p>Headphone</p>
 
   </div>
 
-  <div className=' border flex flex-col justify-center items-center cursor-pointer hover:bg-black hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
-    <img src={gaming}/>
+  <div className=' border flex flex-col justify-center text-[#38B496] items-center cursor-pointer hover:bg-[#F15C26] hover:transition-all hover:shadow-lg  rounded-md p-8 hover:text-white text-center w-72 md:w-full '>
+  <Icon icon="streamline:ai-gaming-spark" width="52" height="52" />
     <p>Gaming</p>
 
   </div>
@@ -223,72 +193,55 @@ function Home() {
 </div>
    
 
-<div className=' ml-5 flex flex-col justify-center items-center'>
-{/* Flash seles  */}
-<div className=' flex justify-stretch w-full mt-10'>
-  <div className=' w-1/2'>
-    <p className=' font-bold'>This Month</p>
-    <p className=' font-semibold text-3xl'>Best Selling Products</p>
-  </div>
-  <div className=' w-1/2  flex justify-end'>
-    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full mr-4' src={icons_arrow_left}/>
-    <img className=' w-10 h-10 bg-slate-500 p-2 rounded-full' src={icons_arrow_right}/>
-  </div>
-  <div>
-  </div>
-</div>
 
-<div className=' w-full  flex justify-center items-center  '>
+   <div className="ml-2 sm:ml-5 flex flex-col items-center">
+      <div className="flex flex-col sm:flex-row justify-between w-full mt-6 sm:mt-10 px-4 sm:px-0">
+        <div className="w-full sm:w-1/2 text-center sm:text-left">
+          <p className="font-bold text-sm sm:text-base">This Month</p>
+          <p className="font-semibold text-2xl sm:text-3xl">Best Selling Products</p>
+        </div>
+        <div className="w-full sm:w-1/2 flex justify-center sm:justify-end mt-3 sm:mt-0">
+          <img className="w-10 h-10 bg-slate-500 p-2 rounded-full mx-2" src={icons_arrow_left} alt="Prev" />
+          <img className="w-10 h-10 bg-slate-500 p-2 rounded-full mx-2" src={icons_arrow_right} alt="Next" />
+        </div>
+      </div>
 
+      <div className="w-full flex justify-center items-center mt-6">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 sm:px-0">
+          {products.map((product) => (
+            <div className="w-full sm:w-72 mb-6" key={product.id}>
+              <div className="bg-slate-400 rounded-md flex flex-col items-center p-4">
+                <p className="bg-slate-600 text-white px-3 py-1 text-xs rounded-md self-start">-40%</p>
+                <Link to={`/product/${product.id}`}>
+                  <img
+                    className="h-36 sm:h-44 object-contain"
+                    src={product.images?.length > 0 ? `https://bambe.shop${product.images[0].url}` : "placeholder-image-url"}
+                    alt={product.name}
+                  />
+                </Link>
+                <button className="bg-[#38B496] hover:bg-[#F15C26] w-full rounded-md text-white py-2 mt-3" onClick={() => handleAddToCart(product)}>
+                  Add To Cart
+                </button>
+              </div>
+              <p className="mt-2 mb-2 text-center">{product.name}</p>
+              <p className="text-center">{product.price} RFW</p>
 
-<div className=' w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  lg:gap-x-32 '>
+              <div className="flex justify-center">
+                <img className="w-4 h-4" src={star} alt="star" />
+                <img className="w-4 h-4" src={star} alt="star" />
+                <img className="w-4 h-4" src={star} alt="star" />
+                <img className="w-4 h-4" src={emptystar} alt="empty star" />
+                <span className="text-slate-500 text-sm ml-2">(55)</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-
-
-{products.map((product) => (
-  <div className="w-96 lg:w-72 mb-6 mt-5" key={product.id}>
-    <div className="bg-slate-400 rounded-md w-96 lg:w-72 flex flex-col justify-center items-center">
-      <p className="bg-slate-600 text-white pl-3 pr-3 -ml-72 lg:-ml-52 mt-2 rounded-md">-40%</p>
-      <img
-        className="h-44"
-        src={
-          product.images && product.images.length > 0
-            ? `https://bambe.shop${product.images[0].url}`  
-            : 'placeholder-image-url' 
-        }
-        alt={product.name}
-      />
-      <button className="bg-[#38B496] w-full rounded-md text-white p-1">Add To Cart</button>
+      <div className="flex justify-center items-center mb-10 mt-4">
+        <button className="bg-[#38B496] w-48 sm:w-60 rounded-md text-white py-3">View All Products</button>
+      </div>
     </div>
-
-    <p className="mt-2 mb-2">{product.name}</p>
-    <div className="flex space-x-2">
-      <p>{product.price} RFW</p>
-    </div>
-
-    <div className="flex">
-      <img className="w-4 h-4" src={star} alt="star" />
-      <img className="w-4 h-4" src={star} alt="star" />
-      <img className="w-4 h-4" src={star} alt="star" />
-      <img className="w-4 h-4" src={emptystar} alt="empty star" />
-      <span className="text-slate-500 text-sm ml-2 -mt-1.2">(55)</span>
-    </div>
-  </div>
-))}
-
- 
-
-</div>
-
-</div>
-<div className=' flex justify-center items-center mb-10'>
-<button className=' bg-[#38B496] w-60 rounded-md text-white p-3'>View All Products</button>
-</div>
-</div> 
- 
-
-
-{/* category */}
 
 <div className=' mb-20 w-full p-10 bg-[#38B496] flex flex-col md:flex-row'>
 
@@ -296,7 +249,7 @@ function Home() {
   <p className=' text-lg text-slate-100 font-bold mb-8'>Categories</p>
 <p className=' text-4xl text-white font-bold mb-10'>Enhance Your Music Experience</p>
 
-<Link className=' text-white bg-[#8af888] w-44 p-2 text-lg text-center  rounded-md'>Buy Now</Link>
+<Link className=' text-white bg-[#F15C26] w-44 p-2 text-lg text-center  rounded-md'>Buy Now</Link>
 </div>
 
 

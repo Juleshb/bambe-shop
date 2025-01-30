@@ -1,113 +1,89 @@
-import React from 'react'
+import React from "react";
 import Logo from "../assets/whitelogo.png";
-import Qrcode from "../assets/Qrcode.png";
-import Vector1 from "../assets/Vector1.png";
-import Vector2 from "../assets/Vector2.png";
-import Vector3 from "../assets/Vector3.png";
-import Vector4 from "../assets/Vector4.png";
-
+import { Icon } from "@iconify/react";
 import delivery from "../assets/delivery.png";
 import money from "../assets/money.png";
 import Services from "../assets/Services.png";
 
-
 function Footer() {
   return (
     <>
-    <div className=' flex justify-center items-center  w-full'>
-<div className=' grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  lg:gap-14 '>
+      <div className="flex justify-center items-center w-full px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl text-center">
+          <div className="mt-5 lg:mt-20 flex flex-col items-center">
+            <img className="w-14 mb-2" src={delivery} alt="Free Delivery" />
+            <p className="font-bold">FREE AND FAST DELIVERY</p>
+            <p className="text-sm text-gray-600">Free delivery for all orders over $140</p>
+          </div>
 
-<div className=' mt-5 lg:mt-20 lg:mb-20 flex flex-col w-full justify-center items-center'>
-  <img className=' w-14 mb-2' src={delivery}/>
-  <p className=' font-bold'>FREE AND FAST DELIVERY</p>
-  <p>Free delivery for all orders over $140</p>
-</div>
+          <div className="mt-5 lg:mt-20 flex flex-col items-center">
+            <img className="w-14 mb-2" src={Services} alt="Customer Service" />
+            <p className="font-bold">24/7 CUSTOMER SERVICE</p>
+            <p className="text-sm text-gray-600">Friendly 24/7 customer support</p>
+          </div>
 
-<div className=' mt-10 lg:mt-20 lg:mb-20 flex flex-col w-full justify-center items-center'>
-  <img className=' w-14 mb-2' src={Services}/>
-  <p className=' font-bold'>24/7 CUSTOMER SERVICE</p>
-  <p>Friendly 24/7 customer support</p>
-</div>
-
-<div className='mt-10 lg:mt-20 lg:mb-20 mb-10 flex flex-col w-full justify-center items-center'>
-  <img className=' w-14 mb-2' src={money}/>
-  <p className=' font-bold'>MONEY BACK GUARANTEE</p>
-  <p>We reurn money within 30 days</p>
-</div>
-
-
-
-
-<div></div>
-<div></div>
-
-</div>
- </div>
-
-
-
-    <div className='bg-[#F15C26] w-full flex justify-center '>
-    <div className=' p-10  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 lg:gap-32  text-white '>
-
-      <div className='lg:pl-10'>
-        <img src={Logo}/>
-        <p className=' text-xl text-white mb-5'>Subscribe</p>
-        <p className=' mb-5'>Get 10% off your order</p>
-        <input className=' bg-transparent border rounded-md text-slate-700 p-2 focus:outline-none' placeholder='Enter your email '/>
-      </div>
-
-      <div>
-        <p className=' text-xl text-white mb-5'>Support</p>
-        <p className=' mb-5'>KGL stret 121</p>
-        <a className=' mt-2' href="mailto:umuhuza.store@gmail.com">umuhuza.store@gmail.com</a>
-        <a href="tel:+250 783 224 032">+250 783 224 032</a>
+          <div className="mt-5 lg:mt-20 mb-10 flex flex-col items-center">
+            <img className="w-14 mb-2" src={money} alt="Money Back" />
+            <p className="font-bold">MONEY BACK GUARANTEE</p>
+            <p className="text-sm text-gray-600">We return money within 30 days</p>
+          </div>
         </div>
-     
-      <div>
-        <p className=' text-xl text-white mb-5'>Account</p>
-        <p className=' mb-5'>My account</p>
-        <p className=' mb-5'>Login/ Register</p>
-        <p className=' mb-5'>Cart</p>
-        <p className=' mb-5'>Wishlist</p>
-        <p className=' mb-5'>Shop</p>
       </div>
-      
-      <div>
-        <p className=' text-xl text-white mb-5'>Quick Link</p>
-        <p className=' mb-5'>Privacy Policy</p>
-        <p className=' mb-5'>Team Of Use</p>
-        <p className=' mb-5'>FAQ</p>
-        <p className=' mb-5'>Contact</p>
-      </div>
-     
-      <div>
-        <p className=' text-xl text-white mb-5'>Download App</p>
-        <p className=' mb-5'>Save $3 with App New User Only</p>
 
-        <img src={Qrcode}/>
+      <div className="bg-[#F15C26] w-full flex justify-center">
+        <div className="p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-20 text-white w-full max-w-6xl">
+          
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+            <img src={Logo} alt="Logo" className="w-32 mb-4" />
+          </div>
 
-        <div className=' flex  mt-3 w-52 justify-evenly items-center'>
-        <img src={Vector1}/>
-        <img src={Vector2}/>
-        <img src={Vector3}/>
-        <img src={Vector4}/>
+          {/* Support */}
+          <div className="text-center lg:text-left">
+            <p className="text-lg font-semibold mb-4">Support</p>
+            <p className="text-sm">KGL Street 121</p>
+            <a className="block text-sm mt-2" href="mailto:umuhuza.store@gmail.com">umuhuza.store@gmail.com</a>
+            <a className="block text-sm" href="tel:+250783224032">+250 783 224 032</a>
+          </div>
 
+          {/* Account */}
+          <div className="text-center lg:text-left">
+            <p className="text-lg font-semibold mb-4">Account</p>
+            <p className="text-sm mb-2">My Account</p>
+            <p className="text-sm mb-2">Login / Register</p>
+            <p className="text-sm mb-2">Cart</p>
+            <p className="text-sm mb-2">Wishlist</p>
+            <p className="text-sm">Shop</p>
+          </div>
+
+          {/* Quick Links */}
+          <div className="text-center lg:text-left">
+            <p className="text-lg font-semibold mb-4">Quick Links</p>
+            <p className="text-sm mb-2">Privacy Policy</p>
+            <p className="text-sm mb-2">Terms of Use</p>
+            <p className="text-sm mb-2">FAQ</p>
+            <p className="text-sm">Contact</p>
+          </div>
+
+          {/* Download App */}
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+            <p className="text-lg font-semibold mb-4">Download App</p>
+            <p className="text-sm mb-4 flex">
+            <p className="text-sm mb-2">Available</p>
+            <Icon icon="lineicons:play-store" width="52" height="32" />
+            <Icon icon="streamline:app-store-solid" width="52" height="32" />
+            </p>
+            <div className="flex justify-center lg:justify-start space-x-3">
+            <Icon icon="proicons:instagram" width="24" height="24" />
+            <Icon icon="line-md:twitter-x-alt" width="24" height="24" />
+            <Icon icon="ri:linkedin-fill" width="24" height="24" />
+            <Icon icon="ic:sharp-tiktok" width="24" height="24" />
+            </div>
+          </div>
 
         </div>
-        
       </div>
-     
-
-
-    </div>
-     </div>
     </>
-
-    
-
-  )
-
+  );
 }
 
-
-export default Footer
+export default Footer;
