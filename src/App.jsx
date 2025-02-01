@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Notfound from "./components/404";
 import Home from "./components/Home";
+import Homerealestate from "./components/Homerealestate";
 import Cart from "./components/Cart";
 import Dashboard from "./components/Seller/index";
 import Addproduct from "./components/Seller/Addproduct";
@@ -16,11 +17,14 @@ import { AuthProvider } from "./components/contex/authocontex";
 import { CartProvider } from "./components/CartContext";
 import ProtectedRoute from "./components/contex/ProtectedRoute ";
 import Invoice from "./components/Invoice";
+import ListingDetails from "./components/listingDetail";
+import { IntlProvider } from "react-intl";
 
 import Logout from "./components/Seller/Logout";
 
 function App() { 
   return (
+    <IntlProvider locale="en">
     <AuthProvider>
       <CartProvider>
         <Routes>      
@@ -34,6 +38,8 @@ function App() {
           <Route path="/Checkout" element={<Checkout />} />
           <Route path="/Logout" element={<Logout />} />
           <Route path="/Invoice" element={<Invoice />} />
+          <Route path="/Homerealestate" element={<Homerealestate />} />
+          <Route path="/listing/:id" element={<ListingDetails />} />
 
           {/* Protected Routes */}
           <Route 
@@ -65,6 +71,7 @@ function App() {
         </Routes> 
       </CartProvider>
     </AuthProvider>
+    </IntlProvider>
   );
 }
 

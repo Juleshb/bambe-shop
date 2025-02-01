@@ -84,6 +84,7 @@ function Nav() {
       <li>
       <Link to="/signup" className="text-[#38B496] hover:text-[#F15C26]">Signup / Login</Link>
       </li>
+      <li><Link  to="/Homerealestate" className=' text-white bg-[#F15C26] w-44 p-2 text-lg text-center  rounded-md'>Real estate</Link></li>
     </ul>
   </div>
       </div>
@@ -102,6 +103,7 @@ function Nav() {
           <li>
             <Link to="/signup" className="text-[#38B496] hover:text-[#F15C26]">Signup / Login</Link>
           </li>
+          <li><Link to="/Homerealestate" className=' text-white bg-[#F15C26] w-44 p-2 text-lg text-center  rounded-md'>Real estate</Link></li>
         </ul>
       </div>
     </nav>
