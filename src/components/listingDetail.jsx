@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import MapComponent from "./MapComponent"; 
@@ -12,6 +12,7 @@ import {
     WhatsappShareButton,
     LinkedinShareButton,
   } from 'react-share';
+  import { CartContext } from "./CartContext";
 
 function PropertyDetails() {
   const { id } = useParams();
@@ -19,6 +20,7 @@ function PropertyDetails() {
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [profile, setProfile] = useState([]);
+   const { addToCart } = useContext(CartContext);
 
 
   const shareUrl = `${URL}${window.location.pathname}`;

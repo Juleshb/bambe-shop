@@ -1,14 +1,15 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // For navigation
+import { useTranslation } from "react-i18next"; // Import translation hook
+import { useNavigate } from "react-router-dom"; 
 import Nav from "./navs/Nav";
 import Footer from "./navs/Footer";
 import { CartContext } from "./CartContext";
 
 function Cart() {
+  const { t } = useTranslation(); // Initialize translation function
   const { cart, setCart, removeFromCart } = useContext(CartContext);
-  const navigate = useNavigate(); // Initialize navigation
+  const navigate = useNavigate(); 
 
-  // Calculate total
   const calculateTotal = () => {
     return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
@@ -38,7 +39,7 @@ function Cart() {
   };
 
   const handleCheckout = () => {
-    navigate("/checkout"); // Navigate to Checkout page
+    navigate("/checkout"); 
   };
 
   return (
@@ -50,11 +51,11 @@ function Cart() {
           <table className="w-full text-sm text-left rtl:text-right text-green-500">
             <thead className="text-xs uppercase bg-[#38B496] text-white">
               <tr>
-                <th scope="col" className="px-16 py-3">Image</th>
-                <th scope="col" className="px-6 py-3">Product</th>
-                <th scope="col" className="px-6 py-3">Qty</th>
-                <th scope="col" className="px-6 py-3">Price</th>
-                <th scope="col" className="px-6 py-3">Action</th>
+                <th scope="col" className="px-16 py-3">{t("image")}</th>
+                <th scope="col" className="px-6 py-3">{t("product")}</th>
+                <th scope="col" className="px-6 py-3">{t("quantity")}</th>
+                <th scope="col" className="px-6 py-3">{t("price")}</th>
+                <th scope="col" className="px-6 py-3">{t("action")}</th>
               </tr>
             </thead>
             <tbody>
@@ -73,9 +74,7 @@ function Cart() {
                       className="w-16 md:w-32 max-w-full max-h-full"
                     />
                   </td>
-                  <td className="px-6 py-4 font-semibold text-white">
-                    {item.name}
-                  </td>
+                  <td className="px-6 py-4 font-semibold text-white">{item.name}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center">
                       <button
@@ -101,7 +100,7 @@ function Cart() {
                       onClick={() => removeFromCart(item.id)}
                       className="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >
-                      Remove
+                      {t("remove")}
                     </button>
                   </td>
                 </tr>
@@ -115,25 +114,25 @@ function Cart() {
             <input
               type="text"
               className="border-2 border-slate-300 p-2 rounded-md mt-20"
-              placeholder="Coupon code"
+              placeholder={t("couponPlaceholder")}
             />
             <button className="bg-green-400 md:pl-4 md:pr-4 ml-3 rounded-sm text-sm p-3 text-white font-semibold">
-              Apply Coupon
+              {t("applyCoupon")}
             </button>
           </div>
 
           <div className="border-2 border-slate-500 p-3 lg:w-96 mt-10">
-            <p className="font-bold mb-2">Cart Total</p>
+            <p className="font-bold mb-2">{t("cartTotal")}</p>
             <div className="flex w-full justify-between border-b-2 border-slate-400 pb-2">
-              <p>Subtotal:</p>
+              <p>{t("subtotal")}:</p>
               <p>{total} RFW</p>
             </div>
             <div className="flex w-full justify-between border-b-2 border-slate-400 pb-2">
-              <p>Shipping:</p>
-              <p>Free</p>
+              <p>{t("shipping")}:</p>
+              <p>{t("free")}</p>
             </div>
             <div className="flex w-full justify-between pb-2">
-              <p>Total:</p>
+              <p>{t("total")}:</p>
               <p>{total} RFW</p>
             </div>
             <div className="flex justify-center items-center mt-5">
@@ -141,7 +140,7 @@ function Cart() {
                 className="bg-green-400 p-2 rounded-md text-white"
                 onClick={handleCheckout}
               >
-                Process to Checkout
+                {t("proceedToCheckout")}
               </button>
             </div>
           </div>

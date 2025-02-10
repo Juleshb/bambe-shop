@@ -1,41 +1,46 @@
-import React from 'react';
-import './ProductDetails.css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import Nav from './navs/Nav';
-import Footer from './navs/Footer';
-import { useParams } from 'react-router-dom';
-import { useState,useEffect } from 'react';
-import iphone from "./assets/iphone.jpg"
+import React, { useState, useEffect , useContext} from "react";
+import { useTranslation } from "react-i18next"; // Import translation hook
+import { useParams } from "react-router-dom";
+import Nav from "./navs/Nav";
+import Footer from "./navs/Footer";
+import { CartContext } from "./CartContext";
+
 function ProductDetails() {
-    const { id } = useParams();
-    const [loading, setLoading] = useState(true);
-    const [product, setProduct] = useState(null);
-    const API = `https://bambe.shop/api/products/single/${id}`; 
+  const { t } = useTranslation(); // Initialize translation function
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState(null);
+   const { addToCart } = useContext(CartContext);
+  const API = `https://bambe.shop/api/products/single/${id}`;
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                const response = await fetch(API);
-                const data = await response.json();
-                setProduct(data);
-                setLoading(false); 
-            } catch (error) {
-                console.error('Error fetching product:', error);
-                setLoading(false); // Stop loading even on error
-            }
-        };
-        
-        fetchProduct();
-    }, [id]);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(API);
+        const data = await response.json();
+        setProduct(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+        setLoading(false);
+      }
+    };
 
-    if (loading) {
-        return <div className=" flex justify-center items-center h-[50vh] text-center">
-            <p>Loading product details...</p> 
-        </div>;
-    }
-    if (!product) {
-        return <div>Product not found!</div>;
-    }
+    fetchProduct();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-[50vh] text-center">
+        <p>{t("loadingProduct")}</p>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return <div>{t("productNotFound")}</div>;
+  }
+
   return (
    <>
 <Nav/>
@@ -102,7 +107,7 @@ function ProductDetails() {
                             </svg>
                         
                         </div>
-                        <p className="font-medium text-lg text-gray-900 mb-2">Color</p>
+                        <p className="font-medium text-lg text-gray-900 mb-2">{t("color")}</p>
                         <div className="grid grid-cols-3 gap-3 mb-6 max-w-sm">
                              
 
@@ -113,7 +118,7 @@ function ProductDetails() {
                                         />
                                     <p
                                         className="font-normal text-sm leading-6 text-gray-400 text-center mt-2 group-hover:text-[#38B496] ">
-                                        Beige</p>
+                                       {t("colorBeige")}</p>
                                 </div>
                             </div>
                         </div>
@@ -148,7 +153,8 @@ function ProductDetails() {
                                 </button>
                             </div>
                             <button
-                                className="group py-3 px-5 rounded-full bg-indigo-50 text-[#38B496] font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-indigo-300 hover:bg-indigo-100">
+                                className="group py-3 px-5 rounded-full bg-indigo-50 text-[#38B496] font-semibold text-lg w-full flex items-center justify-center gap-2 shadow-sm shadow-transparent transition-all duration-500 hover:shadow-indigo-300 hover:bg-indigo-100"
+                                onClick={() => addToCart(product)}>
                                 <svg className="stroke-[#38B496] transition-all duration-500 group-hover:stroke-[#38B496]"
                                     width="22" height="22" viewBox="0 0 22 22" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -156,11 +162,11 @@ function ProductDetails() {
                                         d="M10.7394 17.875C10.7394 18.6344 10.1062 19.25 9.32511 19.25C8.54402 19.25 7.91083 18.6344 7.91083 17.875M16.3965 17.875C16.3965 18.6344 15.7633 19.25 14.9823 19.25C14.2012 19.25 13.568 18.6344 13.568 17.875M4.1394 5.5L5.46568 12.5908C5.73339 14.0221 5.86724 14.7377 6.37649 15.1605C6.88573 15.5833 7.61377 15.5833 9.06984 15.5833H15.2379C16.6941 15.5833 17.4222 15.5833 17.9314 15.1605C18.4407 14.7376 18.5745 14.0219 18.8421 12.5906L19.3564 9.84059C19.7324 7.82973 19.9203 6.8243 19.3705 6.16215C18.8207 5.5 17.7979 5.5 15.7522 5.5H4.1394ZM4.1394 5.5L3.66797 2.75"
                                         stroke="" stroke-width="1.6" stroke-linecap="round" />
                                 </svg>
-                                Add to cart</button>
+                                {t("addToCart")}</button>
                         </div>
                         <button
                             className="text-center w-full px-5 py-4 rounded-[100px] bg-[#38B496] flex items-center justify-center font-semibold text-lg text-white shadow-sm shadow-transparent transition-all duration-500 ">
-                            Buy Now
+                           {t("buyNow")}
                         </button>
                     </div>
                 </div>

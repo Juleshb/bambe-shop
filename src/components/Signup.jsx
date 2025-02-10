@@ -1,96 +1,90 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next"; // Import translation hook
 import LoginImg from "./assets/signup-img.webp";
 import google from "./assets/google.webp";
 import { Link } from "react-router-dom";
 import Footer from "./navs/Footer";
 import Nav from "./navs/Nav";
 import axios from "axios";
-function Signup() {
 
-  const [message, setmessage] = useState("");
-  const [username, setusername] = useState("");
-  const [email, setemail] = useState("");
-  const [password, setpassword] = useState("");
-  
-const handleSignup=async(e)=>{
-    e.preventDefault();   
-    try{
-      const response =await axios.post("https://bambe.shop/api/register",{
+function Signup() {
+  const { t } = useTranslation(); // Initialize translation function
+
+  const [message, setMessage] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("https://bambe.shop/api/register", {
         username,
         email,
-        password
-      })
-      setmessage(response.data.message);
-
-    }
-    catch (error) {
+        password,
+      });
+      setMessage(response.data.message);
+    } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        setmessage(error.response.data.error);  
+        setMessage(error.response.data.error);
       } else {
-        setmessage("An unexpected error occurred. Please try again.");
+        setMessage(t("signupError"));
       }
       console.error("Error:", error.message);
     }
-  }
+  };
+
   return (
     <>
-      {/* include navigations */}
+      {/* Include navigation */}
       <Nav />
 
-      <div className=" w-full flex mt-10   md:flex-col-reverse lg:flex-row  ml-10 lg:ml-0">
-        <img
-          className=" hidden lg:block w-96 lg:w-1/2 lg:h-1/3  "
-          src={LoginImg}
-        />
+      <div className="w-full flex mt-10 md:flex-col-reverse lg:flex-row ml-10 lg:ml-0">
+        <img className="hidden lg:block w-96 lg:w-1/2 lg:h-1/3" src={LoginImg} alt="Signup" />
 
         <form onSubmit={handleSignup}>
-          <div className="  md:ml-32 flex flex-col justify-center items-center ">
-            <p className=" text-4xl mb-7 font-semibold">Create an account</p>
-            <p className=" mb-3 mt-60 text-2xl lg:mb-10">Enter your details below</p>
+          <div className="md:ml-32 flex flex-col justify-center items-center">
+            <p className="text-4xl mb-7 font-semibold">{t("createAccount")}</p>
+            <p className="mb-3 mt-60 text-2xl lg:mb-10">{t("enterDetails")}</p>
 
             {message && <p className="text-green-500 mb-4">{message}</p>}
 
             <input
-            value={username}
-            onChange={(e)=>setusername(e.target.value)}
-              className=" focus:outline-none border-b-2 border-slate-400 pb-1 mb-10 w-80"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="focus:outline-none border-b-2 border-slate-400 pb-1 mb-10 w-80"
               type="text"
-              placeholder="Full name"
+              placeholder={t("fullName")}
             />{" "}
             <br />
             <input
-               value={email}
-               onChange={(e)=>setemail(e.target.value)}
-              className=" focus:outline-none border-b-2 border-slate-400 pb-1 mb-10 w-80"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="focus:outline-none border-b-2 border-slate-400 pb-1 mb-10 w-80"
               type="text"
-              placeholder="Email or Phone Number"
+              placeholder={t("emailOrPhone")}
             />
             <br />
             <input
-                  value={password}
-                  onChange={(e)=>setpassword(e.target.value)}
-              className=" focus:outline-none border-b-2 border-slate-400 pb-1  mb-5 w-80"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="focus:outline-none border-b-2 border-slate-400 pb-1 mb-5 w-80"
               type="password"
-              placeholder="Password"
+              placeholder={t("password")}
             />
             <br />
-            <button
-              type="submit"
-
-              className=" bg-[#67c066] rounded-md mb-5 p-2 w-80 text-white"
-              to=""
-            >
-              Create Account
+            <button type="submit" className="bg-[#67c066] rounded-md mb-5 p-2 w-80 text-white">
+              {t("createAccount")}
             </button>{" "}
             <br />
-            <button className=" hover:bg-[#67c066] hover:text-white mb-5 border flex w-80 justify-center items-center text-center p-2 rounded-md">
-              <img src={google} />
-              <span className=" ml-2">Signup with Google</span>
+            <button className="hover:bg-[#67c066] hover:text-white mb-5 border flex w-80 justify-center items-center text-center p-2 rounded-md">
+              <img src={google} alt="Google Signup" />
+              <span className="ml-2">{t("signupWithGoogle")}</span>
             </button>
-            <p className=" text-slate-800">
-              Already have account?{" "}
-              <Link className=" underline  ml-2" to="/Login">
-                Log in
+            <p className="text-slate-800">
+              {t("alreadyHaveAccount")}{" "}
+              <Link className="underline ml-2" to="/Login">
+                {t("login")}
               </Link>
             </p>
           </div>

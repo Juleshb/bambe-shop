@@ -19,6 +19,7 @@ import ProtectedRoute from "./components/contex/ProtectedRoute ";
 import Invoice from "./components/Invoice";
 import ListingDetails from "./components/listingDetail";
 import { IntlProvider } from "react-intl";
+import SearchResults from "./components/SearchResults";
 
 import Logout from "./components/Seller/Logout";
 
@@ -40,6 +41,7 @@ function App() {
           <Route path="/Invoice" element={<Invoice />} />
           <Route path="/Homerealestate" element={<Homerealestate />} />
           <Route path="/listing/:id" element={<ListingDetails />} />
+          <Route path="/search-results" element={<SearchResults />} />
 
           {/* Protected Routes */}
           <Route 
