@@ -136,7 +136,6 @@ function Nav() {
       <li>
       <Link to="/signup" className="text-[#38B496] hover:text-[#F15C26]">{t("login")}</Link>
       </li>
-      <li><Link  to="/Homerealestate" className=' text-white bg-[#F15C26] w-44 p-2 text-lg text-center  rounded-md'>{t("realEstate")}</Link></li>
       <li><LanguageSwitcher /></li>
     </ul>
   </div>
@@ -156,7 +155,6 @@ function Nav() {
           <li>
             <Link to="/signup" className="text-[#38B496] hover:text-[#F15C26]">{t("login")}</Link>
           </li>
-          <li><Link to="/Homerealestate" className=' text-white bg-[#F15C26] w-44 p-2 text-lg text-center  rounded-md'>Real estate</Link></li>
           <li><LanguageSwitcher /></li>
         </ul>
       </div>

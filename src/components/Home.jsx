@@ -24,7 +24,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsRes = await axiosInstance.get("/api/products");
+        const productsRes = await axiosInstance.get("/api/listings/listing/product");
         setProducts(productsRes.data);
         const categoriesRes = await axiosInstance.get("/api/categories");
         setCategories(categoriesRes.data);
@@ -94,7 +94,7 @@ function Home() {
                 <div className="w-full sm:w-72 mb-6" key={product.id}>
                   <div className="bg-slate-400 rounded-md flex flex-col items-center p-4">
                     <p className="bg-slate-600 text-white px-3 py-1 text-xs rounded-md self-start">-40%</p>
-                    <Link to={`/product/${product.id}`}>
+                    <Link to={product.type === "listing" ? `/listing/${product.id}` : `/product/${product.id}`}>
                       <img
                         className="h-36 sm:h-44 object-contain"
                         src={product.images?.length > 0 ? `https://bambe.shop${product.images[0].url}` : "placeholder-image-url"}
