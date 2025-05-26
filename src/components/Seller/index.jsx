@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CategoryIcon from "@mui/icons-material/Category";
-import Inventory2Icon from "@mui/icons-material/Inventory";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
+import BroadcastOnHomeIcon from '@mui/icons-material/BroadcastOnHome';
 import GroupIcon from "@mui/icons-material/Group";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Product from "./Addproduct";
 import Category from "./Createcategory";
+import Listings from "./listing";
 import DashboardComponent from "./Dashboard";
 import Nav from "./nav";
-import Logo from "../assets/logo-black.png";
+import Logo from "../assets/whitelogo.png";
 import Order from "./Order";
-
-
-
-
+import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const navigate = useNavigate();
 
   const renderContent = () => {
     switch (activeTab) {
@@ -25,10 +27,12 @@ const Dashboard = () => {
         return <DashboardComponent />;
       case "Products":
         return <Product />;
+      case "Listings":
+        return <Listings/>;
       case "Categories":
         return <Category />;
       case "Orders":
-        return <Order/>;
+        return <Order />;
       case "Customers":
         return <div>Customers Content</div>;
       case "Account":
@@ -38,53 +42,113 @@ const Dashboard = () => {
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleLogOut = () => {
+    navigate("/Login");
+  };
+
   return (
-    <div className="flex h-screen font-Poppins">
-      {/* Sidebar */}
-      <div className="flex h-full flex-col bg-green-600 xs:w-16 sm:w-20 md:w-64 transition-all">
-        {/* Header */}
-        <div className="flex flex-col items-center py-4">
-          <img src={Logo} alt="Logo" className="w-10 sm:w-16" />
+    <div className="flex flex-col h-screen font-Poppins lg:flex-row">
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
+
+      <aside
+        className={`
+          fixed 
+          top-0 
+          left-0 
+          h-full 
+          bg-slate-600
+          text-white 
+          shadow-md 
+          w-52
+          transform 
+          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} 
+          transition-transform duration-300 
+          z-30 
+          lg:static 
+          lg:translate-x-0 
+          lg:w-52
+        `}
+      >
+        <div className="flex items-center justify-between py-6 px-4">
+          <div className="flex  items-center">
+            <img
+              src={Logo}
+              alt="Logo"
+              className="w-24 object-contain"
+            />
+          </div>
+          <button
+            className="lg:hidden text-white focus:outline-none"
+            onClick={toggleSidebar}
+            aria-label="Close Sidebar"
+          >
+            <Icon icon="mdi:close" className="text-2xl" />
+          </button>
         </div>
 
-        {/* Navigation */}
-        <ul className="space-y-1 flex-grow">
+        <nav className="flex-grow space-y-2 px-2">
           {[
             { label: "Dashboard", icon: <DashboardIcon /> },
             { label: "Products", icon: <Inventory2Icon /> },
+            { label: "Listings", icon: <BroadcastOnHomeIcon /> },
             { label: "Categories", icon: <CategoryIcon /> },
-            { label: "Orders", icon: <GroupIcon /> }, // Placeholder for Orders
+            { label: "Orders", icon: <GroupIcon /> },
             { label: "Customers", icon: <GroupIcon /> },
             { label: "Account", icon: <AccountCircleIcon /> },
-          ].map((tab) => (
-            <li key={tab.label}>
-              <button
-                onClick={() => setActiveTab(tab.label)}
-                className={`w-full flex items-center gap-4 px-4 py-3 text-sm font-medium transition-colors ${
-                  activeTab === tab.label
-                    ? "bg-[#38B496] text-white"
-                    : "text-white hover:bg-[#4bc250] hover:text-gray-900"
-                }`}
-              >
-                <span className="text-lg hidden xxs:block sm:text-2xl">{tab.icon}</span>
-                <span className="hidden sm:block">{tab.label}</span>
-              </button>
-            </li>
+          ].map(({ label, icon }) => (
+            <button
+              key={label}
+              onClick={() => {
+                setActiveTab(label);
+                setIsSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg text-sm font-medium transition ${
+                activeTab === label
+                  ? "bg-[#38B496] text-white"
+                  : "hover:bg-[#F15C26] hover:text-white"
+              }`}
+              aria-current={activeTab === label ? "page" : undefined}
+            >
+              {icon}
+              <span className="ml-2">{label}</span>
+            </button>
           ))}
-        </ul>
+          <button
+            onClick={handleLogOut}
+            className="w-full mx-auto space-y-2 flex items-center gap-4 px-4 py-3 text-sm rounded-md font-medium text-white hover:bg-red-700 hover:text-white transition"
+          >
+            <LogoutIcon />
+            <span className="ml-2">Logout</span>
+          </button>
+        </nav>
+      </aside>
 
-        {/* Logout Button */}
-        <button className="w-full mt-auto flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium text-white hover:bg-[#4bc250] hover:text-gray-900">
-          <LogoutIcon className="text-xl sm:text-2xl" />
-          <span className="hidden sm:block">Logout</span>
+      <header className="flex items-center justify-between bg-[#38B496] text-white p-4 lg:hidden">
+        <button
+          onClick={toggleSidebar}
+          className="focus:outline-none"
+          aria-label="Open Sidebar"
+        >
+          <Icon icon="mdi:menu" className="text-2xl" />
         </button>
-      </div>
+        <div className="flex items-center">
+          <img src={Logo} className="w-24 h-8 object-contain" alt="Logo" />
+        </div>
+        <div className="w-8 h-8"></div>
+      </header>
 
-      {/* Main Content */}
-      <div className="flex-1 bg-gray-100 overflow-auto">
-        <Nav />
-        <div className="bg-white p-4 mt-4 shadow-md rounded-md">{renderContent()}</div>
-      </div>
+      <main className="flex-1 bg-gray-100 h-screen overflow-y-auto">
+        {renderContent()}
+      </main>
     </div>
   );
 };

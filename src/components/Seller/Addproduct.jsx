@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { HiUpload } from "react-icons/hi";
 import axiosInstance from "../utils/axios";
 import { Icon } from "@iconify/react";
-import { Modal, Button, TextInput, Label, Select, Table } from "flowbite-react";
+import { Modal, TextInput, Label, Select, Table } from "flowbite-react";
+import { Button } from "primereact/button";
+
 import axios from "axios";
 export default function AddProduct() {
   const [categories, setCategories] = useState([]);
@@ -149,12 +151,20 @@ export default function AddProduct() {
  
   return (
    
-        <div className="flex w-full p-4 mt-20">
-          <div>
-          <button
+    <div className="py-5 px-4">
+    <div className="flex justify-between">
+        <h1 className="lg:text-2xl font-semibold text-[#003049] mb-5">
+          Products Management
+        </h1>
+        <div className="flex gap-5 items-center">
+        <button
         onClick={() => setIsModalOpen(true)}
-        className="text-xl mt-2 bg-green-400 rounded-md p-2 text-white pl-4 pr-4 hover:bg-green-800 transition-all"
-      > New product</button>
+        className="text-sm mt-2 bg-[#38B496] rounded-md p-2 text-white pl-4 pr-4 hover:bg-[#2a8b7e] transition-all"
+      > Add product</button>
+        </div>
+      </div>
+          <div>
+         
 
 {isModalOpen && (
   <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -275,43 +285,74 @@ export default function AddProduct() {
         </div>
       )}
             <div className="mt-10">
-              <p className="text-xl font-bold">Products</p>
+              <p className="text-xl font-bold">My Products</p>
             </div>
 
-<div className="overflow-x-auto">
-  <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
-    <thead className="ltr:text-left rtl:text-right">
-      <tr> 
-        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
-        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Description</th>
-        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Price</th>
-        <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Images</th>
-        <th className="px-4 py-2"></th>
-      </tr>
-    </thead>
-   
-    <tbody className="divide-y divide-gray-200">
-    {products.map((product) => (
-      <tr  key={product.id}>
-        <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{product.name}</td>
-        <td className="whitespace-nowrap px-4 py-2 text-gray-700">{product.description}</td>
-        <td className="whitespace-nowrap px-4 py-2 text-gray-700">{product.price}Fwf</td>
-        <td className="whitespace-nowrap px-4 py-2 text-gray-700"> {product.images.length > 0 ? (
-                          <div className="flex space-x-2">
-                            {product.images.map((image) => (
-                              <img
-                                key={image.id}
-                                src={`https://bambe.shop${image.url}`}
-                                alt={product.name}
-                                className="w-16 h-16 object-cover"
-                              />
-                            ))}
-                          </div>
-                        ) : (
-                          <span>No images</span>
-                        )}</td>
-        <td className="whitespace-nowrap px-4 py-2">
-        <button
+<div className="rounded-lg shadow overflow-hidden mt-5 bg-white">
+
+<table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Name
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Description
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Price
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Image
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {products.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="px-6 py-4 text-center text-gray-500">
+                    No products found. Add your first product!
+                  </td>
+                </tr>
+              ) : (
+                products.map((product) => (
+                  <tr key={product.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                      {product.name}
+                    </td>
+                    <td className="px-6 py-4 text-gray-500 max-w-xs truncate">
+                      {product.description}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                      ${product.price}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {product.images.length > 0 ? (
+                        <div className="flex space-x-2">
+                          {product.images.slice(0, 1).map((image) => (
+                            <img
+                              key={image.id}
+                              src={`https://bambe.shop${image.url}`}
+                              alt={product.name}
+                              className="w-10 h-10 object-cover rounded"
+                            />
+                          ))}
+                          {product.images.length > 1 && (
+                            <span className="text-xs bg-gray-100 rounded-full px-2 py-1 flex items-center">
+                              +{product.images.length - 1}
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-gray-400">No image</span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex justify-end space-x-2">
+                      <button
                     color="light"
                     onClick={() => handleViewProduct(product)}
                   >
@@ -323,15 +364,13 @@ export default function AddProduct() {
                   >
                   <Icon icon="weui:delete-outlined" width="24" height="24" />
                   </button>
-                  
-        </td>
-      </tr>
-
-     
-    ))}
-     
-    </tbody>
-  </table>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
 </div>
           </div>
       {isViewModalOpen && currentProduct && (
@@ -364,6 +403,5 @@ export default function AddProduct() {
         </div>
       )}
         </div>
-     
   );
 }

@@ -27,7 +27,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsRes = await axiosInstance.get("/api/listings/listing/product");
+        const productsRes = await axiosInstance.get("/api/listings/listings/product");
         setProducts(productsRes.data);
         const categoriesRes = await axiosInstance.get("/api/categories");
         setCategories(categoriesRes.data);
