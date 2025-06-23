@@ -29,8 +29,6 @@ function Nav() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [createMenuOpen, setCreateMenuOpen] = useState(false);
-  const [collectMenuOpen, setCollectMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -67,72 +65,6 @@ function Nav() {
     return "text-gray-600";
   };
 
-  // Create menu items based on user role
-  const getCreateMenuItems = () => {
-    const items = [];
-    
-    if (isAdmin()) {
-      items.push(
-        { label: "Add Property", icon: "mdi:home-plus", path: "/admin/add-property" },
-        { label: "Create Category", icon: "mdi:tag-plus", path: "/admin/create-category" },
-        { label: "Add User", icon: "mdi:account-plus", path: "/admin/add-user" },
-        { label: "Create Promotion", icon: "mdi:gift", path: "/admin/create-promotion" }
-      );
-    } else if (isAgent()) {
-      items.push(
-        { label: "Add Listing", icon: "mdi:home-plus", path: "/agent/add-listing" },
-        { label: "Create Report", icon: "mdi:file-plus", path: "/agent/create-report" }
-      );
-    } else if (isClient()) {
-      items.push(
-        { label: "Submit Inquiry", icon: "mdi:message-plus", path: "/inquiry" },
-        { label: "Create Wishlist", icon: "mdi:heart-plus", path: "/client/wishlist" }
-      );
-    } else {
-      // For non-authenticated users
-      items.push(
-        { label: "Submit Inquiry", icon: "mdi:message-plus", path: "/inquiry" },
-        { label: "Register Account", icon: "mdi:account-plus", path: "/register" }
-      );
-    }
-    
-    return items;
-  };
-
-  // Collect menu items based on user role
-  const getCollectMenuItems = () => {
-    const items = [];
-    
-    if (isAdmin()) {
-      items.push(
-        { label: "View Reports", icon: "mdi:chart-line", path: "/admin/reports" },
-        { label: "User Analytics", icon: "mdi:account-group", path: "/admin/analytics" },
-        { label: "Revenue Data", icon: "mdi:cash-multiple", path: "/admin/revenue" },
-        { label: "System Logs", icon: "mdi:file-document", path: "/admin/logs" }
-      );
-    } else if (isAgent()) {
-      items.push(
-        { label: "Client Inquiries", icon: "mdi:message-text", path: "/agent/inquiries" },
-        { label: "Sales Reports", icon: "mdi:chart-bar", path: "/agent/reports" },
-        { label: "Client Data", icon: "mdi:account-group", path: "/agent/clients" }
-      );
-    } else if (isClient()) {
-      items.push(
-        { label: "My Inquiries", icon: "mdi:message-text", path: "/client/inquiries" },
-        { label: "Saved Properties", icon: "mdi:heart", path: "/client/saved" },
-        { label: "View History", icon: "mdi:history", path: "/client/history" }
-      );
-    } else {
-      // For non-authenticated users
-      items.push(
-        { label: "Browse Properties", icon: "mdi:home-search", path: "/listings" },
-        { label: "View Map", icon: "mdi:map-search", path: "/map-search" }
-      );
-    }
-    
-    return items;
-  };
-
   return (
     <>
       <nav className="bg-white fixed w-full top-0 z-50 left-0 shadow-md">
@@ -155,7 +87,7 @@ function Nav() {
           </Link>
 
           {/* Desktop Navigation Menu */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-[#38B496] hover:text-[#F15C26] font-medium transition-colors">
               {t("home")}
             </Link>
@@ -166,73 +98,6 @@ function Nav() {
               <Icon icon="mdi:map-search" className="mr-1" />
               Map Search
             </Link>
-            
-            {/* Create Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setCreateMenuOpen(!createMenuOpen);
-                  setCollectMenuOpen(false);
-                }}
-                className="text-[#38B496] hover:text-[#F15C26] font-medium transition-colors flex items-center"
-              >
-                <Icon icon="mdi:plus-circle" className="mr-1" />
-                Create
-                <Icon icon="mdi:chevron-down" className="ml-1 text-sm" />
-              </button>
-              
-              {createMenuOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border z-50">
-                  <div className="py-2">
-                    {getCreateMenuItems().map((item, index) => (
-                      <Link
-                        key={index}
-                        to={item.path}
-                        className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setCreateMenuOpen(false)}
-                      >
-                        <Icon icon={item.icon} className="mr-3 text-[#38B496]" />
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Collect Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => {
-                  setCollectMenuOpen(!collectMenuOpen);
-                  setCreateMenuOpen(false);
-                }}
-                className="text-[#38B496] hover:text-[#F15C26] font-medium transition-colors flex items-center"
-              >
-                <Icon icon="mdi:folder-multiple" className="mr-1" />
-                Collect
-                <Icon icon="mdi:chevron-down" className="ml-1 text-sm" />
-              </button>
-              
-              {collectMenuOpen && (
-                <div className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border z-50">
-                  <div className="py-2">
-                    {getCollectMenuItems().map((item, index) => (
-                      <Link
-                        key={index}
-                        to={item.path}
-                        className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
-                        onClick={() => setCollectMenuOpen(false)}
-                      >
-                        <Icon icon={item.icon} className="mr-3 text-[#38B496]" />
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
             <Link to="/about" className="text-[#38B496] hover:text-[#F15C26] font-medium transition-colors">
               {t("about")}
             </Link>
@@ -346,7 +211,7 @@ function Nav() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-lg focus:outline-none hover:bg-gray-200"
+              className="md:hidden p-2 rounded-lg focus:outline-none hover:bg-gray-200"
             >
               <svg
                 className="w-6 h-6"
@@ -394,7 +259,7 @@ function Nav() {
         </div>
 
         {/* Mobile Navigation Menu */}
-        <div className={`lg:hidden transition-all duration-300 ${menuOpen ? "block" : "hidden"} bg-white w-full border-t`}>
+        <div className={`md:hidden transition-all duration-300 ${menuOpen ? "block" : "hidden"} bg-white w-full border-t`}>
           <ul className="flex flex-col items-center space-y-4 py-4">
             <li>
               <Link to="/" className="text-[#38B496] hover:text-[#F15C26] font-medium">{t("home")}</Link>
@@ -408,53 +273,6 @@ function Nav() {
                 Map Search
               </Link>
             </li>
-            
-            {/* Mobile Create Menu */}
-            <li className="w-full">
-              <div className="text-center">
-                <div className="text-[#38B496] font-medium mb-2 flex items-center justify-center">
-                  <Icon icon="mdi:plus-circle" className="mr-1" />
-                  Create
-                </div>
-                <div className="space-y-2">
-                  {getCreateMenuItems().map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.path}
-                      className="block text-sm text-gray-600 hover:text-[#38B496] py-1"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <Icon icon={item.icon} className="mr-2 inline" />
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </li>
-            
-            {/* Mobile Collect Menu */}
-            <li className="w-full">
-              <div className="text-center">
-                <div className="text-[#38B496] font-medium mb-2 flex items-center justify-center">
-                  <Icon icon="mdi:folder-multiple" className="mr-1" />
-                  Collect
-                </div>
-                <div className="space-y-2">
-                  {getCollectMenuItems().map((item, index) => (
-                    <Link
-                      key={index}
-                      to={item.path}
-                      className="block text-sm text-gray-600 hover:text-[#38B496] py-1"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      <Icon icon={item.icon} className="mr-2 inline" />
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </li>
-            
             <li>
               <Link to="/about" className="text-[#38B496] hover:text-[#F15C26] font-medium">{t("about")}</Link>
             </li>

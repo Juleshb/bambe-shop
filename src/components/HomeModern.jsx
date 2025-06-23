@@ -28,9 +28,9 @@ function HomeModern() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const propertiesRes = await axiosInstance.get("/api/listings");
+        const propertiesRes = await axiosInstance.get("/api/listings/listings/product");
         setProperties(propertiesRes.data);
-        const categoriesRes = await axiosInstance.get("/api/propertycategories");
+        const categoriesRes = await axiosInstance.get("/api/categories");
         setCategories(categoriesRes.data);
       } catch (err) {
         console.error("Error fetching data:", err.message);
@@ -337,73 +337,63 @@ function HomeModern() {
                   {properties.slice(currentSlide * 3, (currentSlide + 1) * 3).map((property, index) => (
                     <motion.div 
                       key={property.id}
-                      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100"
+                      className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      whileHover={{ y: -8 }}
+                      whileHover={{ y: -10 }}
                     >
                       <div className="relative overflow-hidden">
                         <img
-                          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
                           src={property.images?.length > 0 ? `https://bambe.shop${property.images[0].url}` : featuredProperty}
                           alt={property.title}
                         />
-                        <div className="absolute top-3 left-3">
-                          <span className="bg-[#F15C26] text-white px-2 py-1 text-xs rounded-full font-medium shadow-lg">
-                            {property.status || "New"}
-                          </span>
+                        <div className="absolute top-4 left-4 bg-[#F15C26] text-white px-3 py-1 text-sm rounded-full font-medium">
+                          {property.status || "New Listing"}
                         </div>
-                        <div className="absolute top-3 right-3">
-                          <span className="bg-white/95 backdrop-blur-sm text-gray-800 px-2 py-1 text-xs rounded-full font-semibold shadow-lg">
-                            RWF {property.price?.toLocaleString()}
-                          </span>
+                        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 text-sm rounded-full font-medium">
+                          RWF {property.price?.toLocaleString()}
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       </div>
                       
-                      <div className="p-5">
-                        <div className="mb-3">
-                          <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#38B496] transition-colors line-clamp-1">
-                            {property.title}
-                          </h3>
-                          
-                          <div className="flex items-center text-gray-600 mb-3">
-                            <Icon icon="mdi:map-marker" className="mr-1 text-[#38B496] text-sm" />
-                            <span className="text-sm">{property.location}</span>
-                          </div>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#38B496] transition-colors">
+                          {property.title}
+                        </h3>
+                        
+                        <div className="flex items-center text-gray-600 mb-4">
+                          <Icon icon="mdi:map-marker" className="mr-2 text-[#38B496]" />
+                          <span>{property.location}</span>
                         </div>
                         
-                        <div className="grid grid-cols-3 gap-3 mb-4">
-                          <div className="flex items-center justify-center bg-gray-50 rounded-lg py-2 px-1">
-                            <Icon icon="mdi:bed" className="mr-1 text-[#38B496] text-sm" />
-                            <span className="text-xs font-medium text-gray-700">{property.bedrooms || 0}</span>
+                        <div className="grid grid-cols-3 gap-4 mb-6">
+                          <div className="flex items-center">
+                            <Icon icon="mdi:bed" className="mr-2 text-[#38B496]" />
+                            <span className="text-sm font-medium">{property.bedrooms} Beds</span>
                           </div>
-                          <div className="flex items-center justify-center bg-gray-50 rounded-lg py-2 px-1">
-                            <Icon icon="mdi:shower" className="mr-1 text-[#38B496] text-sm" />
-                            <span className="text-xs font-medium text-gray-700">{property.bathrooms || 0}</span>
+                          <div className="flex items-center">
+                            <Icon icon="mdi:shower" className="mr-2 text-[#38B496]" />
+                            <span className="text-sm font-medium">{property.bathrooms} Baths</span>
                           </div>
-                          <div className="flex items-center justify-center bg-gray-50 rounded-lg py-2 px-1">
-                            <Icon icon="mdi:ruler-square" className="mr-1 text-[#38B496] text-sm" />
-                            <span className="text-xs font-medium text-gray-700">{property.area || 0}m²</span>
+                          <div className="flex items-center">
+                            <Icon icon="mdi:ruler-square" className="mr-2 text-[#38B496]" />
+                            <span className="text-sm font-medium">{property.area} m²</span>
                           </div>
                         </div>
                         
                         <div className="flex justify-between items-center">
-                          <div className="flex flex-col">
-                            <span className="text-lg font-bold text-[#38B496]">
-                              RWF {property.price?.toLocaleString()}
-                            </span>
-                            <span className="text-xs text-gray-500">Price</span>
-                          </div>
+                          <span className="text-2xl font-bold text-[#38B496]">
+                            RWF {property.price?.toLocaleString()}
+                          </span>
                           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link 
                               to={`/listing/${property.id}`} 
-                              className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg flex items-center"
+                              className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-6 py-2 rounded-full font-medium transition-colors flex items-center"
                             >
-                              View
-                              <Icon icon="mdi:arrow-right" className="ml-1 text-xs" />
+                              View Details
+                              <Icon icon="mdi:arrow-right" className="ml-1" />
                             </Link>
                           </motion.div>
                         </div>
@@ -478,13 +468,13 @@ function HomeModern() {
                 >
                   <img 
                     src={category.image || featuredProperty} 
-                    alt={category.category_name}
+                    alt={category.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end p-6">
                     <div className="text-white">
                       <h3 className="text-2xl font-bold mb-2 group-hover:text-[#38B496] transition-colors">
-                        {category.category_name}
+                        {category.name}
                       </h3>
                       <p className="text-white/80 mb-4">{category.count} Properties</p>
                       <motion.div 

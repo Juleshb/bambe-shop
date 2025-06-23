@@ -4,6 +4,7 @@ import axiosInstance from "../utils/axios";
 import { Modal, Spinner, Alert } from "flowbite-react";
 import { Button } from "primereact";
 import { Icon } from "@iconify/react";
+import LocationPicker from "./LocationPicker";
 
 export default function ListingManagement() {
   // State management
@@ -208,7 +209,7 @@ export default function ListingManagement() {
 
   return (
     <div className="py-5 px-4">
-      <div className="flex justify-between">
+      <div className=" bg-green-100 text-green-800 p-4 flex justify-between">
         <h1 className="lg:text-2xl font-semibold text-[#003049] mb-5">
           Listings Management
         </h1>
@@ -239,7 +240,7 @@ export default function ListingManagement() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg w-full max-w-lg">
             <h2 className="text-xl font-semibold mb-4">Add New Listing</h2>
-            <form onSubmit={handleSubmit}>
+            <form >
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 w-full">
                 {/* Title */}
                 <div className="lg:col-span-2">
@@ -309,7 +310,7 @@ export default function ListingManagement() {
                     type="number"
                     value={formData.price}
                     onChange={handleChange}
-                    placeholder="$250,000"
+                    placeholder="RWF 250,000"
                     className="block w-full mt-1 border border-green-500 p-2 pl-3 rounded"
                     required
                   />
@@ -336,14 +337,10 @@ export default function ListingManagement() {
                   <label htmlFor="coordinates" className="block text-sm font-medium text-gray-700">
                     Coordinates
                   </label>
-                  <input
-                    id="coordinates"
-                    name="coordinates"
-                    value={formData.coordinates}
-                    onChange={handleChange}
-                    placeholder="-1.695756, 29.262374"
-                    className="block w-full mt-1 border border-green-500 p-2 pl-3 rounded"
-                  />
+                  <LocationPicker 
+  value={formData.coordinates}
+  onChange={(coords) => setFormData({...formData, coordinates: coords})}
+/>
                 </div>
 
                 {/* Description */}
@@ -424,6 +421,7 @@ export default function ListingManagement() {
                   type="submit"
                   className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-all"
                   disabled={isLoading}
+                  onClick={handleSubmit}
                 >
                   {isLoading ? (
                     <>
@@ -443,8 +441,9 @@ export default function ListingManagement() {
         </div>
       )}
 
-      <div className="mt-10">
-        <p className="text-xl font-bold">My Listings</p>
+      <div className="mt-10 rounded-full bg-green-100 text-green-800 p-4 flex items-center justify-between">
+        <Icon icon="mdi:home-search" className="h-6 w-6 mr-2" />
+        <p className="text-sm font-bold">My Listings</p>
       </div>
 
       {/* Listings Table */}
@@ -524,7 +523,7 @@ export default function ListingManagement() {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-500">
-                      ${listing.price?.toLocaleString() || '0'}
+                      RWF {listing.price?.toLocaleString() || '0'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-gray-500">
                       {listing.location}
@@ -603,7 +602,7 @@ export default function ListingManagement() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm font-medium text-gray-500">Price</p>
-                        <p className="mt-1 text-gray-900">${currentListing.price?.toLocaleString() || '0'}</p>
+                        <p className="mt-1 text-gray-900">RWF {currentListing.price?.toLocaleString() || '0'}</p>
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-500">Location</p>

@@ -8,7 +8,11 @@ const axiosInstance = axios.create({
   
   axiosInstance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem("token");
+      // Check for both admin token and client token
+      const adminToken = localStorage.getItem("token");
+      const clientToken = localStorage.getItem("clientToken");
+      const token = adminToken || clientToken;
+      
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }

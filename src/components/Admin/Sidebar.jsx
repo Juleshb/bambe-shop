@@ -1,0 +1,173 @@
+import React from "react"
+import { Link, useLocation } from "react-router-dom"
+import { Icon } from "@iconify/react";
+
+function Sidebar({ isOpen, onToggle, onLogout }) {
+  const location = useLocation();
+
+  const isActive = (path) => {
+    return location.pathname === path;
+  };
+
+  return (
+    <>
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+          onClick={onToggle}
+        />
+      )}
+
+      <aside className={`
+        fixed top-0 left-0 h-full bg-gray-800 text-white shadow-md w-64
+        transform ${isOpen ? "translate-x-0" : "-translate-x-full"} 
+        transition-transform duration-300 z-30 
+        lg:static lg:translate-x-0 lg:w-64
+      `}>
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center">
+              <Icon icon="mdi:shield-crown" className="w-8 h-8 text-blue-400 mr-3" />
+              <h2 className="text-xl font-bold">Admin Panel</h2>
+            </div>
+            <button
+              onClick={onToggle}
+              className="lg:hidden text-white focus:outline-none"
+            >
+              <Icon icon="mdi:close" className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+        
+        <nav className="p-4 flex flex-col justify-between h-full">
+          <ul className="space-y-2">
+            <li>
+              <Link 
+                to="/admin-dashboard" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/admin-dashboard") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:view-dashboard" className="w-5 h-5 mr-3" />
+                Dashboard
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/admin/properties" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/admin/properties") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:home-city" className="w-5 h-5 mr-3" />
+                Properties
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/Addproduct" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/Addproduct") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:home-plus" className="w-5 h-5 mr-3" />
+                Property Management
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/admin/users" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/admin/users") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:account-group" className="w-5 h-5 mr-3" />
+                Manage Users
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/admin/inquiries" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/admin/inquiries") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:message-text" className="w-5 h-5 mr-3" />
+                Client Inquiries
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/Createcategory" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/Createcategory") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:tag-multiple" className="w-5 h-5 mr-3" />
+                Categories
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/admin/reports" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/admin/reports") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:chart-line" className="w-5 h-5 mr-3" />
+                Reports
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                to="/admin/settings" 
+                className={`flex items-center py-2 px-4 rounded transition-colors ${
+                  isActive("/admin/settings") 
+                    ? "bg-blue-600 text-white" 
+                    : "hover:bg-gray-700"
+                }`}
+              >
+                <Icon icon="mdi:cog" className="w-5 h-5 mr-3" />
+                Settings
+              </Link>
+            </li>
+          </ul>
+          
+          <footer className="mt-auto">
+            <button
+              onClick={onLogout}
+              className="flex items-center justify-center w-full py-2 px-4 text-left bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
+            >
+              <Icon icon="mdi:logout" className="w-5 h-5 mr-2" />
+              Logout
+            </button>
+          </footer>
+        </nav>
+      </aside>
+    </>
+  );
+}
+
+export default Sidebar
