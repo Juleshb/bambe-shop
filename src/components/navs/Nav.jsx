@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../CartContext.jsx";
 import Logo from "../assets/logo-black.png";
@@ -25,7 +25,8 @@ function Nav() {
   } = useAuth();
   
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -33,8 +34,39 @@ function Nav() {
   const [collectMenuOpen, setCollectMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const searchInputRef = useRef(null);
 
   const phoneNumber = '+250783224032';
+
+  // Scroll lock for mobile menu
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Focus input when mobile search opens
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
+
+  // Keyboard accessibility for mobile search
+  useEffect(() => {
+    if (!searchOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setSearchOpen(false);
+      if (e.key === 'Enter') handleSearch();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [searchOpen, searchTerm]);
 
   const handleSearch = () => {
     if (searchTerm.trim() !== "") {
@@ -50,7 +82,8 @@ function Nav() {
 
   const handleLogout = () => {
     logout();
-    setMenuOpen(false);
+    setUserMenuOpen(false);
+    setMobileMenuOpen(false);
   };
 
   const getRoleIcon = () => {
@@ -140,7 +173,7 @@ function Nav() {
           href={`https://wa.me/${phoneNumber}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="fixed bottom-4 animate-bounce flex justify-between right-4 bg-green-500 text-3xl hover:bg-green-600 text-white py-2 px-4 p-6 rounded-full z-10"
+          className="fixed bottom-4 animate-bounce flex justify-between right-4 bg-green-500 text-3xl hover:bg-green-600 text-white py-2 px-4 p-6 rounded-full z-[60]"
         >
           <Icon icon="akar-icons:whatsapp-fill" />
         </a>
@@ -155,7 +188,7 @@ function Nav() {
           </Link>
 
           {/* Desktop Navigation Menu */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-6">
             <Link to="/" className="text-[#38B496] hover:text-[#F15C26] font-medium transition-colors">
               {t("home")}
             </Link>
@@ -163,7 +196,6 @@ function Nav() {
               Properties
             </Link>
             <Link to="/map-search" className="text-[#38B496] hover:text-[#F15C26] font-medium transition-colors flex items-center">
-              <Icon icon="mdi:map-search" className="mr-1" />
               Map Search
             </Link>
             
@@ -242,28 +274,47 @@ function Nav() {
           </div>
 
           <div className="flex items-center space-x-4">
-            {/* Search Bar */}
-            <div className="hidden md:flex relative">
+            {/* Desktop Search Bar */}
+            <div className="hidden sm:flex relative items-center">
+              <span className="absolute left-3 text-gray-400 pointer-events-none">
+                <Icon icon="mdi:magnify" width="22" height="22" />
+              </span>
               <input
-                className="border p-2 bg-gray-200 w-64 rounded-md focus:outline-none"
-                placeholder={t("searchPlaceholder")}
+                ref={searchInputRef}
+                className="pl-10 pr-10 py-2 w-64 rounded-full border border-gray-200 bg-gray-100 focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all outline-none shadow-sm text-sm"
+                placeholder={t("searchPlaceholder") || "Search for properties..."}
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter') handleSearch(); }}
+                aria-label="Search properties"
               />
+              {searchTerm && (
+                <button
+                  className="absolute right-8 text-gray-400 hover:text-red-500 focus:outline-none"
+                  onClick={() => setSearchTerm("")}
+                  tabIndex={0}
+                  aria-label="Clear search"
+                >
+                  <Icon icon="mdi:close-circle" width="20" />
+                </button>
+              )}
               <button
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#38B496] hover:bg-[#F15C26] text-white px-3 py-1 rounded-md"
+                className="absolute right-2 text-[#38B496] hover:text-[#F15C26] focus:outline-none"
                 onClick={handleSearch}
+                aria-label="Search"
               >
-                <img src={searchIcon} alt="Search" className="w-5" />
+                <Icon icon="mdi:magnify" width="22" height="22" />
               </button>
             </div>
             
+            {/* Mobile Search Icon */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="md:hidden text-[#38B496] hover:text-[#F15C26]"
+              className="sm:hidden text-[#38B496] hover:text-[#F15C26] p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-[#38B496]"
+              aria-label="Open search"
             >
-              <Icon icon="mdi:magnify" width="32" height="32" />
+              <Icon icon="mdi:magnify" width="28" height="28" />
             </button>
             
             {/* Cart */}
@@ -285,7 +336,12 @@ function Nav() {
             {isAuthenticated() ? (
               <div className="relative">
                 <button
-                  onClick={() => setMenuOpen(!menuOpen)}
+                  onClick={() => {
+                    setUserMenuOpen((open) => {
+                      if (!open) setMobileMenuOpen(false);
+                      return !open;
+                    });
+                  }}
                   className="flex items-center space-x-2 text-[#38B496] hover:text-[#F15C26] p-2 rounded-lg"
                 >
                   <Icon icon={getRoleIcon()} className={`text-xl ${getRoleColor()}`} />
@@ -296,7 +352,7 @@ function Nav() {
                 </button>
                 
                 {/* User Dropdown Menu */}
-                <div className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border ${menuOpen ? 'block' : 'hidden'}`}>
+                <div className={`absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border ${userMenuOpen ? 'block' : 'hidden'}`}>
                   <div className="px-4 py-3 border-b">
                     <p className="text-sm font-medium text-gray-900">{getUserDisplayName()}</p>
                     <p className="text-xs text-gray-500">{getUserRole()}</p>
@@ -306,7 +362,7 @@ function Nav() {
                     <Link
                       to={getDashboardPath()}
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => setUserMenuOpen(false)}
                     >
                       <Icon icon="mdi:view-dashboard" className="mr-2" />
                       Dashboard
@@ -316,7 +372,7 @@ function Nav() {
                       <Link
                         to="/client/profile"
                         className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                        onClick={() => setMenuOpen(false)}
+                        onClick={() => setUserMenuOpen(false)}
                       >
                         <Icon icon="mdi:account-edit" className="mr-2" />
                         Profile
@@ -345,8 +401,13 @@ function Nav() {
 
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden p-2 rounded-lg focus:outline-none hover:bg-gray-200"
+              onClick={() => {
+                setMobileMenuOpen((open) => {
+                  if (!open) setUserMenuOpen(false);
+                  return !open;
+                });
+              }}
+              className="md:hidden p-2 rounded-lg focus:outline-none hover:bg-gray-200"
             >
               <svg
                 className="w-6 h-6"
@@ -359,42 +420,60 @@ function Nav() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d={menuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
+                  d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16m-7 6h7"}
                 />
               </svg>
             </button>
           </div>
-          
-          {/* Mobile Search Bar */}
-          <div
-            className={`${
-              searchOpen ? "flex" : "hidden"
-            } absolute top-14 left-0 w-full bg-white shadow-md p-3 flex items-center space-x-2`}
-          >
+        </div>
+
+        {/* Mobile Search Bar (Animated Dropdown) */}
+        <div
+          className={`sm:hidden fixed top-0 left-0 w-full z-[70] bg-white shadow-lg transition-transform duration-300 ${searchOpen ? 'translate-y-0' : '-translate-y-full'}`}
+          style={{ boxShadow: searchOpen ? '0 4px 24px rgba(56,180,150,0.08)' : 'none' }}
+        >
+          <div className="flex items-center px-4 py-3 gap-2">
+            <span className="text-gray-400">
+              <Icon icon="mdi:magnify" width="24" height="24" />
+            </span>
             <input
-              className="border p-2 bg-gray-200 flex-grow rounded-md focus:outline-none"
-              placeholder="Search for properties..."
+              ref={searchInputRef}
+              className="flex-1 px-3 py-2 rounded-full border border-gray-200 bg-gray-100 focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all outline-none shadow-sm text-base"
+              placeholder={t("searchPlaceholder") || "Search for properties..."}
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Search properties"
             />
+            {searchTerm && (
+              <button
+                className="text-gray-400 hover:text-red-500 focus:outline-none"
+                onClick={() => setSearchTerm("")}
+                tabIndex={0}
+                aria-label="Clear search"
+              >
+                <Icon icon="mdi:close-circle" width="24" />
+              </button>
+            )}
             <button
-              className="bg-[#38B496] hover:bg-[#F15C26] text-white px-3 py-2 rounded-md"
+              className="text-[#38B496] hover:text-[#F15C26] focus:outline-none px-2"
               onClick={handleSearch}
+              aria-label="Search"
             >
-              Search
+              <Icon icon="mdi:magnify" width="24" height="24" />
             </button>
             <button
-              className="text-gray-600 hover:text-red-500"
+              className="ml-2 text-gray-400 hover:text-red-500 focus:outline-none"
               onClick={() => setSearchOpen(false)}
+              aria-label="Close search"
             >
-              <Icon icon="mdi:close-circle" width="28" />
+              <Icon icon="mdi:close" width="28" />
             </button>
           </div>
         </div>
 
         {/* Mobile Navigation Menu */}
-        <div className={`lg:hidden transition-all duration-300 ${menuOpen ? "block" : "hidden"} bg-white w-full border-t`}>
+        <div className={`md:hidden transition-all duration-300 ${mobileMenuOpen ? "block" : "hidden"} bg-white w-full border-t z-[70]`}>
           <ul className="flex flex-col items-center space-y-4 py-4">
             <li>
               <Link to="/" className="text-[#38B496] hover:text-[#F15C26] font-medium">{t("home")}</Link>
@@ -422,7 +501,7 @@ function Nav() {
                       key={index}
                       to={item.path}
                       className="block text-sm text-gray-600 hover:text-[#38B496] py-1"
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                     >
                       <Icon icon={item.icon} className="mr-2 inline" />
                       {item.label}
@@ -445,7 +524,7 @@ function Nav() {
                       key={index}
                       to={item.path}
                       className="block text-sm text-gray-600 hover:text-[#38B496] py-1"
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => setMobileMenuOpen(false)}
                     >
                       <Icon icon={item.icon} className="mr-2 inline" />
                       {item.label}
