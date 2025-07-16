@@ -116,7 +116,7 @@ const PropertiesMapView = ({ properties }) => {
           }
           
           const imageUrl = property.images && property.images.length > 0 
-            ? `https://bambe.shop${property.images[0].url}` 
+            ? `http://localhost:4800${property.images[0].url}` 
             : "https://via.placeholder.com/150";
 
           return (

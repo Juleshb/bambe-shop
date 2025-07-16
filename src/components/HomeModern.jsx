@@ -347,7 +347,7 @@ function HomeModern() {
                       <div className="relative overflow-hidden">
                         <img
                           className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                          src={property.images?.length > 0 ? `https://bambe.shop${property.images[0].url}` : featuredProperty}
+                          src={property.images?.length > 0 ? `http://localhost:4800${property.images[0].url}` : featuredProperty}
                           alt={property.title}
                         />
                         <div className="absolute top-4 left-4 bg-[#F15C26] text-white px-3 py-1 text-sm rounded-full font-medium">

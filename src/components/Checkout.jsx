@@ -79,7 +79,7 @@ function Checkout() {
     };
   
     try {
-      const response = await axios.post("https://bambe.shop/api/productorders", order, {
+      const response = await axios.post("http://localhost:4800/api/productorders", order, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -114,7 +114,7 @@ function Checkout() {
                           <img
                             src={
                               item.images && item.images.length > 0
-                                ? `https://bambe.shop${item.images[0].url}`
+                                ? `http://localhost:4800${item.images[0].url}`
                                 : "placeholder-image-url"
                             }
                             className="w-16 md:w-32 max-w-full max-h-full"

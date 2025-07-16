@@ -13,7 +13,7 @@ const MapComponent = ({ coordinates, image, price, beds, propertyAddress }) => {
     : [40.7128, -74.006]; // Default New York coordinates
 
   const imageUrl = Array.isArray(image) && image.length > 0
-    ? `https://bambe.shop${image[0].image_url}`
+    ? `http://localhost:4800${image[0].image_url}`
     : "https://via.placeholder.com/150"; // Default image
 
   const addressText = Array.isArray(propertyAddress)

@@ -248,7 +248,7 @@ const AgentReports = () => {
                       <div className="flex-shrink-0">
                         {listing.images && listing.images.length > 0 ? (
                           <img
-                            src={`https://bambe.shop${listing.images[0].url}`}
+                            src={`http://localhost:4800${listing.images[0].url}`}
                             alt={listing.name}
                             className="w-12 h-12 object-cover rounded-lg"
                           />

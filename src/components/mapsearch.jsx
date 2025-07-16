@@ -265,7 +265,7 @@ const MapSearchPage = () => {
         {property.images.length > 0 && (
           <div className="relative h-40 overflow-hidden">
             <img 
-              src={`https://bambe.shop${property.images[0].url}`} 
+              src={`http://localhost:4800${property.images[0].url}`} 
               alt={property.name}
               className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             />
@@ -402,7 +402,7 @@ const MapSearchPage = () => {
                             {property.images.length > 0 ? (
                               <div className="relative w-16 h-16 flex-shrink-0 rounded overflow-hidden">
                                 <img 
-                                  src={`https://bambe.shop${property.images[0].url}`}
+                                  src={`http://localhost:4800${property.images[0].url}`}
                                   alt={property.name}
                                   className="w-full h-full object-cover"
                                 />

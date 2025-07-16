@@ -93,7 +93,7 @@ import { Icon } from "@iconify/react";
 
                   <td>
                     <img
-                    src={`https://bambe.shop${product.image_url}`}
+                    src={`http://localhost:4800${product.image_url}`}
                     alt={product.name}
                       className="w-16 h-16 object-cover"
                     />
@@ -142,7 +142,7 @@ import { Icon } from "@iconify/react";
               {currentProduct.images.map((image) => (
                 <img
                   key={image.id}
-                  src={`https://bambe.shop${image.url}`}
+                  src={`http://localhost:4800${image.url}`}
                   alt={currentProduct.name}
                   className="w-20 h-20 object-cover"
                 />

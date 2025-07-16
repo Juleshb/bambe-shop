@@ -68,7 +68,7 @@ function Cart() {
                     <img
                       src={
                         item.images && item.images.length > 0
-                          ? `https://bambe.shop${item.images[0].url}`
+                          ? `http://localhost:4800${item.images[0].url}`
                           : "placeholder-image-url"
                       }
                       className="w-16 md:w-32 max-w-full max-h-full"

@@ -121,7 +121,7 @@ const AgentListings = () => {
               <div className="relative h-48">
                 {listing.images && listing.images.length > 0 ? (
                   <img
-                    src={`https://bambe.shop${listing.images[0].url}`}
+                    src={`http://localhost:4800${listing.images[0].url}`}
                     alt={listing.name}
                     className="w-full h-full object-cover"
                   />

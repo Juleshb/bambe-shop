@@ -11,7 +11,7 @@ function ProductDetails() {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(null);
    const { addToCart } = useContext(CartContext);
-  const API = `https://bambe.shop/api/products/single/${id}`;
+  const API = `http://localhost:4800/api/products/single/${id}`;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -57,7 +57,7 @@ function ProductDetails() {
                             <div className="swiper-slide">
                                 <div className="block">
                                 <img 
-                                src={`https://bambe.shop${product?.images?.[0]?.url}`}
+                                src={`http://localhost:4800${product?.images?.[0]?.url}`}
                                 
                                 alt={product?.name}
                                          className="max-lg:mx-auto rounded-2xl object-cover"/>
@@ -113,7 +113,7 @@ function ProductDetails() {
 
                             <div className="color-box group">
                                 <div>
-                                    <img src={`https://bambe.shop${product?.images?.[0]?.url}`} alt={product.name}
+                                    <img src={`http://localhost:4800${product?.images?.[0]?.url}`} alt={product.name}
                                         className="border-2 border-gray-100 rounded-xl transition-all duration-500 group-hover:border-[#38B496] object-cover"
                                         />
                                     <p

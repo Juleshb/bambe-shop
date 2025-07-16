@@ -112,7 +112,7 @@ function Homerealestate() {
                 <Link to={`/listing/${product.id}`}>
                   <img
                     className="h-36 sm:h-44 object-contain"
-                    src={product.images?.length > 0 ? `https://bambe.shop${product.images[0].url}` : "placeholder-image-url"}
+                    src={product.images?.length > 0 ? `http://localhost:4800${product.images[0].url}` : "placeholder-image-url"}
                     alt={product.name}
                   />
                 </Link>
@@ -215,7 +215,7 @@ function Homerealestate() {
                 <Link to={`/product/${product.id}`}>
                   <img
                     className="h-36 sm:h-44 object-contain"
-                    src={product.images?.length > 0 ? `https://bambe.shop${product.images[0].url}` : "placeholder-image-url"}
+                    src={product.images?.length > 0 ? `http://localhost:4800${product.images[0].url}` : "placeholder-image-url"}
                     alt={product.name}
                   />
                 </Link>

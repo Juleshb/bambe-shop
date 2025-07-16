@@ -313,7 +313,7 @@ const AdminProperties = () => {
                       <div className="flex-shrink-0 h-12 w-12">
                         {property.images && property.images.length > 0 ? (
                           <img
-                            src={`https://bambe.shop${property.images[0].url}`}
+                            src={`http://localhost:4800${property.images[0].url}`}
                             alt={property.title || property.name}
                             className="h-12 w-12 object-cover rounded-lg"
                           />
@@ -414,7 +414,7 @@ const AdminProperties = () => {
                 {selectedProperty.images.map((image, index) => (
                   <div key={index} className="relative group">
                     <img
-                      src={`https://bambe.shop${image.url}`}
+                      src={`http://localhost:4800${image.url}`}
                       alt={`${selectedProperty.title || selectedProperty.name} - ${index + 1}`}
                       className="w-full h-48 object-cover rounded-lg"
                     />

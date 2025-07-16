@@ -31,7 +31,7 @@ function PropertyDetails() {
 
   // Fetch listing data from API
   useEffect(() => {
-    fetch(`https://bambe.shop/api/listings/single/${id}`)
+    fetch(`http://localhost:4800/api/listings/single/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProperty(data);
@@ -203,7 +203,7 @@ function PropertyDetails() {
               >
                 <div className="relative">
                   <img
-                    src={`https://bambe.shop${property.images[currentIndex]?.url}`}
+                    src={`http://localhost:4800${property.images[currentIndex]?.url}`}
                     alt={`${property.name} - Image ${currentIndex + 1}`}
                     className="w-full h-[400px] lg:h-[500px] object-cover"
                   />
@@ -242,7 +242,7 @@ function PropertyDetails() {
                         }`}
                       >
                         <img
-                          src={`https://bambe.shop${img.url}`}
+                          src={`http://localhost:4800${img.url}`}
                           alt={`Thumbnail ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
