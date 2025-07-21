@@ -3,7 +3,14 @@ import { useTranslation } from "react-i18next";
 import Footer from "./navs/Footer";
 import Nav from "./navs/Nav";
 import { Link } from "react-router-dom";
-import heroImage from "./assets/nn.jpg";
+import hero1 from "./assets/1.jpg";
+import hero2 from "./assets/2.png";
+import hero3 from "./assets/3.jpeg";
+import hero4 from "./assets/4.jpg";
+import hero5 from "./assets/5.jpg";
+import hero6 from "./assets/6.jpg";
+import hero7 from "./assets/7.webp";
+
 import featuredProperty from "./assets/nn2.jpg";
 import axiosInstance from "./utils/axios";
 import { CartContext } from "./CartContext";
@@ -24,6 +31,18 @@ function HomeModern() {
     priceRange: '',
     bedrooms: ''
   });
+
+  // Sliding hero images
+  const heroImages = [hero1, hero2, hero3, hero4, hero5, hero6, hero7];
+  const [heroIndex, setHeroIndex] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
+  const handlePrevHero = () => setHeroIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+  const handleNextHero = () => setHeroIndex((prev) => (prev + 1) % heroImages.length);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -109,92 +128,107 @@ function HomeModern() {
       <Nav />
 
       <div className="min-h-screen bg-gray-50">
-        {/* Hero Section - Modern Design */}
-        <section className="relative h-screen flex items-center justify-center overflow-hidden">
-          {/* Background Video/Image */}
-          <div className="absolute inset-0">
-            <img 
-              src={heroImage} 
-              alt="Luxury Property" 
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30"></div>
+        {/* Hero Section - Apple-like Welcome with Sliding Photos */}
+        <section className="relative h-[70vh] flex items-center justify-center overflow-hidden bg-black">
+          {/* Sliding Photo Carousel */}
+          <div className="absolute inset-0 w-full h-full">
+            <AnimatePresence initial={false} mode="wait">
+              <motion.img
+                key={heroIndex}
+                src={heroImages[heroIndex]}
+                alt="Welcome Slide"
+                className="w-full h-full object-cover"
+                initial={{ opacity: 0, scale: 1.05 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.7 }}
+              />
+            </AnimatePresence>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
           </div>
-
           {/* Hero Content */}
-          <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
+          <div className="relative z-10 text-center text-white px-4 max-w-2xl mx-auto">
             <motion.div
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-                Find Your
-                <span className="text-[#38B496] block">Dream Home</span>
+              <h1 className="text-3xl md:text-4xl font-bold mb-2 tracking-tight">
+                Welcome to <span className="text-[#38B496]">Umuhuza Online</span>  Real Estate
               </h1>
-              <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-3xl mx-auto">
-                Discover the perfect property in Rwanda's most desirable locations. 
-                From luxury villas to modern apartments, we have everything you need.
+              <p className="text-base text-white/90 mb-6 max-w-xl mx-auto">
+                Discover Rwanda's best properties. Minimal, modern, and made for you.
               </p>
-              
-              {/* Hero Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link 
-                    to="/listings" 
-                    className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-8 py-4 rounded-full font-semibold text-lg flex items-center justify-center transition-all duration-300 shadow-lg hover:shadow-xl"
-                  >
-                    <Icon icon="mdi:home-search" className="mr-2 text-xl" />
-                    Explore Properties
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Link 
-                    to="/contact" 
-                    className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-8 py-4 rounded-full font-semibold text-lg border-2 border-white/30 flex items-center justify-center transition-all duration-300"
-                  >
-                    <Icon icon="mdi:phone" className="mr-2 text-xl" />
-                    Contact Agent
-                  </Link>
-                </motion.div>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+                <Link 
+                  to="/listings" 
+                  className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-6 py-3 rounded-full font-medium text-sm flex items-center justify-center transition-all duration-300 shadow hover:shadow-lg"
+                >
+                  <Icon icon="mdi:home-search" className="mr-2 text-base" />
+                  Explore Properties
+                </Link>
+                <Link 
+                  to="/contact" 
+                  className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-6 py-3 rounded-full font-medium text-sm border-2 border-white/30 flex items-center justify-center transition-all duration-300"
+                >
+                  <Icon icon="mdi:phone" className="mr-2 text-base" />
+                  Contact Agent
+                </Link>
+              </div>
+              {/* Carousel Arrows */}
+              <div className="flex justify-center gap-4 mt-2">
+                <button onClick={handlePrevHero} className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all">
+                  <Icon icon="mdi:chevron-left" className="text-2xl" />
+                </button>
+                <button onClick={handleNextHero} className="p-2 rounded-full bg-white/20 hover:bg-white/40 text-white transition-all">
+                  <Icon icon="mdi:chevron-right" className="text-2xl" />
+                </button>
+              </div>
+              {/* Dots */}
+              <div className="flex justify-center gap-2 mt-2">
+                {heroImages.map((_, idx) => (
+                  <span
+                    key={idx}
+                    className={`w-2 h-2 rounded-full ${heroIndex === idx ? 'bg-[#38B496]' : 'bg-white/40'} inline-block`}
+                  />
+                ))}
               </div>
             </motion.div>
           </div>
-
-          {/* Scroll Indicator */}
-          <motion.div 
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-              <div className="w-1 h-3 bg-white/70 rounded-full mt-2"></div>
-            </div>
-          </motion.div>
         </section>
 
         {/* Advanced Search Section */}
         <section className="relative -mt-20 z-20 px-4">
           <div className="max-w-6xl mx-auto">
             <motion.div 
-              className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-100"
+              className="relative rounded-xl shadow-sm p-6 border border-gray-200 overflow-hidden"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">Find Your Perfect Property</h2>
-                <p className="text-gray-600">Use our advanced search to find exactly what you're looking for</p>
+              {/* Liquid Grass Background */}
+              <div className="absolute inset-0 z-0" style={{
+                background: 'linear-gradient(135deg, #38B496 0%, #4fd67c 100%)',
+                opacity: 0.18
+              }} />
+              {/* Wavy SVG overlay for liquid effect */}
+              <svg className="absolute left-0 bottom-0 w-full h-12 z-0" viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{opacity: 0.25}}>
+                <path d="M0,40 C360,100 1080,0 1440,60 L1440,100 L0,100 Z" fill="#38B496" />
+              </svg>
+
+              <div className="relative z-10 text-center mb-6">
+                <h2 className="text-xl font-semibold text-white mb-1 tracking-tight">Find Your Perfect Property</h2>
+                <p className="text-xs text-white">Use our advanced search to find exactly what you're looking for</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                 <div>
                   <label className="block text-gray-700 text-sm font-semibold mb-2">
                     <Icon icon="mdi:map-marker" className="mr-1" />
                     Location
                   </label>
                   <select 
-                    className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all text-sm"
                     value={searchFilters.location}
                     onChange={(e) => setSearchFilters({...searchFilters, location: e.target.value})}
                   >
@@ -212,7 +246,7 @@ function HomeModern() {
                     Property Type
                   </label>
                   <select 
-                    className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all text-sm"
                     value={searchFilters.propertyType}
                     onChange={(e) => setSearchFilters({...searchFilters, propertyType: e.target.value})}
                   >
@@ -230,7 +264,7 @@ function HomeModern() {
                     Price Range
                   </label>
                   <select 
-                    className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all text-sm"
                     value={searchFilters.priceRange}
                     onChange={(e) => setSearchFilters({...searchFilters, priceRange: e.target.value})}
                   >
@@ -248,7 +282,7 @@ function HomeModern() {
                     Bedrooms
                   </label>
                   <select 
-                    className="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all"
+                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] transition-all text-sm"
                     value={searchFilters.bedrooms}
                     onChange={(e) => setSearchFilters({...searchFilters, bedrooms: e.target.value})}
                   >
@@ -262,12 +296,12 @@ function HomeModern() {
 
                 <div className="flex items-end">
                   <motion.button 
-                    className="w-full bg-gradient-to-r from-[#38B496] to-[#F15C26] hover:from-[#2e9c81] hover:to-[#e04b1a] text-white p-4 rounded-xl font-semibold transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center"
+                    className="w-full bg-[#38B496] hover:bg-[#2e9c81] text-white p-3 rounded-lg font-medium transition-all duration-200 flex items-center justify-center text-sm"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={handleSearch}
                   >
-                    <Icon icon="mdi:magnify" className="mr-2 text-xl" />
+                    <Icon icon="mdi:magnify" className="mr-2 text-base" />
                     Search
                   </motion.button>
                 </div>
@@ -298,8 +332,8 @@ function HomeModern() {
                   <div className="w-16 h-16 bg-gradient-to-br from-[#38B496] to-[#F15C26] rounded-full flex items-center justify-center mx-auto mb-4">
                     <Icon icon={stat.icon} className="text-white text-2xl" />
                   </div>
-                  <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{stat.number}</h3>
-                  <p className="text-gray-600 font-medium">{stat.label}</p>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{stat.number}</h3>
+                  <p className="text-gray-600 text-sm font-medium">{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>
@@ -316,10 +350,10 @@ function HomeModern() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                 Featured Properties
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base text-gray-600 max-w-2xl mx-auto">
                 Discover our handpicked selection of premium properties in the most sought-after locations
               </p>
             </motion.div>
@@ -336,7 +370,7 @@ function HomeModern() {
                 >
                   {properties.slice(currentSlide * 3, (currentSlide + 1) * 3).map((property, index) => (
                     <motion.div 
-                      key={property.id}
+                      key={property.listing_id}
                       className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group border border-gray-100"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -347,7 +381,7 @@ function HomeModern() {
                       <div className="relative overflow-hidden">
                         <img
                           className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                          src={property.images?.length > 0 ? `http://localhost:4800${property.images[0].url}` : featuredProperty}
+                          src={property.images?.length > 0 ? `https://bambe.shop${property.images[0].image_url}` : featuredProperty}
                           alt={property.title}
                         />
                         <div className="absolute top-3 left-3">
@@ -399,7 +433,7 @@ function HomeModern() {
                           </div>
                           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link 
-                              to={`/listing/${property.id}`} 
+                              to={`/listing/${property.listing_id}`} 
                               className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 shadow-md hover:shadow-lg flex items-center"
                             >
                               View
@@ -457,10 +491,10 @@ function HomeModern() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                 Explore Property Types
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base text-gray-600 max-w-2xl mx-auto">
                 Find the perfect property type that matches your lifestyle and preferences
               </p>
             </motion.div>
@@ -514,10 +548,10 @@ function HomeModern() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                 Why Choose Us
               </h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              <p className="text-base text-gray-600 max-w-2xl mx-auto">
                 We provide exceptional service and expertise to make your property journey seamless
               </p>
             </motion.div>
@@ -554,10 +588,10 @@ function HomeModern() {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4">
                 Ready to Find Your Dream Home?
               </h2>
-              <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+              <p className="text-base mb-6 text-white/90 max-w-2xl mx-auto">
                 Join thousands of satisfied customers who found their perfect property with us
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

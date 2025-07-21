@@ -27,7 +27,7 @@ export default function ManageCategories() {
     if (editId) {
       // Update existing category
       try {
-        await axiosInstance.put(`/categories/${editId}`, { name });
+        await axiosInstance.put(`/api/categories/${editId}`, { name });
         setMessage("Category updated successfully!");
         setErrorMessage("");
         setName("");
@@ -42,7 +42,7 @@ export default function ManageCategories() {
     } else {
       // Create new category
       try {
-        await axiosInstance.post("/categories", { name });
+        await axiosInstance.post("/api/categories", { name });
         setMessage("Category created successfully!");
         setErrorMessage("");
         setName("");
@@ -63,7 +63,7 @@ export default function ManageCategories() {
 
   const deleteCategory = async (id) => {
     try {
-      await axiosInstance.delete(`/categories/${id}`);
+      await axiosInstance.delete(`/api/categories/${id}`);
       setMessage("Category deleted successfully!");
       setErrorMessage("");
       fetchCategories(); // Refresh list

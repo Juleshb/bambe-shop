@@ -265,7 +265,7 @@ const MapSearchPage = () => {
         {property.images.length > 0 && (
           <div className="relative h-40 overflow-hidden">
             <img 
-              src={`http://localhost:4800${property.images[0].url}`} 
+              src={`https://bambe.shop${property.images[0].image_url}`} 
               alt={property.name}
               className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
             />
@@ -283,7 +283,7 @@ const MapSearchPage = () => {
               {t(property.listing_type)}
             </span>
             <Link 
-              to={`/listing/${property.id}`}
+              to={`/listing/${property.listing_id}`}
               className="text-[#38B496] text-sm font-medium hover:underline flex items-center"
             >
               {t('View Details')}
@@ -392,9 +392,9 @@ const MapSearchPage = () => {
                     <div className="divide-y divide-gray-100">
                       {properties.map(property => (
                         <div 
-                          key={property.id} 
+                          key={property.listing_id} 
                           className={`p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
-                            selectedProperty?.id === property.id ? 'bg-blue-50' : ''
+                            selectedProperty?.id === property.listing_id ? 'bg-blue-50' : ''
                           }`}
                           onClick={() => handleMarkerClick(property)}
                         >
@@ -402,7 +402,7 @@ const MapSearchPage = () => {
                             {property.images.length > 0 ? (
                               <div className="relative w-16 h-16 flex-shrink-0 rounded overflow-hidden">
                                 <img 
-                                  src={`http://localhost:4800${property.images[0].url}`}
+                                  src={`https://bambe.shop${property.images[0].image_url}`}
                                   alt={property.name}
                                   className="w-full h-full object-cover"
                                 />
@@ -526,9 +526,9 @@ const MapSearchPage = () => {
 
                 return (
                   <Marker
-                    key={property.id}
+                    key={property.listing_id}
                     position={[coordinates.lat, coordinates.lng]}
-                    icon={selectedProperty?.id === property.id ? highlightedIcon : customIcon}
+                    icon={selectedProperty?.id === property.listing_id ? highlightedIcon : customIcon}
                     eventHandlers={{
                       click: () => handleMarkerClick(property),
                     }}

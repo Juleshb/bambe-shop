@@ -29,6 +29,8 @@ import AgentAddListing from "./components/Agent/AgentAddListing";
 import AgentClients from "./components/Agent/AgentClients";
 import AgentInquiries from "./components/Agent/AgentInquiries";
 import AgentReports from "./components/Agent/AgentReports";
+import AgentRegister from "./components/Agent/AgentRegister";
+import AgentPayment from "./components/Agent/AgentPayment";
 
 // Client Components
 import ClientDashboard from "./components/Client/ClientDashboard";
@@ -43,6 +45,7 @@ import AdminProperties from "./components/Admin/AdminProperties";
 import AdminReports from "./components/Admin/AdminReports";
 
 import Logout from "./components/Admin/Logout";
+import ResetPassword from "./components/ResetPassword";
 
 function App() { 
   return (
@@ -52,6 +55,7 @@ function App() {
           <Routes>      
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} /> 
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/" element={<Home />} /> 
             <Route path="/about" element={<About />} /> 
             <Route path="/Contact" element={<Contact />} /> 
@@ -65,6 +69,11 @@ function App() {
             <Route path="/search-results" element={<SearchResults />} />
             <Route path="/listings" element={<PropertyListing />} />
             <Route path="/map-search" element={<MapSearchPage />} />
+
+            {/* Public Agent Registration Route */}
+            <Route path="/agent-register" element={<AgentRegister />} />
+            {/* Public Agent Payment Route */}
+            <Route path="/agent-payment" element={<AgentPayment />} />
 
             {/* Client Routes */}
             <Route path="/client-login" element={<ClientLogin />} />

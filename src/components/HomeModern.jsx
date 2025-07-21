@@ -336,7 +336,7 @@ function HomeModern() {
                 >
                   {properties.slice(currentSlide * 3, (currentSlide + 1) * 3).map((property, index) => (
                     <motion.div 
-                      key={property.id}
+                      key={property.listing_id}
                       className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
                       initial={{ opacity: 0, y: 50 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -347,7 +347,7 @@ function HomeModern() {
                       <div className="relative overflow-hidden">
                         <img
                           className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                          src={property.images?.length > 0 ? `http://localhost:4800${property.images[0].url}` : featuredProperty}
+                          src={property.images?.length > 0 ? `https://bambe.shop${property.images[0].image_url}` : featuredProperty}
                           alt={property.title}
                         />
                         <div className="absolute top-4 left-4 bg-[#F15C26] text-white px-3 py-1 text-sm rounded-full font-medium">
@@ -389,7 +389,7 @@ function HomeModern() {
                           </span>
                           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                             <Link 
-                              to={`/listing/${property.id}`} 
+                              to={`/listing/${property.listing_id}`} 
                               className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-6 py-2 rounded-full font-medium transition-colors flex items-center"
                             >
                               View Details

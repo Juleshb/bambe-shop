@@ -491,7 +491,7 @@ export default function ListingManagement() {
                       {listing.images?.length > 0 ? (
                         <div className="flex items-center">
                           <img
-                            src={`http://localhost:4800${listing.images[0].url}`}
+                            src={`https://bambe.shop${listing.images[0].image_url}`}
                             alt={listing.title}
                             className="h-10 w-10 object-cover rounded"
                             onClick={() => handleViewListing(listing)}
@@ -626,7 +626,7 @@ export default function ListingManagement() {
                       {currentListing.images.map((image, index) => (
                         <div key={index} className="relative">
                           <img
-                            src={`http://localhost:4800${image.url}`}
+                            src={`https://bambe.shop${image.image_url}`}
                             alt={`${currentListing.title} - ${index + 1}`}
                             className="w-full h-48 object-cover rounded-lg"
                           />

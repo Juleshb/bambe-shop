@@ -31,7 +31,7 @@ function PropertyDetails() {
 
   // Fetch listing data from API
   useEffect(() => {
-    fetch(`http://localhost:4800/api/listings/single/${id}`)
+    fetch(`https://bambe.shop/api/listings/single/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProperty(data);
@@ -203,7 +203,7 @@ function PropertyDetails() {
               >
                 <div className="relative">
                   <img
-                    src={`http://localhost:4800${property.images[currentIndex]?.url}`}
+                    src={`https://bambe.shop${property.images[currentIndex]?.image_url}`}
                     alt={`${property.name} - Image ${currentIndex + 1}`}
                     className="w-full h-[400px] lg:h-[500px] object-cover"
                   />
@@ -242,7 +242,7 @@ function PropertyDetails() {
                         }`}
                       >
                         <img
-                          src={`http://localhost:4800${img.url}`}
+                          src={`https://bambe.shop${img.image_url}`}
                           alt={`Thumbnail ${index + 1}`}
                           className="w-full h-full object-cover"
                         />
@@ -282,10 +282,7 @@ function PropertyDetails() {
                 <div className="h-80 rounded-lg overflow-hidden">
                   <MapComponent 
                     coordinates={property.coordinates}
-                    image={property.images[0]?.url}
-                    price={property.price}
-                    beds={property.listing_type}
-                    propertyAddress={property.location} 
+                    property={property}
                   />
                 </div>
               </motion.div>

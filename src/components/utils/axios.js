@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = "http://localhost:4800";
+const URL = "https://bambe.shop";
 const axiosInstance = axios.create({
     baseURL: `${URL}`,
   });
@@ -16,9 +16,8 @@ const axiosInstance = axios.create({
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
-      if (config.data instanceof FormData) {
-        config.headers['Content-Type'] = 'multipart/form-data';
-      } else {
+      // DO NOT set Content-Type for FormData; let Axios handle it
+      if (!(config.data instanceof FormData)) {
         config.headers['Content-Type'] = 'application/json';
       }
       return config;

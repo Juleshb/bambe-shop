@@ -15,6 +15,10 @@ const UnifiedLogin = ({ showModal, onClose, onSuccess }) => {
   const [userType, setUserType] = useState('auto'); // auto, admin, client
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetMsg, setResetMsg] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -44,15 +48,17 @@ const UnifiedLogin = ({ showModal, onClose, onSuccess }) => {
           localStorage.setItem('userData', JSON.stringify(userData.user));
           
           // Update auth context
-          login(userData.user, 'admin');
-          
-          onSuccess && onSuccess(userData.user);
-          onClose();
-          
-          // Redirect based on role
           if (userData.user.role === 'admin') {
+            login(userData.user, 'admin');
+            localStorage.setItem('userType', 'admin');
+            onSuccess && onSuccess(userData.user);
+            onClose();
             navigate('/admin-dashboard');
           } else if (userData.user.role === 'agent') {
+            login(userData.user, 'agent');
+            localStorage.setItem('userType', 'agent');
+            onSuccess && onSuccess(userData.user);
+            onClose();
             navigate('/agent-dashboard');
           }
           return;
@@ -97,106 +103,99 @@ const UnifiedLogin = ({ showModal, onClose, onSuccess }) => {
     setError('');
   };
 
+  const handleResetSubmit = async (e) => {
+    e.preventDefault();
+    setResetLoading(true);
+    setResetMsg("");
+    try {
+      const res = await fetch("https://bambe.shop/api/client/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: resetEmail })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setResetMsg("Password reset instructions sent to your email.");
+      } else {
+        setResetMsg(data.error || "Failed to send reset email.");
+      }
+    } catch (err) {
+      setResetMsg("Failed to send reset email.");
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
   return (
     <Modal show={showModal} onClose={onClose} size="md">
-      <Modal.Header>
-        <div className="flex items-center">
-          <Icon icon="mdi:login" className="text-blue-600 text-2xl mr-2" />
-          <span>Login to Your Account</span>
+      <div className="bg-white/90 rounded-2xl shadow-lg p-6 max-w-md mx-auto relative" style={{backdropFilter: 'blur(2px)'}}>
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 focus:outline-none text-xl"
+          aria-label="Close"
+        >
+          <Icon icon="mdi:close" />
+        </button>
+        <div className="flex flex-col items-center mb-4">
+          <Icon icon="mdi:login" className="text-[#38B496] text-3xl mb-1" />
+          <h2 className="text-lg font-bold text-gray-900 mb-1 tracking-tight">Sign In to Your Account</h2>
         </div>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="space-y-6">
+        {!showReset ? (
+          <>
           {/* User Type Selection */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Login as:
-            </label>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="mb-4">
+              <div className="flex justify-center gap-2 mb-1">
               <button
                 type="button"
                 onClick={() => handleUserTypeChange('auto')}
-                className={`p-3 rounded-lg border-2 text-center transition-colors ${
-                  userType === 'auto'
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <Icon icon="mdi:auto-fix" className="text-xl mx-auto mb-1" />
-                <div className="text-xs font-medium">Auto Detect</div>
-              </button>
+                  className={`px-4 py-2 rounded-lg text-xs font-medium transition-all ${userType === 'auto' ? 'bg-[#38B496] text-white' : 'bg-[#f5f5f7] text-gray-700 hover:bg-[#e5e5e7]'}`}
+                >Auto Detect</button>
               <button
                 type="button"
                 onClick={() => handleUserTypeChange('admin')}
-                className={`p-3 rounded-lg border-2 text-center transition-colors ${
-                  userType === 'admin'
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <Icon icon="mdi:account-cog" className="text-xl mx-auto mb-1" />
-                <div className="text-xs font-medium">Admin/Agent</div>
-              </button>
+                  className={`px-4 py-2 rounded-lg text-xs font-medium transition-all ${userType === 'admin' ? 'bg-[#38B496] text-white' : 'bg-[#f5f5f7] text-gray-700 hover:bg-[#e5e5e7]'}`}
+                >Admin/Agent</button>
               <button
                 type="button"
                 onClick={() => handleUserTypeChange('client')}
-                className={`p-3 rounded-lg border-2 text-center transition-colors ${
-                  userType === 'client'
-                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                    : 'border-gray-200 hover:border-gray-300'
-                }`}
-              >
-                <Icon icon="mdi:account" className="text-xl mx-auto mb-1" />
-                <div className="text-xs font-medium">Client</div>
-              </button>
+                  className={`px-4 py-2 rounded-lg text-xs font-medium transition-all ${userType === 'client' ? 'bg-[#38B496] text-white' : 'bg-[#f5f5f7] text-gray-700 hover:bg-[#e5e5e7]'}`}
+                >Client</button>
+              </div>
             </div>
-          </div>
-
-          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your email"
+                  className="w-full p-2 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-sm placeholder-gray-400"
+                  placeholder="Email Address"
                 required
               />
             </div>
-            
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
               <input
                 type="password"
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your password"
+                  className="w-full p-2 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-sm placeholder-gray-400"
+                  placeholder="Password"
                 required
               />
             </div>
-
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                <div className="flex items-center">
-                  <Icon icon="mdi:alert-circle" className="text-red-500 mr-2" />
+                <div className="p-2 bg-red-50 rounded text-red-800 flex items-center gap-2 text-xs mt-2">
+                  <Icon icon="mdi:alert-circle" className="text-red-600" />
                   {error}
-                </div>
               </div>
             )}
-
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                className="w-full bg-[#38B496] hover:bg-[#2e9c81] text-white py-2 rounded-lg font-medium transition-all duration-200 flex items-center justify-center text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow"
             >
               {loading ? (
                 <>
@@ -211,35 +210,77 @@ const UnifiedLogin = ({ showModal, onClose, onSuccess }) => {
               )}
             </button>
           </form>
-
-          {/* Additional Links */}
-          <div className="text-center space-y-2">
-            <div className="text-sm text-gray-600">
-              Don't have an account?{' '}
+            <div className="flex justify-between items-center mt-2">
               <button
+                className="text-xs text-[#38B496] hover:text-[#2e9c81] font-medium"
+                onClick={() => setShowReset(true)}
+              >
+                Forgot password?
+              </button>
+              <span className="text-xs text-gray-500">Don't have an account?{' '}
+                <button
+                   className="text-[#38B496] hover:text-[#2e9c81] font-medium"
                 onClick={() => {
                   onClose();
-                  navigate('/client-register');
-                }}
-                className="text-blue-600 hover:text-blue-700 font-medium"
-              >
-                Register as Client
-              </button>
+                     window.location.href = '/client-register';
+                   }}
+                >Sign up</button>
+              </span>
             </div>
-            <div className="text-sm text-gray-600">
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col items-center mb-2">
+              <Icon icon="mdi:lock-reset" className="text-[#38B496] text-2xl mb-1" />
+              <h2 className="text-base font-bold text-gray-900 mb-1 tracking-tight">Reset Password</h2>
+              <p className="text-xs text-gray-500 text-center">Enter your email to receive password reset instructions.</p>
+            </div>
+            <form onSubmit={handleResetSubmit} className="space-y-4">
+              <div>
+                <input
+                  type="email"
+                  value={resetEmail}
+                  onChange={e => setResetEmail(e.target.value)}
+                  className="w-full p-2 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-sm placeholder-gray-400"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              {resetMsg && (
+                <div className="p-2 bg-green-50 rounded text-green-800 flex items-center gap-2 text-xs mt-2">
+                  <Icon icon="mdi:check-circle" className="text-green-600" />
+                  {resetMsg}
+                </div>
+              )}
               <button
-                onClick={() => {
-                  onClose();
-                  navigate('/forgot-password');
-                }}
-                className="text-blue-600 hover:text-blue-700"
+                type="submit"
+                disabled={resetLoading}
+                className="w-full bg-[#38B496] hover:bg-[#2e9c81] text-white py-2 rounded-lg font-medium transition-all duration-200 flex items-center justify-center text-sm disabled:opacity-50 disabled:cursor-not-allowed shadow"
               >
-                Forgot your password?
+                {resetLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="mdi:email-send" className="mr-2" />
+                    Send Reset Link
+                  </>
+                )}
+              </button>
+            </form>
+            <div className="flex justify-between items-center mt-2">
+              <button
+                className="text-xs text-[#38B496] hover:text-[#2e9c81] font-medium"
+                onClick={() => setShowReset(false)}
+              >
+                Back to login
               </button>
             </div>
-          </div>
+          </>
+        )}
         </div>
-      </Modal.Body>
     </Modal>
   );
 };

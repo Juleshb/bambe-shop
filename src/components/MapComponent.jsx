@@ -4,25 +4,35 @@ import { Icon } from "@iconify/react";
 import { FormattedNumber } from "react-intl";
 import "leaflet/dist/leaflet.css"; // ✅ Ensure Leaflet styles are loaded
 
-const MapComponent = ({ coordinates, image, price, beds, propertyAddress }) => {
+const MapComponent = ({ coordinates, image, price, beds, propertyAddress, property }) => {
   const { BaseLayer } = LayersControl;
 
-  // ✅ Prevent errors with default values
-  const validCoordinates = Array.isArray(coordinates) && coordinates.length === 2
-    ? coordinates
-    : [40.7128, -74.006]; // Default New York coordinates
+  // Use property data if provided
+  const prop = property || {};
+  const validCoordinates = prop.coordinates
+    ? (Array.isArray(prop.coordinates) && prop.coordinates.length === 2
+        ? prop.coordinates
+        : (typeof prop.coordinates === 'string' && prop.coordinates.includes(',')
+            ? prop.coordinates.split(',').map(Number)
+            : [40.7128, -74.006]))
+    : (Array.isArray(coordinates) && coordinates.length === 2
+        ? coordinates
+        : [40.7128, -74.006]);
 
-  const imageUrl = Array.isArray(image) && image.length > 0
-    ? `http://localhost:4800${image[0].image_url}`
-    : "https://via.placeholder.com/150"; // Default image
+  const images = prop.images || [];
+  const imageUrl = images.length > 0
+    ? `https://bambe.shop${images[0].image_url || images[0].url}`
+    : (Array.isArray(image) && image.length > 0
+        ? `https://bambe.shop${image[0].image_url}`
+        : "https://via.placeholder.com/150");
 
-  const addressText = Array.isArray(propertyAddress)
-    ? propertyAddress.map(item => item.value).join(", ")
-    : "No Address Available";
+  const priceValue = prop.price || price;
+  const bedsValue = prop.bedrooms || beds;
+  const addressText = prop.location || propertyAddress || "No Address Available";
 
   return (
-    <div style={{ height: "500px", width: "100%" }}>
-      <MapContainer center={validCoordinates} zoom={13} scrollWheelZoom={false} style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: "500px", width: "100%", zIndex: 1, position: 'relative' }}>
+      <MapContainer center={validCoordinates} zoom={13} scrollWheelZoom={false} style={{ height: "100%", width: "100%", zIndex: 1, position: 'relative' }}>
         <LayersControl position="topright">
           <BaseLayer checked name="Street View">
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors" />
@@ -46,7 +56,7 @@ const MapComponent = ({ coordinates, image, price, beds, propertyAddress }) => {
                 <div className="flex items-center gap-4 text-lg text-red-500">
                   <span className="px-4 py-1 bg-red-500 bg-opacity-30 rounded-full">Price</span>
                   <span>
-                    <FormattedNumber value={price} style="currency" currency="USD" />
+                    <FormattedNumber value={priceValue} style="currency" currency="RWF" />
                   </span>
                 </div>
                 <div className="flex items-center gap-4 text-sm font-bold text-[#616e96]">
@@ -56,7 +66,7 @@ const MapComponent = ({ coordinates, image, price, beds, propertyAddress }) => {
                   </span>
                   <span className="flex items-center gap-1">
                     <Icon className="bg-gray-100 p-1 rounded-full" icon="ic:baseline-bed" width="24" height="24" />
-                    <p>{beds} bed</p>
+                    <p>{bedsValue} bed</p>
                   </span>
                 </div>
               </div>
@@ -64,6 +74,7 @@ const MapComponent = ({ coordinates, image, price, beds, propertyAddress }) => {
                 <Icon icon="basil:location-outline" width="24" height="24" />
                 <span>{addressText}</span>
               </div>
+              {/* Add more property details here if needed */}
             </div>
           </Popup>
         </Marker>

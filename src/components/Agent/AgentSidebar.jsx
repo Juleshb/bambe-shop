@@ -1,13 +1,16 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { useAuth } from '../context/AuthContext';
+import Logo from "../assets/logo-black.png";
 
 const AgentSidebar = () => {
   const location = useLocation();
+  const { logout } = useAuth();
 
   const menuItems = [
     {
-      path: "/agent/dashboard",
+      path: "/agent-dashboard",
       icon: "mdi:view-dashboard",
       label: "Dashboard",
     },
@@ -50,6 +53,9 @@ const AgentSidebar = () => {
 
   return (
     <div className="bg-white shadow-lg h-screen w-64 fixed left-0 top-0 z-40">
+      <div className="flex items-center justify-center border-b border-gray-100 h-20">
+        <img src={Logo} alt="Logo" className="h-12 object-contain" />
+      </div>
       <div className="p-6 border-b">
         <h2 className="text-xl font-bold text-gray-800">Agent Portal</h2>
         <p className="text-sm text-gray-600">Real Estate Management</p>
@@ -76,13 +82,13 @@ const AgentSidebar = () => {
       </nav>
 
       <div className="absolute bottom-6 left-4 right-4">
-        <Link
-          to="/logout"
-          className="flex items-center px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+        <button
+          onClick={logout}
+          className="flex items-center w-full px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
         >
           <Icon icon="mdi:logout" className="mr-3 text-xl" />
           <span className="font-medium">Logout</span>
-        </Link>
+        </button>
       </div>
     </div>
   );

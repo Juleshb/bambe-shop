@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import axios from './utils/axios';
 import { useAuth } from './context/AuthContext';
+import Nav from './navs/Nav';
+import Footer from './navs/Footer';
 
 const ClientRegister = () => {
   const [formData, setFormData] = useState({
@@ -32,44 +34,31 @@ const ClientRegister = () => {
     setError('');
     setSuccess('');
 
-    // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
       return;
     }
-
-    // Validate password strength
     if (formData.password.length < 6) {
       setError('Password must be at least 6 characters long');
       setLoading(false);
       return;
     }
-
     try {
-      const response = await axios.post('/api/client/register', {
+      const response = await axios.post('/api/client/register-from-inquiry', {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
         password: formData.password
       });
-
       const userData = response.data;
-      
-      // Store client token and data
       localStorage.setItem('clientToken', userData.token);
       localStorage.setItem('clientData', JSON.stringify(userData.client));
-      
-      // Update auth context
       login(userData.client, 'client');
-      
       setSuccess('Registration successful! Redirecting to dashboard...');
-      
-      // Redirect to client dashboard after 2 seconds
       setTimeout(() => {
         navigate('/client-dashboard');
       }, 2000);
-
     } catch (error) {
       console.error('Registration error:', error);
       setError(error.response?.data?.error || 'Registration failed. Please try again.');
@@ -79,156 +68,163 @@ const ClientRegister = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <Icon icon="mdi:account-plus" className="text-blue-600 text-4xl" />
-        </div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create Your Account
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Join our real estate platform as a client
-        </p>
-      </div>
-
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your full name"
-                required
-              />
+    <>
+      <Nav />
+      <div className="min-h-screen bg-[#f8f8f8] flex flex-col lg:flex-row items-center justify-center py-12 px-4 gap-y-8 lg:gap-y-0 lg:gap-x-16">
+        {/* Registration Form Card */}
+        <div className="w-full max-w-md flex flex-col justify-center">
+          <div className="bg-white/90 rounded-2xl shadow-lg p-10" style={{backdropFilter: 'blur(2px)'}}>
+            <div className="flex flex-col items-center mb-10">
+              <Icon icon="mdi:account-plus" className="text-[#38B496] text-5xl mb-3" />
+              <h2 className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">Create Your Account</h2>
+              <p className="text-sm text-gray-500 text-center">Join our real estate platform as a client</p>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Phone Number
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your phone number"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleInputChange}
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Confirm your password"
-                required
-              />
-            </div>
-
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                <div className="flex items-center">
-                  <Icon icon="mdi:alert-circle" className="text-red-500 mr-2" />
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full p-3 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-base placeholder-gray-400"
+                  placeholder="Full Name"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="w-full p-3 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-base placeholder-gray-400"
+                  placeholder="Email Address"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className="w-full p-3 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-base placeholder-gray-400"
+                  placeholder="Phone Number"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  className="w-full p-3 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-base placeholder-gray-400"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  className="w-full p-3 bg-[#f5f5f7] rounded-lg focus:ring-2 focus:ring-[#38B496] focus:border-[#38B496] text-base placeholder-gray-400"
+                  placeholder="Confirm Password"
+                  required
+                />
+              </div>
+              {error && (
+                <div className="p-2 bg-red-50 rounded text-red-800 flex items-center gap-2 text-xs mt-2">
+                  <Icon icon="mdi:alert-circle" className="text-red-600" />
                   {error}
                 </div>
-              </div>
-            )}
-
-            {success && (
-              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-                <div className="flex items-center">
-                  <Icon icon="mdi:check-circle" className="text-green-500 mr-2" />
+              )}
+              {success && (
+                <div className="p-2 bg-green-50 rounded text-green-800 flex items-center gap-2 text-xs mt-2">
+                  <Icon icon="mdi:check-circle" className="text-green-600" />
                   {success}
                 </div>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Creating Account...
-                </>
-              ) : (
-                <>
-                  <Icon icon="mdi:account-plus" className="mr-2" />
-                  Create Account
-                </>
               )}
-            </button>
-          </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
-              </div>
-            </div>
-
-            <div className="mt-6 text-center">
               <button
-                onClick={() => navigate('/')}
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                type="submit"
+                disabled={loading}
+                className="w-full bg-[#38B496] hover:bg-[#2e9c81] text-white py-3 rounded-lg font-medium transition-all duration-200 flex items-center justify-center text-base disabled:opacity-50 disabled:cursor-not-allowed shadow"
+              >
+                {loading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Creating Account...
+                  </>
+                ) : (
+                  <>
+                    <Icon icon="mdi:account-plus" className="mr-2" />
+                    Create Account
+                  </>
+                )}
+              </button>
+            </form>
+            <div className="mt-8 text-center">
+              <span className="text-sm text-gray-500">Already have an account?</span>
+              <button
+                onClick={() => navigate('/')} 
+                className="ml-2 text-[#38B496] hover:text-[#2e9c81] font-medium text-sm"
               >
                 Sign in to your account
               </button>
             </div>
           </div>
         </div>
+        {/* Tips/Info Section */}
+        <div className="w-full max-w-sm flex-shrink-0">
+          <div className="bg-white/90 rounded-2xl shadow-lg p-8 flex flex-col justify-center h-full">
+            <h3 className="text-lg font-bold text-[#38B496] mb-3 flex items-center">
+              <Icon icon="mdi:lightbulb-on-outline" className="mr-2 text-xl" />
+              Tips for Registration
+            </h3>
+            <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2">
+              <li>Use your real name for a professional profile.</li>
+              <li>Provide a valid email address to receive notifications.</li>
+              <li>Choose a strong password (at least 6 characters).</li>
+              <li>Double-check your phone number for accuracy.</li>
+              <li>After registration, you’ll be logged in automatically.</li>
+            </ul>
+            <h3 className="text-lg font-bold text-[#38B496] mb-3 mt-6 flex items-center">
+              <Icon icon="mdi:login" className="mr-2 text-xl" />
+              Login Tips
+            </h3>
+            <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2">
+              <li>Use the same email and password you registered with.</li>
+              <li>If you forget your password, use the “Forgot Password?” link on the login page.</li>
+              <li>Your account is private and secure.</li>
+              <li>Contact support if you have trouble logging in.</li>
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+      <style>{`
+        @media (min-width: 1024px) {
+          .client-register-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 48px;
+            min-height: 80vh;
+          }
+        }
+        @media (max-width: 1023px) {
+          .client-register-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 24px;
+          }
+        }
+      `}</style>
+    </>
   );
 };
 

@@ -227,7 +227,7 @@ const Dashboard = () => {
               {stats.recentProperties.length > 0 ? (
                 <div className="space-y-4">
                   {stats.recentProperties.map((property) => (
-                    <div key={property.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                    <div key={property.listing_id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                       <div className="flex-shrink-0">
                         <Icon icon="mdi:home" className="w-6 h-6 text-green-600" />
                       </div>

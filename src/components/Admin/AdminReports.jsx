@@ -263,7 +263,7 @@ const AdminReports = () => {
             <div className="p-6">
               <div className="space-y-4">
                 {getTopProperties().map((property) => (
-                  <div key={property.id} className="flex items-center space-x-3">
+                  <div key={property.listing_id} className="flex items-center space-x-3">
                     <div className="flex-shrink-0">
                       <Icon icon="mdi:home" className="w-5 h-5 text-blue-600" />
                     </div>

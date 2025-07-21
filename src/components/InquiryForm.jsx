@@ -88,7 +88,7 @@ const InquiryForm = ({ propertyId, propertyName, agentInfo, onSuccess, className
     setSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:4800/api/inquiries', {
+      const response = await fetch('https://bambe.shop/api/inquiries', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ const InquiryForm = ({ propertyId, propertyName, agentInfo, onSuccess, className
     setRegistering(true);
 
     try {
-      const response = await fetch('http://localhost:4800/api/client/register-from-inquiry', {
+      const response = await fetch('https://bambe.shop/api/client/register-from-inquiry', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -59,10 +59,10 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
                 About Umuhuza
               </h1>
-              <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-base text-white/90 max-w-2xl mx-auto leading-relaxed">
                 Your trusted partner in finding the perfect property in Rwanda's dynamic real estate market
               </p>
             </motion.div>
@@ -79,9 +79,9 @@ const About = () => {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Introduction</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Introduction</h2>
               <div className="max-w-4xl mx-auto">
-                <p className="text-lg text-gray-700 leading-relaxed">
+                <p className="text-sm text-gray-700 leading-relaxed">
                   Rwanda is a rapidly growing country, where the residents are settling in Kigali and other urban areas outside Kigali, joyfully, we are also a touristic country, as we welcome more than a million tourists every year making Rwanda to be among the very dynamic nations all over Africa. In fact, it is understood that we need connectors.
                 </p>
               </div>
@@ -100,8 +100,8 @@ const About = () => {
               className="grid lg:grid-cols-2 gap-12 items-center"
             >
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-6">Who We Are</h2>
-                <div className="space-y-6 text-lg text-gray-700">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Who We Are</h2>
+                <div className="space-y-4 text-sm text-gray-700">
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0 w-8 h-8 bg-[#38B496] rounded-full flex items-center justify-center">
                       <Icon icon="mdi:check" className="text-white text-sm" />
@@ -123,8 +123,8 @@ const About = () => {
               <div className="relative">
                 <div className="bg-gradient-to-br from-[#38B496] to-[#F15C26] rounded-2xl p-8 text-white">
                   <Icon icon="mdi:home-city" className="text-6xl mb-6" />
-                  <h3 className="text-2xl font-bold mb-4">Comprehensive Real Estate Solutions</h3>
-                  <p className="text-white/90">
+                  <h3 className="text-lg font-bold mb-3">Comprehensive Real Estate Solutions</h3>
+                  <p className="text-white/90 text-sm">
                     From finding your dream home to managing your investments, we provide end-to-end real estate services tailored to your needs.
                   </p>
                 </div>
@@ -145,8 +145,8 @@ const About = () => {
                 className="bg-gradient-to-br from-[#38B496] to-[#2e9c81] rounded-2xl p-8 text-white"
               >
                 <Icon icon="mdi:target" className="text-5xl mb-6" />
-                <h3 className="text-3xl font-bold mb-4">Our Mission</h3>
-                <p className="text-lg text-white/90 leading-relaxed">
+                <h3 className="text-lg font-bold mb-3">Our Mission</h3>
+                <p className="text-sm text-white/90 leading-relaxed">
                   Helping clients to get information regarding buying, selling and renting properties in an easy way.
                 </p>
               </motion.div>
@@ -159,8 +159,8 @@ const About = () => {
                 className="bg-gradient-to-br from-[#F15C26] to-[#e04a1a] rounded-2xl p-8 text-white"
               >
                 <Icon icon="mdi:eye" className="text-5xl mb-6" />
-                <h3 className="text-3xl font-bold mb-4">Our Vision</h3>
-                <p className="text-lg text-white/90 leading-relaxed">
+                <h3 className="text-lg font-bold mb-3">Our Vision</h3>
+                <p className="text-sm text-white/90 leading-relaxed">
                   To be the most credible source of property information and the trusted leader in real estate services in Rwanda.
                 </p>
               </motion.div>
@@ -178,8 +178,8 @@ const About = () => {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Values</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Our Values</h2>
+              <p className="text-sm text-gray-600 max-w-2xl mx-auto">
                 The core principles that guide everything we do and every decision we make
               </p>
             </motion.div>
@@ -197,8 +197,8 @@ const About = () => {
                   <div className="w-16 h-16 bg-gradient-to-r from-[#38B496] to-[#F15C26] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <Icon icon={value.icon} className="text-3xl text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-4">{value.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                  <h3 className="text-base font-bold text-gray-900 mb-2">{value.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{value.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -221,8 +221,8 @@ const About = () => {
                   <div className="w-20 h-20 bg-gradient-to-r from-[#38B496] to-[#F15C26] rounded-full flex items-center justify-center mx-auto mb-4">
                     <Icon icon={stat.icon} className="text-3xl text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-2">{stat.number}</div>
-                  <div className="text-gray-600">{stat.label}</div>
+                  <div className="text-xl font-bold text-gray-900 mb-1">{stat.number}</div>
+                  <div className="text-gray-600 text-xs">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -238,10 +238,10 @@ const About = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-bold text-white mb-6">
+              <h2 className="text-xl font-bold text-white mb-4">
                 Ready to Find Your Perfect Property?
               </h2>
-              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              <p className="text-base text-white/90 mb-6 max-w-2xl mx-auto">
                 Join thousands of satisfied clients who have found their dream homes with Umuhuza
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

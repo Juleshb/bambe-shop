@@ -527,7 +527,7 @@ const PropertyListing = () => {
                         >
                             {displayedProperties.map((property, index) => (
                                 <motion.div
-                                    key={property.id}
+                                    key={property.listing_id}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -543,7 +543,7 @@ const PropertyListing = () => {
                                             <div className="relative overflow-hidden">
                                                 <img
                                                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                                                    src={property.images?.length > 0 ? `http://localhost:4800${property.images[0].url}` : featuredProperty}
+                                                    src={property.images?.length > 0 ? `https://bambe.shop${property.images[0].image_url}` : featuredProperty}
                                                     alt={property.name || property.title}
                                                 />
                                                 <div className="absolute top-3 left-3">
@@ -557,15 +557,15 @@ const PropertyListing = () => {
                                                     </span>
                                                 </div>
                                                 <button
-                                                    onClick={() => toggleFavorite(property.id)}
+                                                    onClick={() => toggleFavorite(property.listing_id)}
                                                     className={`absolute top-3 right-3 mt-8 p-2 rounded-full shadow-lg transition-all duration-300 ${
-                                                        favorites.includes(property.id)
+                                                        favorites.includes(property.listing_id)
                                                             ? 'bg-red-500 text-white hover:bg-red-600'
                                                             : 'bg-white/95 text-gray-600 hover:bg-white hover:text-red-500'
                                                     }`}
                                                 >
                                                     <Icon 
-                                                        icon={favorites.includes(property.id) ? "mdi:heart" : "mdi:heart-outline"} 
+                                                        icon={favorites.includes(property.listing_id) ? "mdi:heart" : "mdi:heart-outline"} 
                                                         className="text-lg" 
                                                     />
                                                 </button>
@@ -606,7 +606,7 @@ const PropertyListing = () => {
                                                     <div className="flex space-x-2">
                                                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                                             <Link 
-                                                                to={`/listing/${property.id}`} 
+                                                                to={`/listing/${property.listing_id}`} 
                                                                 className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-3 py-2 rounded-lg text-base font-semibold text-gray-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center"
                                                             >
                                                                 View
@@ -631,7 +631,7 @@ const PropertyListing = () => {
                                             <div className="relative w-48 h-32 flex-shrink-0">
                                                 <img
                                                     className="w-full h-full object-cover"
-                                                    src={property.images?.length > 0 ? `http://localhost:4800${property.images[0].url}` : featuredProperty}
+                                                    src={property.images?.length > 0 ? `https://bambe.shop${property.images[0].image_url}` : featuredProperty}
                                                     alt={property.name || property.title}
                                                 />
                                                 <div className="absolute top-2 left-2">
@@ -640,15 +640,15 @@ const PropertyListing = () => {
                                                     </span>
                                                 </div>
                                                 <button
-                                                    onClick={() => toggleFavorite(property.id)}
+                                                    onClick={() => toggleFavorite(property.listing_id)}
                                                     className={`absolute top-2 right-2 p-1.5 rounded-full shadow-lg transition-all duration-300 ${
-                                                        favorites.includes(property.id)
+                                                        favorites.includes(property.listing_id)
                                                             ? 'bg-red-500 text-white hover:bg-red-600'
                                                             : 'bg-white/95 text-gray-600 hover:bg-white hover:text-red-500'
                                                     }`}
                                                 >
                                                     <Icon 
-                                                        icon={favorites.includes(property.id) ? "mdi:heart" : "mdi:heart-outline"} 
+                                                        icon={favorites.includes(property.listing_id) ? "mdi:heart" : "mdi:heart-outline"} 
                                                         className="text-sm" 
                                                     />
                                                 </button>
@@ -693,7 +693,7 @@ const PropertyListing = () => {
                                                     <div className="flex space-x-2">
                                                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                                                             <Link 
-                                                                to={`/listing/${property.id}`} 
+                                                                to={`/listing/${property.listing_id}`} 
                                                                 className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-4 py-2 rounded-lg text-base font-semibold text-gray-800 transition-all duration-300 shadow-md hover:shadow-lg flex items-center"
                                                             >
                                                                 View Details

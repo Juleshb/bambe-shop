@@ -3,8 +3,12 @@ import { Icon } from "@iconify/react";
 import axiosInstance from "../utils/axios";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import AgentSidebar from "./AgentSidebar";
+import { useAuth } from '../context/AuthContext';
+import Logo from "../assets/logo-black.png";
 
 const AgentDashboard = () => {
+  const { user, login } = useAuth();
   const [stats, setStats] = useState({
     totalProperties: 0,
     activeListings: 0,
@@ -20,6 +24,22 @@ const AgentDashboard = () => {
 
   useEffect(() => {
     fetchDashboardData();
+    // Fetch latest agent status
+    const fetchAgentStatus = async () => {
+      if (user && user.id) {
+        try {
+          const res = await axiosInstance.get(`/api/users/${user.id}`);
+          if (res.data.status && res.data.status !== user.status) {
+            const updatedUser = { ...user, status: res.data.status };
+            login(updatedUser, 'agent');
+            localStorage.setItem('userData', JSON.stringify(updatedUser));
+          }
+        } catch (err) {
+          // ignore
+        }
+      }
+    };
+    fetchAgentStatus();
   }, [selectedPeriod]);
 
   const fetchDashboardData = async () => {
@@ -104,337 +124,143 @@ const AgentDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Agent Dashboard</h1>
-              <p className="text-gray-600">Manage your properties and clients</p>
-            </div>
-            <div className="flex space-x-3">
-              <select
-                value={selectedPeriod}
-                onChange={(e) => setSelectedPeriod(e.target.value)}
-                className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-[#38B496]"
-              >
-                <option value="week">This Week</option>
-                <option value="month">This Month</option>
-                <option value="quarter">This Quarter</option>
-                <option value="year">This Year</option>
-              </select>
-              <Link
-                to="/agent/add-listing"
-                className="bg-[#38B496] text-white px-4 py-2 rounded-md hover:bg-[#2e9c81] transition-colors"
-              >
-                <Icon icon="mdi:plus" className="inline mr-2" />
-                Add Property
-              </Link>
+    <div className="min-h-screen bg-[#f8f8f8] font-[Inter,system-ui,sans-serif]">
+      {/* Logo above sidebar */}
+      <div className="fixed top-0 left-0 z-50 w-64 flex items-center justify-center bg-white border-b border-gray-100 h-20">
+        <img src={Logo} alt="Logo" className="h-12 object-contain" />
+      </div>
+      {/* Sidebar */}
+      <AgentSidebar />
+      <div className="ml-64 flex-1 p-8">
+        {/* Welcome Banner */}
+        <div className="bg-white/90 rounded-2xl shadow p-8 flex flex-col md:flex-row items-center justify-between mb-8" style={{backdropFilter: 'blur(2px)'}}>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-1 tracking-tight" style={{fontFamily:'Inter,system-ui,sans-serif'}}>Welcome, {user?.username || 'Agent'}!</h1>
+            <p className="text-gray-500 text-sm">Manage your properties, clients, and performance.</p>
+          </div>
+          <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-[#38B496]/10 text-[#38B496] border border-[#38B496]">{user?.status === 'active' ? 'Active' : user?.status === 'pending' ? 'Pending Activation' : (user?.status || 'Unknown')}</span>
+            <div className="flex items-center gap-2">
+              <Icon icon="mdi:account-tie" className="text-[#38B496] text-3xl" />
+              <span className="text-gray-700 font-medium text-base">Agent</span>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white rounded-lg shadow-sm p-6"
-          >
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center">
-                  <Icon icon="mdi:home" className="text-blue-600 text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Properties</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalProperties}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="bg-white rounded-lg shadow-sm p-6"
-          >
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center">
-                  <Icon icon="mdi:check-circle" className="text-green-600 text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Active Listings</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.activeListings}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
-            className="bg-white rounded-lg shadow-sm p-6"
-          >
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-yellow-100 rounded-md flex items-center justify-center">
-                  <Icon icon="mdi:clock" className="text-yellow-600 text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Pending</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.pendingListings}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.3 }}
-            className="bg-white rounded-lg shadow-sm p-6"
-          >
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-purple-100 rounded-md flex items-center justify-center">
-                  <Icon icon="mdi:account-group" className="text-purple-600 text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Clients</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalClients}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.4 }}
-            className="bg-white rounded-lg shadow-sm p-6"
-          >
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-indigo-100 rounded-md flex items-center justify-center">
-                  <Icon icon="mdi:currency-usd" className="text-indigo-600 text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Monthly Revenue</p>
-                <p className="text-2xl font-bold text-gray-900">RWF {stats.monthlyRevenue.toLocaleString()}</p>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.5 }}
-            className="bg-white rounded-lg shadow-sm p-6"
-          >
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 bg-red-100 rounded-md flex items-center justify-center">
-                  <Icon icon="mdi:eye" className="text-red-600 text-xl" />
-                </div>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">Total Views</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalViews}</p>
-              </div>
-            </div>
-          </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white/90 rounded-2xl shadow p-6 flex flex-col items-center">
+            <Icon icon="mdi:home" className="text-[#38B496] text-3xl mb-2" />
+            <div className="text-2xl font-bold text-gray-900" style={{fontFamily:'Inter,system-ui,sans-serif'}}>{stats.totalProperties}</div>
+            <div className="text-xs text-gray-500 mt-1">Total Properties</div>
+          </div>
+          <div className="bg-white/90 rounded-2xl shadow p-6 flex flex-col items-center">
+            <Icon icon="mdi:account-group" className="text-[#38B496] text-3xl mb-2" />
+            <div className="text-2xl font-bold text-gray-900" style={{fontFamily:'Inter,system-ui,sans-serif'}}>{stats.totalClients}</div>
+            <div className="text-xs text-gray-500 mt-1">Clients</div>
+          </div>
+          <div className="bg-white/90 rounded-2xl shadow p-6 flex flex-col items-center">
+            <Icon icon="mdi:currency-rwf" className="text-[#38B496] text-3xl mb-2" />
+            <div className="text-2xl font-bold text-gray-900" style={{fontFamily:'Inter,system-ui,sans-serif'}}>RWF {stats.monthlyRevenue?.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">Revenue (This Month)</div>
+          </div>
+          <div className="bg-white/90 rounded-2xl shadow p-6 flex flex-col items-center">
+            <Icon icon="mdi:eye" className="text-[#38B496] text-3xl mb-2" />
+            <div className="text-2xl font-bold text-gray-900" style={{fontFamily:'Inter,system-ui,sans-serif'}}>{stats.totalViews}</div>
+            <div className="text-xs text-gray-500 mt-1">Total Views</div>
+          </div>
         </div>
-
-        {/* Main Content Grid */}
+        {/* Recent Listings & Inquiries */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Listings */}
-          <div className="bg-white rounded-lg shadow-sm">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-gray-900">Recent Listings</h3>
-                <Link
-                  to="/agent/listings"
-                  className="text-[#38B496] hover:text-[#2e9c81] text-sm font-medium"
-                >
-                  View all
-                </Link>
+          <div className="bg-white/90 rounded-2xl shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4" style={{fontFamily:'Inter,system-ui,sans-serif'}}>Recent Listings</h3>
+            {recentListings.length === 0 ? (
+              <div className="text-center py-8">
+                <Icon icon="mdi:home-outline" className="text-gray-300 text-5xl mx-auto mb-4" />
+                <p className="text-gray-400">No listings yet</p>
               </div>
-            </div>
-            <div className="p-6">
-              {recentListings.length === 0 ? (
-                <div className="text-center py-8">
-                  <Icon icon="mdi:home-outline" className="text-gray-400 text-4xl mx-auto mb-4" />
-                  <p className="text-gray-500">No listings yet</p>
-                  <Link
-                    to="/agent/add-listing"
-                    className="text-[#38B496] hover:text-[#2e9c81] text-sm font-medium"
-                  >
-                    Add your first property
-                  </Link>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {recentListings.map((listing) => (
-                    <div key={listing.id} className="flex items-center space-x-4 p-4 border border-gray-100 rounded-lg hover:bg-gray-50">
-                      <div className="flex-shrink-0">
-                        {listing.images && listing.images.length > 0 ? (
-                          <img
-                            src={`http://localhost:4800${listing.images[0].url}`}
-                            alt={listing.name}
-                            className="w-16 h-16 object-cover rounded-lg"
-                          />
-                        ) : (
-                          <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
-                            <Icon icon="mdi:home" className="text-gray-400 text-xl" />
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900 truncate">
-                          {listing.name}
-                        </p>
-                        <p className="text-sm text-gray-500 truncate">
-                          {listing.location}
-                        </p>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <span className="text-sm font-medium text-[#38B496]">
-                            RWF {listing.price?.toLocaleString()}
-                          </span>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(listing.status)}`}>
-                            {listing.status || 'Active'}
-                          </span>
+            ) : (
+              <div className="space-y-4">
+                {recentListings.map((listing) => (
+                  <div key={listing.id} className="flex items-center space-x-4 p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition">
+                    <div className="flex-shrink-0">
+                      {listing.images && listing.images.length > 0 ? (
+                        <img
+                          src={`https://bambe.shop${listing.images[0].image_url}`}
+                          alt={listing.name}
+                          className="w-16 h-16 object-cover rounded-xl"
+                        />
+                      ) : (
+                        <div className="w-16 h-16 bg-gray-200 rounded-xl flex items-center justify-center">
+                          <Icon icon="mdi:home" className="text-gray-400 text-xl" />
                         </div>
-                      </div>
-                      <div className="flex-shrink-0">
-                        <Link
-                          to={`/agent/listing/${listing.id}`}
-                          className="text-[#38B496] hover:text-[#2e9c81]"
-                        >
-                          <Icon icon="mdi:arrow-right" className="text-xl" />
-                        </Link>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-base font-medium text-gray-900 truncate" style={{fontFamily:'Inter,system-ui,sans-serif'}}>
+                        {listing.name}
+                      </p>
+                      <p className="text-xs text-gray-500 truncate">
+                        {listing.location}
+                      </p>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <span className="text-sm font-medium text-[#38B496]">
+                          RWF {listing.price?.toLocaleString()}
+                        </span>
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(listing.status)}`}>
+                          {listing.status || 'Active'}
+                        </span>
                       </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-
           {/* Recent Inquiries */}
-          <div className="bg-white rounded-lg shadow-sm">
-            <div className="px-6 py-4 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-gray-900">Recent Inquiries</h3>
-                <Link
-                  to="/agent/inquiries"
-                  className="text-[#38B496] hover:text-[#2e9c81] text-sm font-medium"
-                >
-                  View all
-                </Link>
+          <div className="bg-white/90 rounded-2xl shadow p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4" style={{fontFamily:'Inter,system-ui,sans-serif'}}>Recent Inquiries</h3>
+            {recentInquiries.length === 0 ? (
+              <div className="text-center py-8">
+                <Icon icon="mdi:email-outline" className="text-gray-300 text-5xl mx-auto mb-4" />
+                <p className="text-gray-400">No inquiries yet</p>
               </div>
-            </div>
-            <div className="p-6">
-              {recentInquiries.length === 0 ? (
-                <div className="text-center py-8">
-                  <Icon icon="mdi:email-outline" className="text-gray-400 text-4xl mx-auto mb-4" />
-                  <p className="text-gray-500">No inquiries yet</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {recentInquiries.map((inquiry) => (
-                    <div key={inquiry.id} className="p-4 border border-gray-100 rounded-lg hover:bg-gray-50">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900">
-                            {inquiry.name}
-                          </p>
-                          <p className="text-sm text-gray-500">
-                            {inquiry.email}
-                          </p>
-                          <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                            {inquiry.message}
-                          </p>
-                          <div className="flex items-center space-x-2 mt-2">
-                            <span className="text-xs text-gray-500">
-                              {new Date(inquiry.created_at).toLocaleDateString()}
+            ) : (
+              <div className="space-y-4">
+                {recentInquiries.map((inquiry) => (
+                  <div key={inquiry.id} className="p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <p className="text-base font-medium text-gray-900" style={{fontFamily:'Inter,system-ui,sans-serif'}}>
+                          {inquiry.name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {inquiry.email}
+                        </p>
+                        <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                          {inquiry.message}
+                        </p>
+                        <div className="flex items-center space-x-2 mt-2">
+                          <span className="text-xs text-gray-500">
+                            {new Date(inquiry.created_at).toLocaleDateString()}
+                          </span>
+                          {inquiry.property_name && (
+                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                              {inquiry.property_name}
                             </span>
-                            {inquiry.property_name && (
-                              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                                {inquiry.property_name}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex-shrink-0 ml-4">
-                          <button className="text-[#38B496] hover:text-[#2e9c81]">
-                            <Icon icon="mdi:reply" className="text-xl" />
-                          </button>
+                          )}
                         </div>
                       </div>
+                      <div className="flex-shrink-0 ml-4">
+                        <button className="text-[#38B496] hover:text-[#2e9c81]">
+                          <Icon icon="mdi:reply" className="text-xl" />
+                        </button>
+                      </div>
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Actions */}
-        <div className="mt-8 bg-white rounded-lg shadow-sm p-6">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link
-              to="/agent/add-listing"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Icon icon="mdi:plus-circle" className="text-[#38B496] text-2xl mr-3" />
-              <div>
-                <p className="font-medium text-gray-900">Add Property</p>
-                <p className="text-sm text-gray-500">Create new listing</p>
+                  </div>
+                ))}
               </div>
-            </Link>
-
-            <Link
-              to="/agent/listings"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Icon icon="mdi:format-list-bulleted" className="text-[#38B496] text-2xl mr-3" />
-              <div>
-                <p className="font-medium text-gray-900">Manage Listings</p>
-                <p className="text-sm text-gray-500">View all properties</p>
-              </div>
-            </Link>
-
-            <Link
-              to="/agent/clients"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Icon icon="mdi:account-group" className="text-[#38B496] text-2xl mr-3" />
-              <div>
-                <p className="font-medium text-gray-900">Client Management</p>
-                <p className="text-sm text-gray-500">Manage clients</p>
-              </div>
-            </Link>
-
-            <Link
-              to="/agent/reports"
-              className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-            >
-              <Icon icon="mdi:chart-line" className="text-[#38B496] text-2xl mr-3" />
-              <div>
-                <p className="font-medium text-gray-900">Reports</p>
-                <p className="text-sm text-gray-500">View analytics</p>
-              </div>
-            </Link>
+            )}
           </div>
         </div>
       </div>

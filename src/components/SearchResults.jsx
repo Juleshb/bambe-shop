@@ -42,7 +42,7 @@ function SearchResults() {
                 <Link to={item.type === "listing" ? `/listing/${item.id}` : `/product/${item.id}`}>
                   <img
                     className="h-36 sm:h-44 object-contain"
-                    src={item.images?.length > 0 ? `http://localhost:4800${item.images[0].url}` : "placeholder-image-url"}
+                    src={item.images?.length > 0 ? `https://bambe.shop${item.images[0].image_url}` : "placeholder-image-url"}
                     alt={item.name}
                   />
                   <h3 className="text-xl font-semibold mt-2">{item.name}</h3>

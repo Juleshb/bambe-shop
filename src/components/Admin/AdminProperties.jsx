@@ -100,7 +100,7 @@ const AdminProperties = () => {
   const handleSaveEdit = async () => {
     try {
       console.log('Saving edit form:', editForm); // Debug log
-      await axios.put(`/api/listings/${selectedProperty.id}`, {
+      await axios.put(`/api/listings/${selectedproperty.listing_id}`, {
         title: editForm.title,
         description: editForm.description,
         price: editForm.price,
@@ -307,13 +307,13 @@ const AdminProperties = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredProperties.map((property) => (
-                <tr key={property.id} className="hover:bg-gray-50">
+                <tr key={property.listing_id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-12 w-12">
                         {property.images && property.images.length > 0 ? (
                           <img
-                            src={`http://localhost:4800${property.images[0].url}`}
+                            src={`https://bambe.shop${property.images[0].image_url}`}
                             alt={property.title || property.name}
                             className="h-12 w-12 object-cover rounded-lg"
                           />
@@ -372,7 +372,7 @@ const AdminProperties = () => {
                       </button>
                       <select
                         value={property.status || 'available'}
-                        onChange={(e) => handleStatusUpdate(property.id, e.target.value)}
+                        onChange={(e) => handleStatusUpdate(property.listing_id, e.target.value)}
                         className="text-xs border border-gray-300 rounded px-2 py-1"
                       >
                         <option value="available">Available</option>
@@ -380,7 +380,7 @@ const AdminProperties = () => {
                         <option value="rented">Rented</option>
                       </select>
                       <button
-                        onClick={() => handleDelete(property.id)}
+                        onClick={() => handleDelete(property.listing_id)}
                         className="text-red-600 hover:text-red-900"
                         title="Delete Property"
                       >
@@ -414,7 +414,7 @@ const AdminProperties = () => {
                 {selectedProperty.images.map((image, index) => (
                   <div key={index} className="relative group">
                     <img
-                      src={`http://localhost:4800${image.url}`}
+                      src={`https://bambe.shop${image.image_url}`}
                       alt={`${selectedProperty.title || selectedProperty.name} - ${index + 1}`}
                       className="w-full h-48 object-cover rounded-lg"
                     />

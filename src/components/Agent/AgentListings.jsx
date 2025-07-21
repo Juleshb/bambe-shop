@@ -31,8 +31,8 @@ const AgentListings = () => {
 
   const handleDelete = async () => {
     try {
-      await axiosInstance.delete(`/api/listings/${selectedListing.id}`);
-      setListings(listings.filter(listing => listing.id !== selectedListing.id));
+      await axiosInstance.delete(`/api/listings/${selectedListing.listing_id}`);
+      setListings(listings.filter(listing => listing.listing_id !== selectedListing.listing_id));
       setShowDeleteModal(false);
       setSelectedListing(null);
     } catch (error) {
@@ -121,7 +121,7 @@ const AgentListings = () => {
               <div className="relative h-48">
                 {listing.images && listing.images.length > 0 ? (
                   <img
-                    src={`http://localhost:4800${listing.images[0].url}`}
+                    src={`https://bambe.shop${listing.images[0].image_url}`}
                     alt={listing.name}
                     className="w-full h-full object-cover"
                   />
@@ -164,14 +164,14 @@ const AgentListings = () => {
                 
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => window.location.href = `/agent/edit-listing/${listing.id}`}
+                    onClick={() => window.location.href = `/agent/edit-listing/${listing.listing_id}`}
                     className="flex-1 bg-blue-100 text-blue-700 px-3 py-2 rounded-lg hover:bg-blue-200 transition-colors flex items-center justify-center"
                   >
                     <Icon icon="mdi:pencil" className="mr-1" />
                     Edit
                   </button>
                   <button
-                    onClick={() => window.location.href = `/listing/${listing.id}`}
+                    onClick={() => window.location.href = `/listing/${listing.listing_id}`}
                     className="flex-1 bg-gray-100 text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center"
                   >
                     <Icon icon="mdi:eye" className="mr-1" />

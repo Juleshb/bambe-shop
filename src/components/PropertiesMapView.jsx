@@ -116,11 +116,11 @@ const PropertiesMapView = ({ properties }) => {
           }
           
           const imageUrl = property.images && property.images.length > 0 
-            ? `http://localhost:4800${property.images[0].url}` 
+            ? `https://bambe.shop${property.images[0].image_url}` 
             : "https://via.placeholder.com/150";
 
           return (
-            <Marker key={property.id || index} position={coordinates}>
+            <Marker key={property.listing_id || index} position={coordinates}>
               <Popup className="property-popup">
                 <div className="w-80 max-w-sm">
                   <div className="h-48 mb-3 rounded-lg overflow-hidden">
@@ -169,7 +169,7 @@ const PropertiesMapView = ({ properties }) => {
                           {formatPrice(property.price)}
                         </span>
                         <Link 
-                          to={`/listing/${property.id}`}
+                          to={`/listing/${property.listing_id}`}
                           className="bg-[#38B496] hover:bg-[#2e9c81] text-white px-3 py-1 rounded-lg text-sm font-medium transition-colors"
                         >
                           View Details

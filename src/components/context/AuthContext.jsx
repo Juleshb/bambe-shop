@@ -42,6 +42,13 @@ export const AuthProvider = ({ children }) => {
           setUser(JSON.parse(clientData));
           setUserType('client');
         }
+      } else if (storedUserType === 'agent') {
+        const token = localStorage.getItem('token');
+        const userData = localStorage.getItem('userData');
+        if (token && userData) {
+          setUser(JSON.parse(userData));
+          setUserType('agent');
+        }
       }
     } catch (error) {
       console.error('Error initializing auth:', error);
@@ -80,7 +87,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAgent = () => {
-    return userType === 'admin' && user?.role === 'agent';
+    return userType === 'agent' && user?.role === 'agent';
   };
 
   const isClient = () => {

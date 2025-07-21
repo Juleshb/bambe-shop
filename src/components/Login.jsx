@@ -21,6 +21,11 @@ function Login() {
   const { setAuthData } = useContext(AuthContext);
   const [showLoader, setShowLoader] = useState(false);
   const [showButton, setShowButton] = useState(true);
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetMsg, setResetMsg] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -68,6 +73,29 @@ function Login() {
     } finally {
       setShowButton(true);
       setShowLoader(false);
+    }
+  };
+
+  const handleResetSubmit = async (e) => {
+    e.preventDefault();
+    setResetLoading(true);
+    setResetMsg("");
+    try {
+      const res = await fetch("https://bambe.shop/api/client/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: resetEmail })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setResetMsg("Password reset instructions sent to your email.");
+      } else {
+        setResetMsg(data.error || "Failed to send reset email.");
+      }
+    } catch (err) {
+      setResetMsg("Failed to send reset email.");
+    } finally {
+      setResetLoading(false);
     }
   };
 
@@ -121,12 +149,54 @@ function Login() {
                   {t("login")}
                 </button>
               )}
-              <Link className="mt-2 hover:underline" to="/">
-                {t("forgotPassword")}
-              </Link>
             </div>
+            {/* Forgot Password Button */}
+            <button
+              type="button"
+              className="text-blue-500 hover:underline mt-2"
+              onClick={() => setShowReset(true)}
+            >
+              Forgot Password?
+            </button>
           </div>
         </form>
+        {/* Password Reset Modal */}
+        {showReset && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
+              <button
+                type="button"
+                className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl"
+                onClick={() => {
+                  setShowReset(false);
+                  setResetMsg("");
+                  setResetEmail("");
+                }}
+              >
+                &times;
+              </button>
+              <form onSubmit={handleResetSubmit}>
+                <label className="block mb-2 text-sm font-medium text-gray-700">Enter your email to reset password:</label>
+                <input
+                  type="email"
+                  value={resetEmail}
+                  onChange={e => setResetEmail(e.target.value)}
+                  required
+                  className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
+                  placeholder="Email address"
+                />
+                <button
+                  type="submit"
+                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 w-full"
+                  disabled={resetLoading}
+                >
+                  {resetLoading ? "Sending..." : "Send Reset Email"}
+                </button>
+                {resetMsg && <div className="mt-2 text-sm text-green-600">{resetMsg}</div>}
+              </form>
+            </div>
+          </div>
+        )}
       </div>
 
       <Footer />
